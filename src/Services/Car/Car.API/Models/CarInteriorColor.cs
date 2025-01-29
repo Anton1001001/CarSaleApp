@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Car.API.Models;
 
-namespace Pizda.Models;
-
-/// <summary>
-/// Цвета салона автомобилей
-/// </summary>
-public partial class CarInteriorColor
+public class CarInteriorColor
 {
-    /// <summary>
-    /// ID цвета салона
-    /// </summary>
-    public int IdCarInteriorColor { get; set; }
-
-    /// <summary>
-    /// Название цвета салона
-    /// </summary>
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
 }

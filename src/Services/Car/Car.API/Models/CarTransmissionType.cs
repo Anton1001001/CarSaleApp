@@ -1,5 +1,6 @@
 ﻿namespace Car.API.Models;
-public class CarCondition
+
+public class CarTransmissionType
 {
     public int Id { get; set; }
     public string Name { get; set; } = null!;

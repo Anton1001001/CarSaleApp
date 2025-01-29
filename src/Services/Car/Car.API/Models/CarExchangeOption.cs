@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Car.API.Models;
 
-namespace Pizda.Models;
-
-/// <summary>
-/// Варианты обмена автомобилей
-/// </summary>
-public partial class CarExchangeOption
+public class CarExchangeOption
 {
-    /// <summary>
-    /// ID варианта обмена
-    /// </summary>
-    public int IdCarExchangeOption { get; set; }
-
-    /// <summary>
-    /// Название варианта обмена
-    /// </summary>
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
 }

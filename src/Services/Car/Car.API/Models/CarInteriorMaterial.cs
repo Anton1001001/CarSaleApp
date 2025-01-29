@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Car.API.Models;
 
-namespace Pizda.Models;
-
-/// <summary>
-/// Материалы салона автомобилей
-/// </summary>
-public partial class CarInteriorMaterial
+public class CarInteriorMaterial
 {
-    /// <summary>
-    /// ID материала салона
-    /// </summary>
-    public int IdCarInteriorMaterial { get; set; }
-
-    /// <summary>
-    /// Название материала салона
-    /// </summary>
+    public int Id { get; set; }
     public string Name { get; set; } = null!;
 }
