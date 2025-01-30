@@ -8,4 +8,7 @@ public class CarOptionValue
     public uint DateCreate { get; set; }
     public uint DateUpdate { get; set; }
     public int CarTypeId { get; set; }
+    public virtual CarEquipment CarEquipmentNavigation { get; set; } = null!;
+    public virtual CarOption CarOptionNavigation { get; set; } = null!;
+    public virtual CarType CarTypeNavigation { get; set; } = null!;
 }

@@ -9,4 +9,7 @@ public class CarCharacteristicValue
     public uint? DateCreate { get; set; }
     public uint? DateUpdate { get; set; }
     public int CarTypeId { get; set; }
+    public virtual CarCharacteristic CarCharacteristicNavigation { get; set; } = null!;
+    public virtual CarModification CarModificationNavigation { get; set; } = null!;
+    public virtual CarType CarTypeNavigation { get; set; } = null!;
 }

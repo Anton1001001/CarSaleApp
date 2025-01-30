@@ -1,5 +1,4 @@
 ﻿namespace Car.API.Models;
-
 public class CarExchangeOption
 {
     public int Id { get; set; }
