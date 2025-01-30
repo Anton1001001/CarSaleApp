@@ -1,3 +1,2 @@
 namespace Car.API.DTO;
-
-public record GetAllBrandsResponse(int Id, string Name);
+public record GetBrandsResponse(int Id, string Name);
