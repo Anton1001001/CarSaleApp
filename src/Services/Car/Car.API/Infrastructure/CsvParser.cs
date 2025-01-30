@@ -1,10 +1,7 @@
-using System.Text.RegularExpressions;
-
 namespace Car.API.Infrastructure;
-
 public class CsvParser : ICsvParser
 {
-    private const string Pattern = @"'(.*?)'|NULL";
+    private const string Pattern = @"'((?:[^']|'')*)'|NULL";
 
     public IEnumerable<T> Parse<T>(string filePath, Func<string[], T> mapFunction)
     {

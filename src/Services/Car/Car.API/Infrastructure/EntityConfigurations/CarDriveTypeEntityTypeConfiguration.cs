@@ -1,5 +1,3 @@
-using Car.API.Models;
-
 namespace Car.API.Infrastructure.EntityConfigurations;
 
 public class CarDriveTypeEntityTypeConfiguration : IEntityTypeConfiguration<CarDriveType>

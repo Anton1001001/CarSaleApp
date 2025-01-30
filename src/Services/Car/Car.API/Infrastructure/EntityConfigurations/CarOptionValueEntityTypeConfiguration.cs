@@ -1,5 +1,3 @@
-using Car.API.Models;
-
 namespace Car.API.Infrastructure.EntityConfigurations;
 
 public class CarOptionValueEntityTypeConfiguration : IEntityTypeConfiguration<CarOptionValue>
@@ -12,10 +10,13 @@ public class CarOptionValueEntityTypeConfiguration : IEntityTypeConfiguration<Ca
 
         builder.HasIndex(e => e.CarTypeId, "date_delete");
 
-        builder.HasIndex(e => new { IdCarOption = e.CarOptionId, IdCarEquipment = e.CarEquipmentId, IdCarType = e.CarTypeId },
-            "id_car_option").IsUnique();
+        builder.HasIndex(e => e.CarEquipmentId, "fk_car_option_value_equipment");
 
-        builder.Property(e => e.Id).HasColumnName("id_car_option_value");
+        builder.HasIndex(e => new { IdCarOption = e.CarOptionId, IdCarEquipment = e.CarEquipmentId, IdCarType = e.CarTypeId }, "id_car_option").IsUnique();
+
+        builder.Property(e => e.Id)
+            .ValueGeneratedNever()
+            .HasColumnName("id_car_option_value");
         builder.Property(e => e.DateCreate).HasColumnName("date_create");
         builder.Property(e => e.DateUpdate).HasColumnName("date_update");
         builder.Property(e => e.CarEquipmentId).HasColumnName("id_car_equipment");
@@ -25,5 +26,17 @@ public class CarOptionValueEntityTypeConfiguration : IEntityTypeConfiguration<Ca
             .IsRequired()
             .HasDefaultValueSql("'1'")
             .HasColumnName("is_base");
+
+        builder.HasOne(d => d.CarEquipmentNavigation).WithMany(p => p.CarOptionValues)
+            .HasForeignKey(d => d.CarEquipmentId)
+            .HasConstraintName("fk_car_option_value_equipment");
+
+        builder.HasOne(d => d.CarOptionNavigation).WithMany(p => p.CarOptionValues)
+            .HasForeignKey(d => d.CarOptionId)
+            .HasConstraintName("fk_car_option_value_option");
+
+        builder.HasOne(d => d.CarTypeNavigation).WithMany(p => p.CarOptionValues)
+            .HasForeignKey(d => d.CarTypeId)
+            .HasConstraintName("fk_car_option_value_type");
     }
 }

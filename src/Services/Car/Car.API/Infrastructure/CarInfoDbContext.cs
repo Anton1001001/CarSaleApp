@@ -1,7 +1,4 @@
-﻿using Car.API.Infrastructure.EntityConfigurations;
-using Car.API.Models;
-
-namespace Car.API.Infrastructure;
+﻿namespace Car.API.Infrastructure;
 
 public class CarInfoDbContext : DbContext
 {
@@ -56,5 +53,9 @@ public class CarInfoDbContext : DbContext
         modelBuilder.ApplyConfiguration(new CarExchangeOptionEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CarInteriorColorEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CarInteriorMaterialEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CarBodyTypeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CarDriveTypeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CarEngineTypeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CarTransmissionTypeEntityTypeConfiguration());
     }
 }

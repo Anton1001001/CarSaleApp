@@ -1,7 +1,4 @@
-using Car.API.Models;
-
 namespace Car.API.Infrastructure.EntityConfigurations;
-
 public class CarExchangeOptionEntityTypeConfiguration : IEntityTypeConfiguration<CarExchangeOption>
 {
     public void Configure(EntityTypeBuilder<CarExchangeOption> builder)
