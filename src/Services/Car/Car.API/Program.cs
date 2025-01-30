@@ -1,5 +1,3 @@
-using Car.API.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.AddApplicationServices();

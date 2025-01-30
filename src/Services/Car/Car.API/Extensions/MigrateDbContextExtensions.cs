@@ -1,8 +1,4 @@
-using System.Net;
-using Car.API.Infrastructure;
-
 namespace Car.API.Extensions;
-
 internal static class MigrateDbContextExtensions
 {
     private static IServiceCollection AddMigration<TContext>(this IServiceCollection services,
