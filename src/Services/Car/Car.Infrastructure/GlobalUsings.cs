@@ -1,0 +1,12 @@
+global using Car.Domain.Entities;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System.Globalization;
+global using Car.Infrastructure.Extensions;
+global using Microsoft.Extensions.Hosting;
+global using System.Text.RegularExpressions;
+global using Car.Infrastructure.EntityConfigurations;
+global using Car.Domain.Interfaces;
+global using Car.Infrastructure.Repositories;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
