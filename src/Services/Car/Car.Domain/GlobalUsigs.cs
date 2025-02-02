@@ -1,0 +1,1 @@
+global using Car.Domain.Entities;

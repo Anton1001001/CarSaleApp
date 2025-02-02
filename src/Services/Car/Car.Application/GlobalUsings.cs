@@ -1,0 +1,10 @@
+global using AutoMapper;
+global using Car.Domain.Entities;
+global using Car.Domain.Interfaces;
+global using MediatR;
+global using Car.Application.Extensions;
+global using Car.Application.Common.DTOs;
+global using System.Linq.Expressions;
+global using System.Reflection;
+global using AutoMapper.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
