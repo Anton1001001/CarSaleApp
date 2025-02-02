@@ -13,6 +13,7 @@
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
         <PackageReference Include="CsvHelper" Version="33.0.1" />
+        <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
             <PrivateAssets>all</PrivateAssets>
@@ -29,6 +30,11 @@
       <Content Include="..\..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Car.Application\Car.Application.csproj" />
+      <ProjectReference Include="..\Car.Infrastructure\Car.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

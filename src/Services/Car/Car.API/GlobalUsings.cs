@@ -1,14 +1,20 @@
-﻿global using Microsoft.EntityFrameworkCore;
-global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using Car.API.DTO;
-global using Car.API.Infrastructure;
+﻿global using Car.Application.Extensions;
+global using Car.Infrastructure.Extensions;
+global using Car.Application.Queries.GetBodyTypes;
+global using Car.Application.Queries.GetBrandModels;
+global using Car.Application.Queries.GetBrands;
+global using Car.Application.Queries.GetColors;
+global using Car.Application.Queries.GetConditions;
+global using Car.Application.Queries.GetDriveTypes;
+global using Car.Application.Queries.GetEngineTypes;
+global using Car.Application.Queries.GetExchangeTypes;
+global using Car.Application.Queries.GetGenerationModifications;
+global using Car.Application.Queries.GetInteriorColors;
+global using Car.Application.Queries.GetInteriorMaterials;
+global using Car.Application.Queries.GetModelGenerations;
+global using Car.Application.Queries.GetModificationCharacteristics;
+global using Car.Application.Queries.GetTransmissionTypes;
+global using Car.Infrastructure;
+global using MediatR;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc;
-global using Car.API.Models;
-global using Car.API.Infrastructure.EntityConfigurations;
-global using System.Globalization;
-global using Car.API.Extensions;
-global using System.Text.RegularExpressions;
-
-
-
