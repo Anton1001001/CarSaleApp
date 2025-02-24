@@ -1,0 +1,7 @@
+using Advert.Application.Common.Advert.Models;
+using MediatR;
+
+namespace Advert.Application.CQRS.Queries.GetAdvertById;
+
+public record GetAdvertByIdQuery(int Id) : IRequest<AdvertResponse>;
+
