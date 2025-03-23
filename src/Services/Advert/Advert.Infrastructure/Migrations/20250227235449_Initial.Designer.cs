@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Advert.Infrastructure.Migrations
 {
     [DbContext(typeof(AdvertDbContext))]
-    [Migration("20250221173621_mig7")]
-    partial class mig7
+    [Migration("20250227235449_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,10 @@ namespace Advert.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AdvertCategoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("advert_category_id");
+
                     b.Property<uint?>("AdvertPrivateStatusId")
                         .HasColumnType("int unsigned")
                         .HasColumnName("advert_private_status_id");
@@ -50,7 +54,8 @@ namespace Advert.Infrastructure.Migrations
 
                     b.Property<string>("AdvertType")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("advert_type");
 
                     b.Property<int?>("DaysOnSale")
                         .HasColumnType("int")
@@ -139,6 +144,8 @@ namespace Advert.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("PRIMARY");
 
+                    b.HasIndex(new[] { "AdvertCategoryId" }, "fk_advert_advert_category_idx");
+
                     b.HasIndex(new[] { "AdvertPrivateStatusId" }, "fk_advert_advert_private_status_idx");
 
                     b.HasIndex(new[] { "AdvertPublicStatusId" }, "fk_advert_advert_public_status1_idx");
@@ -150,6 +157,30 @@ namespace Advert.Infrastructure.Migrations
                     b.HasIndex(new[] { "PlaceCityId" }, "fk_advert_places3_idx");
 
                     b.ToTable("advert", (string)null);
+                });
+
+            modelBuilder.Entity("Advert.Domain.Entities.AdvertCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("label");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
+
+                    b.ToTable("advert_category", (string)null);
                 });
 
             modelBuilder.Entity("Advert.Domain.Entities.AdvertPhoneNumber", b =>
@@ -366,6 +397,11 @@ namespace Advert.Infrastructure.Migrations
 
             modelBuilder.Entity("Advert.Domain.Entities.Advert", b =>
                 {
+                    b.HasOne("Advert.Domain.Entities.AdvertCategory", "AdvertCategory")
+                        .WithMany("Adverts")
+                        .HasForeignKey("AdvertCategoryId")
+                        .HasConstraintName("fk_advert_advert_category");
+
                     b.HasOne("Advert.Domain.Entities.AdvertPrivateStatus", "AdvertPrivateStatus")
                         .WithMany("Adverts")
                         .HasForeignKey("AdvertPrivateStatusId")
@@ -390,6 +426,8 @@ namespace Advert.Infrastructure.Migrations
                         .WithMany("AdvertPlaceRegions")
                         .HasForeignKey("PlaceRegionId")
                         .HasConstraintName("fk_advert_places2");
+
+                    b.Navigation("AdvertCategory");
 
                     b.Navigation("AdvertPrivateStatus");
 
@@ -448,6 +486,11 @@ namespace Advert.Infrastructure.Migrations
                     b.Navigation("AdvertPhoneNumbers");
 
                     b.Navigation("AdvertPhotos");
+                });
+
+            modelBuilder.Entity("Advert.Domain.Entities.AdvertCategory", b =>
+                {
+                    b.Navigation("Adverts");
                 });
 
             modelBuilder.Entity("Advert.Domain.Entities.AdvertPrivateStatus", b =>

@@ -33,64 +33,72 @@ namespace Advert.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<uint?>("AdvertPrivateStatusId")
+                    b.Property<int>("AdvertCategoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("advert_category_id");
+
+                    b.Property<uint>("AdvertPrivateStatusId")
                         .HasColumnType("int unsigned")
                         .HasColumnName("advert_private_status_id");
 
-                    b.Property<uint?>("AdvertPublicStatusId")
+                    b.Property<uint>("AdvertPublicStatusId")
                         .HasColumnType("int unsigned")
                         .HasColumnName("advert_public_status_id");
 
                     b.Property<string>("AdvertStatus")
+                        .IsRequired()
                         .HasColumnType("longtext")
                         .HasColumnName("advert_status");
 
                     b.Property<string>("AdvertType")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("advert_type");
 
-                    b.Property<int?>("DaysOnSale")
+                    b.Property<int>("DaysOnSale")
                         .HasColumnType("int")
                         .HasColumnName("days_on_sale");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("varchar(4000)")
                         .HasColumnName("description");
 
-                    b.Property<DateTime?>("NextRefreshAvailableAt")
+                    b.Property<DateTime>("NextRefreshAvailableAt")
                         .HasColumnType("datetime")
                         .HasColumnName("next_refresh_available_at");
 
-                    b.Property<uint?>("PlaceCityId")
-                        .HasColumnType("int unsigned")
+                    b.Property<int>("PlaceCityId")
+                        .HasColumnType("int")
                         .HasColumnName("place_city_id");
 
-                    b.Property<uint?>("PlaceCountryId")
-                        .HasColumnType("int unsigned")
+                    b.Property<int?>("PlaceCountryId")
+                        .HasColumnType("int")
                         .HasColumnName("place_country_id");
 
-                    b.Property<uint?>("PlaceRegionId")
-                        .HasColumnType("int unsigned")
+                    b.Property<int>("PlaceRegionId")
+                        .HasColumnType("int")
                         .HasColumnName("place_region_id");
 
-                    b.Property<int?>("PriceAmount")
+                    b.Property<int>("PriceAmount")
                         .HasColumnType("int")
                         .HasColumnName("price_amount");
 
-                    b.Property<int?>("PriceCurrency")
+                    b.Property<int>("PriceCurrency")
                         .HasColumnType("int")
                         .HasColumnName("price_currency");
 
                     b.Property<string>("Properties")
+                        .IsRequired()
                         .HasColumnType("json")
                         .HasColumnName("properties");
 
-                    b.Property<DateTime?>("PublishedAt")
+                    b.Property<DateTime>("PublishedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("published_at");
 
-                    b.Property<DateTime?>("RefreshedAt")
+                    b.Property<DateTime>("RefreshedAt")
                         .HasColumnType("datetime")
                         .HasColumnName("refreshed_at");
 
@@ -100,41 +108,45 @@ namespace Advert.Infrastructure.Migrations
                         .HasColumnName("remove_reason");
 
                     b.Property<string>("SellerName")
+                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("varchar(25)")
                         .HasColumnName("seller_name");
 
-                    b.Property<int?>("TodayViews")
+                    b.Property<int>("TodayViews")
                         .HasColumnType("int")
                         .HasColumnName("today_views");
 
-                    b.Property<int?>("TotalBookmarks")
+                    b.Property<int>("TotalBookmarks")
                         .HasColumnType("int")
                         .HasColumnName("total_bookmarks");
 
-                    b.Property<int?>("TotalPhoneViews")
+                    b.Property<int>("TotalPhoneViews")
                         .HasColumnType("int")
                         .HasColumnName("total_phone_views");
 
-                    b.Property<int?>("TotalViews")
+                    b.Property<int>("TotalViews")
                         .HasColumnType("int")
                         .HasColumnName("total_views");
 
-                    b.Property<int?>("TotalVinViews")
+                    b.Property<int>("TotalVinViews")
                         .HasColumnType("int")
                         .HasColumnName("total_vin_views");
 
-                    b.Property<int?>("Version")
+                    b.Property<int>("Version")
                         .HasColumnType("int")
                         .HasColumnName("version");
 
                     b.Property<string>("VideoUrl")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)")
                         .HasColumnName("video_url");
 
                     b.HasKey("Id")
                         .HasName("PRIMARY");
+
+                    b.HasIndex(new[] { "AdvertCategoryId" }, "fk_advert_advert_category_idx");
 
                     b.HasIndex(new[] { "AdvertPrivateStatusId" }, "fk_advert_advert_private_status_idx");
 
@@ -147,6 +159,30 @@ namespace Advert.Infrastructure.Migrations
                     b.HasIndex(new[] { "PlaceCityId" }, "fk_advert_places3_idx");
 
                     b.ToTable("advert", (string)null);
+                });
+
+            modelBuilder.Entity("Advert.Domain.Entities.AdvertCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("label");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
+
+                    b.ToTable("advert_category", (string)null);
                 });
 
             modelBuilder.Entity("Advert.Domain.Entities.AdvertPhoneNumber", b =>
@@ -168,8 +204,8 @@ namespace Advert.Infrastructure.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("number");
 
-                    b.Property<uint>("PhoneCodeId")
-                        .HasColumnType("int unsigned")
+                    b.Property<int>("PhoneCodeId")
+                        .HasColumnType("int")
                         .HasColumnName("phone_code_id");
 
                     b.HasKey("Id")
@@ -268,12 +304,12 @@ namespace Advert.Infrastructure.Migrations
 
             modelBuilder.Entity("Advert.Domain.Entities.PhoneCode", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -301,12 +337,12 @@ namespace Advert.Infrastructure.Migrations
 
             modelBuilder.Entity("Advert.Domain.Entities.Place", b =>
                 {
-                    b.Property<uint>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
+                        .HasColumnType("int")
                         .HasColumnName("id");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<uint>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CaseLabel")
                         .HasMaxLength(255)
@@ -324,6 +360,7 @@ namespace Advert.Infrastructure.Migrations
                         .HasColumnName("emoji");
 
                     b.Property<string>("Label")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("label");
@@ -339,8 +376,8 @@ namespace Advert.Infrastructure.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
-                    b.Property<uint?>("ParentId")
-                        .HasColumnType("int unsigned")
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int")
                         .HasColumnName("parent_id");
 
                     b.Property<string>("ShortName")
@@ -363,19 +400,31 @@ namespace Advert.Infrastructure.Migrations
 
             modelBuilder.Entity("Advert.Domain.Entities.Advert", b =>
                 {
+                    b.HasOne("Advert.Domain.Entities.AdvertCategory", "AdvertCategory")
+                        .WithMany("Adverts")
+                        .HasForeignKey("AdvertCategoryId")
+                        .IsRequired()
+                        .HasConstraintName("fk_advert_advert_category");
+
                     b.HasOne("Advert.Domain.Entities.AdvertPrivateStatus", "AdvertPrivateStatus")
                         .WithMany("Adverts")
                         .HasForeignKey("AdvertPrivateStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_advert_advert_private_status");
 
                     b.HasOne("Advert.Domain.Entities.AdvertPublicStatus", "AdvertPublicStatus")
                         .WithMany("Adverts")
                         .HasForeignKey("AdvertPublicStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_advert_advert_public_status");
 
                     b.HasOne("Advert.Domain.Entities.Place", "PlaceCity")
                         .WithMany("AdvertPlaceCities")
                         .HasForeignKey("PlaceCityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_advert_places3");
 
                     b.HasOne("Advert.Domain.Entities.Place", "PlaceCountry")
@@ -386,7 +435,11 @@ namespace Advert.Infrastructure.Migrations
                     b.HasOne("Advert.Domain.Entities.Place", "PlaceRegion")
                         .WithMany("AdvertPlaceRegions")
                         .HasForeignKey("PlaceRegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_advert_places2");
+
+                    b.Navigation("AdvertCategory");
 
                     b.Navigation("AdvertPrivateStatus");
 
@@ -445,6 +498,11 @@ namespace Advert.Infrastructure.Migrations
                     b.Navigation("AdvertPhoneNumbers");
 
                     b.Navigation("AdvertPhotos");
+                });
+
+            modelBuilder.Entity("Advert.Domain.Entities.AdvertCategory", b =>
+                {
+                    b.Navigation("Adverts");
                 });
 
             modelBuilder.Entity("Advert.Domain.Entities.AdvertPrivateStatus", b =>

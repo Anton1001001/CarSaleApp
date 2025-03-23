@@ -13,7 +13,24 @@ namespace Advert.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterDatabase()
-                .Annotation("MySql:CharSet", "utf8mb3");
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "advert_category",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false),
+                    name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    label = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PRIMARY", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "advert_private_status",
@@ -21,20 +38,20 @@ namespace Advert.Infrastructure.Migrations
                 {
                     id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
+                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     published = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    photo_label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    photo_label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PRIMARY", x => x.id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "advert_public_status",
@@ -42,17 +59,17 @@ namespace Advert.Infrastructure.Migrations
                 {
                     id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PRIMARY", x => x.id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "phone_code",
@@ -60,19 +77,19 @@ namespace Advert.Infrastructure.Migrations
                 {
                     id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    label = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    emoji = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    code = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    label = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    emoji = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    code = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PRIMARY", x => x.id);
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "place",
@@ -81,22 +98,22 @@ namespace Advert.Infrastructure.Migrations
                     id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     parent_id = table.Column<uint>(type: "int unsigned", nullable: true),
-                    type = table.Column<string>(type: "enum('country','region','city')", nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    short_name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    label_bel = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    emoji = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    case_label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    case_label_bel = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    type = table.Column<string>(type: "enum('country','region','city')", nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    short_name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    label_bel = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    emoji = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    case_label = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    case_label_bel = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -108,49 +125,56 @@ namespace Advert.Infrastructure.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "advert",
                 columns: table => new
                 {
-                    id = table.Column<uint>(type: "int unsigned", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    advert_type = table.Column<string>(type: "longtext", nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     advert_private_status_id = table.Column<uint>(type: "int unsigned", nullable: true),
                     advert_public_status_id = table.Column<uint>(type: "int unsigned", nullable: true),
-                    AdvertStatus = table.Column<string>(type: "longtext", nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
+                    advert_status = table.Column<string>(type: "longtext", nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     days_on_sale = table.Column<int>(type: "int", nullable: true),
-                    description = table.Column<string>(type: "varchar(4000)", maxLength: 4000, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
+                    description = table.Column<string>(type: "varchar(4000)", maxLength: 4000, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     version = table.Column<int>(type: "int", nullable: true),
                     published_at = table.Column<DateTime>(type: "datetime", nullable: true),
                     refreshed_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    remove_reason = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    video_url = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
-                    price_currency_id = table.Column<int>(type: "int", nullable: true),
+                    remove_reason = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    video_url = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    price_currency = table.Column<int>(type: "int", nullable: true),
                     price_amount = table.Column<int>(type: "int", nullable: true),
                     today_views = table.Column<int>(type: "int", nullable: true),
                     total_views = table.Column<int>(type: "int", nullable: true),
-                    seller_name = table.Column<string>(type: "varchar(25)", maxLength: 25, nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3"),
+                    seller_name = table.Column<string>(type: "varchar(25)", maxLength: 25, nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     total_phone_views = table.Column<int>(type: "int", nullable: true),
                     total_bookmarks = table.Column<int>(type: "int", nullable: true),
                     total_vin_views = table.Column<int>(type: "int", nullable: true),
                     next_refresh_available_at = table.Column<DateTime>(type: "datetime", nullable: true),
-                    refresh_available = table.Column<bool>(type: "tinyint(1)", nullable: true),
                     place_country_id = table.Column<uint>(type: "int unsigned", nullable: true),
                     place_region_id = table.Column<uint>(type: "int unsigned", nullable: true),
                     place_city_id = table.Column<uint>(type: "int unsigned", nullable: true),
-                    properties = table.Column<string>(type: "json", nullable: true, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    properties = table.Column<string>(type: "json", nullable: true, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    advert_category_id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PRIMARY", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_advert_advert_category",
+                        column: x => x.advert_category_id,
+                        principalTable: "advert_category",
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "fk_advert_advert_private_status",
                         column: x => x.advert_private_status_id,
@@ -177,8 +201,8 @@ namespace Advert.Infrastructure.Migrations
                         principalTable: "place",
                         principalColumn: "id");
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "advert_phone_number",
@@ -186,10 +210,10 @@ namespace Advert.Infrastructure.Migrations
                 {
                     id = table.Column<uint>(type: "int unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    advert_id = table.Column<uint>(type: "int unsigned", nullable: false),
+                    advert_id = table.Column<int>(type: "int", nullable: false),
                     phone_code_id = table.Column<uint>(type: "int unsigned", nullable: false),
-                    number = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false, collation: "utf8mb3_general_ci")
-                        .Annotation("MySql:CharSet", "utf8mb3")
+                    number = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false, collation: "utf8mb4_general_ci")
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -205,14 +229,14 @@ namespace Advert.Infrastructure.Migrations
                         principalTable: "phone_code",
                         principalColumn: "id");
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
 
             migrationBuilder.CreateTable(
                 name: "advert_photo",
                 columns: table => new
                 {
-                    advert_id = table.Column<uint>(type: "int unsigned", nullable: false),
+                    advert_id = table.Column<int>(type: "int", nullable: false),
                     file_id = table.Column<int>(type: "int", nullable: false),
                     is_main = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -226,8 +250,13 @@ namespace Advert.Infrastructure.Migrations
                         principalTable: "advert",
                         principalColumn: "id");
                 })
-                .Annotation("MySql:CharSet", "utf8mb3")
-                .Annotation("Relational:Collation", "utf8mb3_general_ci");
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .Annotation("Relational:Collation", "utf8mb4_general_ci");
+
+            migrationBuilder.CreateIndex(
+                name: "fk_advert_advert_category_idx",
+                table: "advert",
+                column: "advert_category_id");
 
             migrationBuilder.CreateIndex(
                 name: "fk_advert_advert_private_status_idx",
@@ -289,6 +318,9 @@ namespace Advert.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "advert");
+
+            migrationBuilder.DropTable(
+                name: "advert_category");
 
             migrationBuilder.DropTable(
                 name: "advert_private_status");
