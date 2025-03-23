@@ -1,21 +1,26 @@
 using Advert.Application.Common.Advert.Models;
-using Advert.Application.CQRS.Queries.GetAdvertById;
+using Advert.Application.Errors;
+using Advert.Application.Errors.Base;
+using Advert.Application.Services.Interfaces;
 using Advert.Domain.Constants;
-using Advert.Domain.Interfaces;
+using Advert.Domain.Interfaces.Repositories;
+using FluentResults;
 using MediatR;
 
 namespace Advert.Application.CQRS.Commands.RemoveAdvert;
 
-public class RemoveAdvertHandler(IUnitOfWork unitOfWork, ISender sender)
-    : IRequestHandler<RemoveAdvertCommand, AdvertResponse>
+public class RemoveAdvertHandler(
+    IUnitOfWork unitOfWork, 
+    IAdvertService advertService)
+    : IRequestHandler<RemoveAdvertCommand, Result<AdvertResponse>>
 {
-    public async Task<AdvertResponse> Handle(RemoveAdvertCommand request, CancellationToken cancellationToken)
+    public async Task<Result<AdvertResponse>> Handle(RemoveAdvertCommand request, CancellationToken cancellationToken)
     {
         var advert = await unitOfWork.AdvertRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        if (advert == null)
+        if (advert is null)
         {
-            throw new Exception("Advert not found");
+            return new AdvertNotFoundError(message: $"Advert with id: {request.Id} was not found");
         }
 
         var status = AdvertStatus.Removed;
@@ -29,15 +34,40 @@ public class RemoveAdvertHandler(IUnitOfWork unitOfWork, ISender sender)
         }
 
         advert.AdvertStatus = status;
-        advert.AdvertPublicStatus =
-            await unitOfWork.AdvertPublicStatusRepository.GetByNameAsync(publicStatus, cancellationToken);
-        advert.AdvertPrivateStatus =
-            await unitOfWork.AdvertPrivateStatusRepository.GetByNameAsync(privateStatus, cancellationToken);
+        
+        var advertPublicStatus = await unitOfWork.AdvertPublicStatusRepository.GetByNameAsync(publicStatus, cancellationToken);
+        
+        if (advertPublicStatus is null)
+        {
+            return new InternalServerError(code: "Advert.Remove", message: "Public status error");
+        }
+        
+        advert.AdvertPublicStatus = advertPublicStatus;
+            
+        var advertPrivateStatus = await unitOfWork.AdvertPrivateStatusRepository.GetByNameAsync(privateStatus, cancellationToken);
+        
+        if (advertPrivateStatus is null)
+        {
+            return new InternalServerError(code: "Advert.Remove", message: "Private status error");
+        }
+        
+        advert.AdvertPrivateStatus = advertPrivateStatus;
+            
         advert.RemoveReason = request.RemoveReason;
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        var saveResult = await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        if (!saveResult)
+        {
+            return new InternalServerError(code: "Advert.Remove", message: "Failed to save data");
+        }
 
-        var advertResponse = await sender.Send(new GetAdvertByIdQuery(advert.Id), cancellationToken);
+        var advertResponse = await advertService.GetAdvertByIdAsync(advert.Id, cancellationToken);
+
+        if (advertResponse is null)
+        {
+            return new AdvertNotFoundError(message: $"Advert with id: {advert.Id} was not found");
+        }
 
         return advertResponse;
     }
