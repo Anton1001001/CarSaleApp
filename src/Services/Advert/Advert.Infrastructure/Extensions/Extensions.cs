@@ -1,7 +1,8 @@
 using System.Reflection;
-using Advert.Application.Interfaces;
-using Advert.Application.Services;
-using Advert.Domain.Interfaces;
+using Advert.Application.Abstractions;
+using Advert.Application.Abstractions.GrpcClients;
+using Advert.Domain.Entities;
+using Advert.Domain.Interfaces.Repositories;
 using Advert.Infrastructure.GrpcClients;
 using Advert.Infrastructure.Repositories;
 using Advert.Infrastructure.Services;
@@ -28,9 +29,27 @@ public static class Extensions
 
         services.AddGrpcClient<CarCatalog.CarCatalogClient>(options =>
             options.Address = new Uri("http://localhost:5047"));
+        
+        services.AddGrpcClient<File.GrpcService.File.FileClient>(options => 
+            options.Address = new Uri("http://localhost:5086"));
+
+        services.AddScoped<IFileServiceGrpcClient, FileServiceGrpcClient>();
         services.AddScoped<ICarCatalogGrpcClient, CarCatalogGrpcClient>();
+        
+        var redisConnectionString = configuration.GetConnectionString("Redis")!;
+        services.AddStackExchangeRedisCache(options => options.Configuration = redisConnectionString);
+        
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        services.AddScoped<IRepository<Place>, Repository<Place>>();
+        services.Decorate<IRepository<Place>, CachedRepository<Place>>();
+        
+        services.AddScoped<IRepository<PhoneCode>, Repository<PhoneCode>>();
+        services.Decorate<IRepository<PhoneCode>, CachedRepository<PhoneCode>>();
+        
         services.AddSingleton<ICurrencyRateService, CurrencyRateService>();
         services.AddDbContext<AdvertDbContext>(options => options.UseMySql(connectionString, serverVersion));
+        services.AddScoped<IPlaceRepository, PlaceRepository>();
         services.AddScoped<IAdvertRepository, AdvertRepository>();
         services.AddScoped<IAdvertPublicStatusRepository, AdvertPublicStatusRepository>();
         services.AddScoped<IAdvertPrivateStatusRepository, AdvertPrivateStatusRepository>();
