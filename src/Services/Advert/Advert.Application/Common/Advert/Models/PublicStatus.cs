@@ -1,7 +1,6 @@
-namespace Advert.Application.CQRS.Commands.CreateAdvert;
+namespace Advert.Application.Common.Advert.Models;
 
-public class PublicStatus
-{
-    public string Label { get; set; }
-    public string Name { get; set; }
-}
+public record PublicStatus(
+    string Label, 
+    string Name
+);
