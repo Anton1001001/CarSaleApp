@@ -3,10 +3,10 @@ using Advert.Application.Common.Cars.Models;
 using Advert.Application.CQRS.Queries.GetAdvertForm.Models;
 using AutoMapper;
 using Car.GrpcService;
-using static Car.GrpcService.CarCatalog;
 using Google.Protobuf.WellKnownTypes;
+using static Car.GrpcService.CarCatalog;
 
-namespace Advert.Infrastructure.GrpcClients;
+namespace Advert.Infrastructure.GrpcClients.CarsCatalog;
 
 public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper mapper) : ICarCatalogGrpcClient
 {
