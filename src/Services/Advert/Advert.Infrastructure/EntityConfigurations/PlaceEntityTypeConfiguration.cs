@@ -14,7 +14,8 @@ public class PlaceEntityTypeConfiguration : IEntityTypeConfiguration<Place>
 
         builder.HasIndex(e => e.ParentId, "parent_id");
 
-        builder.Property(e => e.Id).HasColumnName("id");
+        builder.Property(e => e.Id)
+            .HasColumnName("id");
         builder.Property(e => e.CaseLabel)
             .HasMaxLength(255)
             .HasColumnName("case_label");
@@ -33,7 +34,8 @@ public class PlaceEntityTypeConfiguration : IEntityTypeConfiguration<Place>
         builder.Property(e => e.Name)
             .HasMaxLength(255)
             .HasColumnName("name");
-        builder.Property(e => e.ParentId).HasColumnName("parent_id");
+        builder.Property(e => e.ParentId)
+            .HasColumnName("parent_id");
         builder.Property(e => e.ShortName)
             .HasMaxLength(100)
             .HasColumnName("short_name");

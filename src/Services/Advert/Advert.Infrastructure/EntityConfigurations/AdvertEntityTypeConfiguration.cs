@@ -10,6 +10,8 @@ public class AdvertEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ent
         builder.HasKey(e => e.Id).HasName("PRIMARY");
 
         builder.ToTable("advert");
+        
+        builder.HasIndex(e => e.AdvertCategoryId, "fk_advert_advert_category_idx");
 
         builder.HasIndex(e => e.AdvertPrivateStatusId, "fk_advert_advert_private_status_idx");
 
@@ -22,23 +24,29 @@ public class AdvertEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ent
         builder.HasIndex(e => e.PlaceCityId, "fk_advert_places3_idx");
 
         builder.Property(e => e.Id).HasColumnName("id");
+        builder.Property(e => e.AdvertCategoryId).HasColumnName("advert_category_id");
         builder.Property(e => e.AdvertStatus).HasColumnName("advert_status");
         builder.Property(e => e.AdvertPrivateStatusId).HasColumnName("advert_private_status_id");
         builder.Property(e => e.AdvertPublicStatusId).HasColumnName("advert_public_status_id");
         builder.Property(e => e.DaysOnSale).HasColumnName("days_on_sale");
+        builder.Property(e => e.AdvertType).HasColumnName("advert_type");
         builder.Property(e => e.Description)
             .HasMaxLength(4000)
             .HasColumnName("description");
         builder.Property(e => e.NextRefreshAvailableAt)
             .HasColumnType("datetime")
             .HasColumnName("next_refresh_available_at");
-        builder.Property(e => e.PlaceCityId).HasColumnName("place_city_id");
-        builder.Property(e => e.PlaceCountryId).HasColumnName("place_country_id");
-        builder.Property(e => e.PlaceRegionId).HasColumnName("place_region_id");
-        builder.Property(e => e.PriceAmount).HasColumnName("price_amount");
+        builder.Property(e => e.PlaceCityId)
+            .HasColumnName("place_city_id");
+        builder.Property(e => e.PlaceCountryId)
+            .HasColumnName("place_country_id");
+        builder.Property(e => e.PlaceRegionId)
+            .HasColumnName("place_region_id");
+        builder.Property(e => e.PriceAmount)
+            .HasColumnName("price_amount");
         builder.Property(a => a.PriceCurrency)
             .HasConversion<int>()
-            .IsRequired(false)
+            .IsRequired()
             .HasColumnName("price_currency");
         builder.Property(e => e.Properties)
             .HasColumnType("json")
@@ -84,5 +92,10 @@ public class AdvertEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ent
         builder.HasOne(d => d.PlaceRegion).WithMany(p => p.AdvertPlaceRegions)
             .HasForeignKey(d => d.PlaceRegionId)
             .HasConstraintName("fk_advert_places2");
+        
+        builder.HasOne(d => d.AdvertCategory).WithMany(p => p.Adverts)
+            .HasForeignKey(d => d.AdvertCategoryId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("fk_advert_advert_category");
     }
 }
