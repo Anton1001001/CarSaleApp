@@ -1,5 +1,3 @@
-using Advert.Application.CQRS.Commands.CreateAdvert;
-
 namespace Advert.Application.Common.Advert.Models;
 
 public record AdvertResponse(
