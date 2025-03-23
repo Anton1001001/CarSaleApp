@@ -1,10 +1,8 @@
 using Advert.Application.Common.Advert.Models;
-using Advert.Application.CQRS.Commands.CreateAdvert.Parameters;
+using Advert.Application.Common.Advert.Models.Parameters;
+using FluentResults;
 using MediatR;
 
 namespace Advert.Application.CQRS.Commands.CreateAdvert;
 
-public class CreateAdvertCommand : IRequest<AdvertResponse>
-{
-    public ParametersBase Parameters { get; set; }
-}
+public record CreateAdvertCommand(ParametersBase Parameters) : IRequest<Result<AdvertResponse>>;
