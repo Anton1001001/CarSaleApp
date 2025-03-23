@@ -1,4 +1,4 @@
-namespace Advert.Domain.Interfaces;
+namespace Advert.Domain.Interfaces.Repositories;
 
 public interface IAdvertRepository
 {

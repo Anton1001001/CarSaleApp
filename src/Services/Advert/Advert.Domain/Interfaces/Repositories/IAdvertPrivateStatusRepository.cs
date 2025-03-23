@@ -1,6 +1,6 @@
 using Advert.Domain.Entities;
 
-namespace Advert.Domain.Interfaces;
+namespace Advert.Domain.Interfaces.Repositories;
 
 public interface IAdvertPrivateStatusRepository
 {
