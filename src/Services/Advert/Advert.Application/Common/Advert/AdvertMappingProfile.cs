@@ -1,5 +1,5 @@
 using Advert.Application.Common.Advert.Models;
-using Advert.Application.CQRS.Commands.CreateAdvert;
+using Advert.Application.Extensions;
 using Advert.Domain.Entities;
 using AutoMapper;
 using AdvertPublicStatus = Advert.Domain.Entities.AdvertPublicStatus;
@@ -13,13 +13,13 @@ public class AdvertMappingProfile : Profile
         CreateMap<AdvertPrivateStatus, PrivateStatus>();
         CreateMap<AdvertPublicStatus, PublicStatus>();
         CreateMap<Domain.Entities.Advert, AdvertResponse>()
-            .ForMember(dest => dest.PublicStatus, opt =>
+            .ForCtorParam(dest => dest.PublicStatus, opt =>
                 opt.MapFrom(src => src.AdvertPublicStatus))
-            .ForMember(dest => dest.PrivateStatus, opt =>
+            .ForCtorParam(dest => dest.PrivateStatus, opt =>
                 opt.MapFrom(src => src.AdvertPrivateStatus))
-            .ForMember(dest => dest.LocationName, opt =>
+            .ForCtorParam(dest => dest.LocationName, opt =>
                 opt.MapFrom(src => src.PlaceCity!.Label + ", " + src.PlaceRegion!.Label))
-            .ForMember(dest => dest.ShortLocationName, opt =>
+            .ForCtorParam(dest => dest.ShortLocationName, opt =>
                 opt.MapFrom(src => src.PlaceCity!.ShortName));
         
     }
