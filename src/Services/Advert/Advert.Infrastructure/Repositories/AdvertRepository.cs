@@ -1,4 +1,5 @@
 using Advert.Domain.Interfaces;
+using Advert.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Advert.Infrastructure.Repositories;
