@@ -4,5 +4,5 @@ namespace Advert.Application.Abstractions;
 
 public interface ICurrencyRateService
 {
-    Task<CurrencyRates> GetCurrencyRatesAsync();
+    Task<CurrencyRates> GetCurrencyRatesAsync(CancellationToken cancellationToken);
 }

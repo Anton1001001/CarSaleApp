@@ -6,5 +6,5 @@ namespace Advert.Application.Abstractions;
 
 public interface ICurrencyConverter
 {
-    Task<PriceResponse?> ConvertPriceToAllCurrenciesOrDefaultAsync(int amount, Currency currency);
+    Task<PriceResponse?> ConvertPriceToAllCurrenciesOrDefaultAsync(int amount, Currency currency, CancellationToken cancellationToken);
 }
