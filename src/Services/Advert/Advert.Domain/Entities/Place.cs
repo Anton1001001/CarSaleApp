@@ -2,12 +2,12 @@
 
 public class Place
 {
-    public uint Id { get; set; }
-    public uint? ParentId { get; set; }
+    public int Id { get; set; }
+    public int? ParentId { get; set; }
     public string Type { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string? ShortName { get; set; }
-    public string? Label { get; set; }
+    public string Label { get; set; } = null!;
     public string? LabelBel { get; set; }
     public string? Emoji { get; set; }
     public string? CaseLabel { get; set; }
