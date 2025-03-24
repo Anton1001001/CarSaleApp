@@ -1,6 +1,5 @@
 using Advert.Application.Common.Advert.Models;
 using Advert.Application.Common.Advert.Models.Parameters;
-using Advert.Application.Extensions;
 using Advert.Domain.Entities;
 using AutoMapper;
 
@@ -20,13 +19,13 @@ public class CreateAdvertMappingProfile : Profile
             }).ToList());
 
         CreateMap<ParametersBase, Domain.Entities.Advert>()
-            .ForCtorParam(dest => dest.AdvertPhoneNumbers, opt =>
+            .ForMember(dest => dest.AdvertPhoneNumbers, opt =>
                 opt.MapFrom(src => src.Phones))
-            .ForCtorParam(dest => dest.AdvertPhotos, opt =>
+            .ForMember(dest => dest.AdvertPhotos, opt =>
                 opt.MapFrom(src => src.Photos))
-            .ForCtorParam(dest => dest.PriceAmount, opt =>
+            .ForMember(dest => dest.PriceAmount, opt =>
                 opt.MapFrom(src => src.Price))
-            .ForCtorParam(dest => dest.PriceCurrency, opt =>
+            .ForMember(dest => dest.PriceCurrency, opt =>
                 opt.MapFrom(src => src.Currency));
         
     }

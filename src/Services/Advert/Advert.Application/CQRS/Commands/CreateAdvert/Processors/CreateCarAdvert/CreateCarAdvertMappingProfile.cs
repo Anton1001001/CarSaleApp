@@ -1,5 +1,4 @@
 using Advert.Application.Common.Advert.Models.Parameters;
-using Advert.Application.Common.Cars;
 using Advert.Application.Common.Cars.Models;
 using AutoMapper;
 

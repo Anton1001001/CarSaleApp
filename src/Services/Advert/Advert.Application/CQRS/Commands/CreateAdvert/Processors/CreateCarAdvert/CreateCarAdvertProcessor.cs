@@ -37,12 +37,15 @@ public class CreateCarAdvertProcessor(
         }
 
         var carParamsToSave = mapper.Map<CarParametersToSave>(carParameters);
-        
-        var mileageKm = carParameters.MileageUnit == MileageUnit.Kilometers
-            ? carParameters.Mileage
-            : DistanceConverter.MilesToKilometers(carParameters.Mileage);
 
-        carParamsToSave = carParamsToSave with { MileageKm = mileageKm };
+        if (carParameters.Mileage.HasValue)
+        {
+            var mileageKm = carParameters.MileageUnit == MileageUnit.Kilometers
+                ? carParameters.Mileage.Value
+                : DistanceConverter.MilesToKilometers(carParameters.Mileage.Value);
+
+            carParamsToSave = carParamsToSave with { MileageKm = mileageKm };
+        }
 
         var carParamsJson = JsonConvert.SerializeObject(carParamsToSave, Formatting.Indented);
 
