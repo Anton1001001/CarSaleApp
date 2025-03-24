@@ -1,3 +1,4 @@
+using Advert.API.Middlewares;
 using Advert.Application.Extensions;
 using Advert.Infrastructure.Extensions;
 
@@ -25,6 +26,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.MapControllers();
 
 app.Run();
