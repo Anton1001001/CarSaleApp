@@ -31,7 +31,7 @@ public class GetCarAdvertFormProcessor(
             return new AdvertBadRequestError();
         }
 
-        var placeRegions = await unitOfWork.PlaceRepository.GetPlacesByTypeAsync(PlaceTypes.Region);
+        var placeRegions = await unitOfWork.PlaceRepository.GetPlacesByTypeAsync(PlaceTypes.Region, cancellationToken);
         var phoneCodes = await unitOfWork.Repository<PhoneCode>().GetAllAsync(cancellationToken);
 
         var placeRegionsResponse = mapper.Map<List<PlaceRegionResponse>>(placeRegions);
@@ -131,7 +131,7 @@ public class GetCarAdvertFormProcessor(
             return response;
 
         var placeCities = await unitOfWork.PlaceRepository
-            .GetPlacesByParentIdAsync(carsParameters.PlaceRegionId.Value);
+            .GetPlacesByParentIdAsync(carsParameters.PlaceRegionId.Value, cancellationToken);
 
         response = response with { PlaceCities = mapper.Map<List<PlaceCityResponse>>(placeCities) };
         

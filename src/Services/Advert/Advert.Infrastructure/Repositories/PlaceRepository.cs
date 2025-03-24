@@ -1,28 +1,29 @@
 using Advert.Domain.Entities;
 using Advert.Domain.Interfaces;
 using Advert.Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Advert.Infrastructure.Repositories;
 
 public class PlaceRepository(IRepository<Place> repository, AdvertDbContext context) : IPlaceRepository 
 {
 
-    public async Task<List<Place>> GetPlacesByTypeAsync(string type)
+    public async Task<List<Place>> GetPlacesByTypeAsync(string type, CancellationToken cancellationToken = default)
     {
-        var response = context.Places
+        var response = await context.Places
             .Where(place => place.Type == type)
             .OrderBy(place => place.Id)
-            .ToList();
-        return await Task.FromResult(response);
+            .ToListAsync(cancellationToken: cancellationToken);
+        return response;
     }
 
-    public async Task<List<Place>> GetPlacesByParentIdAsync(int parentId)
+    public async Task<List<Place>> GetPlacesByParentIdAsync(int parentId, CancellationToken cancellationToken = default)
     {
-        var response = context.Places
+        var response = await context.Places
             .Where(place => place.ParentId == parentId)
             .OrderBy(place => place.Id)
-            .ToList();
-        return await Task.FromResult(response);
+            .ToListAsync(cancellationToken: cancellationToken);
+        return response;
     }
 
     public Task<Place?> GetByIdAsync(int id, CancellationToken cancellationToken)
