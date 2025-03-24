@@ -24,16 +24,27 @@ public class CurrencyRateService(IOptions<NbrbApiConfig> options, IDistributedCa
         var response = await HttpClient.GetStringAsync(nbrbOptions.NbrbApiUrl, cancellationToken);
         var rateList = JsonConvert.DeserializeObject<List<NbrbRate>>(response);
 
+        if (rateList is null || rateList.Count == 0)
+        {
+            throw new InvalidOperationException("Couldn't get a list of currency rates.");
+        }
+        
+        var usdRate = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Usd);
+        var eurRate = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Eur);
+        var rubRate = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Rub);
+
         var rates = new CurrencyRates
         {
             Byn = 1,
-            Usd = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Usd)?.CurOfficialRate /
-                rateList.Find(r => r.CurAbbreviation == nbrbOptions.Usd)?.CurScale ?? 0,
-            Eur = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Eur)?.CurOfficialRate /
-                rateList.Find(r => r.CurAbbreviation == nbrbOptions.Eur)?.CurScale ?? 0,
-            Rub = rateList.Find(r => r.CurAbbreviation == nbrbOptions.Rub)?.CurOfficialRate /
-                rateList.Find(r => r.CurAbbreviation == nbrbOptions.Rub)?.CurScale ?? 0
+            Usd = usdRate is not null ? usdRate.CurOfficialRate / usdRate.CurScale : 0,
+            Eur = eurRate is not null ? eurRate.CurOfficialRate / eurRate.CurScale : 0,
+            Rub = rubRate is not null ? rubRate.CurOfficialRate / rubRate.CurScale : 0,
         };
+
+        if (rates.Usd == 0 || rates.Eur == 0 || rates.Rub == 0)
+        {
+            throw new InvalidOperationException("Incorrect exchange rates");
+        }
         
         await cache.SetStringAsync(cacheKey, JsonConvert.SerializeObject(rates), new DistributedCacheEntryOptions
         {
