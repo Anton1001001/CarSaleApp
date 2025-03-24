@@ -13,6 +13,7 @@ public class GetAdvertCategoriesHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         var categories = await unitOfWork.Repository<AdvertCategory>().GetAllAsync(cancellationToken);
         var response = mapper.Map<List<GetAdvertCategoryResponse>>(categories);
+        
         return response;
     }
 }

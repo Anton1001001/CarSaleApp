@@ -55,6 +55,7 @@ public static class Extensions
         services.AddScoped<IAdvertPublicStatusRepository, AdvertPublicStatusRepository>();
         services.AddScoped<IAdvertPrivateStatusRepository, AdvertPrivateStatusRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        
         return services;
     }
 }

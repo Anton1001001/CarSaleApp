@@ -22,12 +22,14 @@ public class AdvertsController(ISender sender) : ControllerBase
     public async Task<IResult> GetAdvertCategories(CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetAdvertCategoriesQuery(), cancellationToken);
+        
         return Results.Ok(result);
     }
     [HttpGet("{id:int}")]
     public async Task<IResult> GetAdvertById([FromRoute] int id, CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(new GetAdvertByIdQuery(id), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
 
@@ -36,6 +38,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     {
         var parameters = ParametersFactory.CreateCommand(type, request.Params.ToString());
         var result = await sender.Send(new CreateAdvertCommand(parameters), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
     
@@ -43,6 +46,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     public async Task<IResult> PublishAdvert(int id, CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(new PublishAdvertCommand(id), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
     
@@ -50,6 +54,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     public async Task<IResult> PauseAdvert(int id, CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(new PauseAdvertCommand(id), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
 
@@ -57,6 +62,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     public async Task<IResult> RefreshAdvert(int id, CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(new RefreshAdvertCommand(id), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
     
@@ -65,6 +71,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     {
         request = request with { Id = id };
         var result = await sender.Send(request, cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
     
@@ -73,6 +80,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     {
         var parameters = ParametersFactory.CreateCommand(type, request.Params.ToString());
         var result = await sender.Send(new GetAdvertFormQuery(parameters), cancellationToken);
+        
         return result.TryGetResult(Results.Ok);
     }
 }

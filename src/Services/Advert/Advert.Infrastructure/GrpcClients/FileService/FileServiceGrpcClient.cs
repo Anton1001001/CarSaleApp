@@ -13,6 +13,7 @@ public class FileServiceGrpcClient(File.GrpcService.File.FileClient client, IMap
         request.Ids.AddRange(ids);
         var photos = await client.GetFilesByIdsAsync(request, cancellationToken: cancellationToken);
         var response = mapper.Map<List<PhotoResponse>>(photos.Files);
+        
         return response;
     }
 }

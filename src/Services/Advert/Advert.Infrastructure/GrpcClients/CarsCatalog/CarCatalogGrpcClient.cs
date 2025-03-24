@@ -20,8 +20,9 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
             request.Year = year.Value;
         }
 
-        var catalogResponse = await carCatalogClient.GetModelGenerationsAsync(request);
+        var catalogResponse = await carCatalogClient.GetModelGenerationsAsync(request, cancellationToken: cancellationToken);
         var response = mapper.Map<List<GenerationResponse>>(catalogResponse.Generations);
+        
         return response;
     }
 
@@ -29,6 +30,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
     {
         var catalogResponse = await carCatalogClient.GetBrandsAsync(new Empty(), cancellationToken: cancellationToken);
         var response = mapper.Map<List<BrandResponse>>(catalogResponse.Brands);
+        
         return response;
     }
 
@@ -39,6 +41,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
             .GetBrandModelsAsync(new GetBrandModelsRequest { BrandId = brandId },
                 cancellationToken: cancellationToken);
         var response = mapper.Map<List<ModelResponse>>(catalogResponse.Models);
+        
         return response;
     }
 
@@ -48,6 +51,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
         var catalogRequest = mapper.Map<GetCarParametersRequest>(request);
         var response = await carCatalogClient
             .GetCarParametersAsync(catalogRequest, cancellationToken: cancellationToken);
+        
         return mapper.Map<CarsCatalogResponse>(response);
     }
 
@@ -59,6 +63,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
                 { GenerationId = generationId }, cancellationToken: cancellationToken);
 
         var response = mapper.Map<List<ModificationResponse>>(catalogResponse.Modifications);
+        
         return response;
     }
 
@@ -66,6 +71,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
     {
         var catalogResponse = await carCatalogClient.GetColorsAsync(new Empty(), cancellationToken: cancellationToken);
         var response = mapper.Map<List<ColorResponse>>(catalogResponse.Colors);
+        
         return response;
     }
 
@@ -74,6 +80,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
         var catalogResponse =
             await carCatalogClient.GetInteriorColorsAsync(new Empty(), cancellationToken: cancellationToken);
         var response = mapper.Map<List<InteriorColorResponse>>(catalogResponse.InteriorColors);
+        
         return response;
     }
 
@@ -83,6 +90,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
         var catalogResponse =
             await carCatalogClient.GetInteriorMaterialsAsync(new Empty(), cancellationToken: cancellationToken);
         var response = mapper.Map<List<InteriorMaterialResponse>>(catalogResponse.InteriorMaterials);
+        
         return response;
     }
 
@@ -91,6 +99,7 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
         var catalogResponse = await carCatalogClient.GetModelYearsAsync(new GetModelYearsRequest { ModelId = modelId },
             cancellationToken: cancellationToken);
         var response = mapper.Map<List<YearResponse>>(catalogResponse.Years);
+        
         return response;
     }
 }

@@ -13,6 +13,7 @@ public class GetAdvertByIdHandler(
     public async Task<Result<AdvertResponse>> Handle(GetAdvertByIdQuery request, CancellationToken cancellationToken)
     {
         var response = await advertService.GetAdvertByIdAsync(request.Id, cancellationToken);
+        
         return response;
     }
 }

@@ -33,11 +33,6 @@ public class RefreshAdvertHandler(IUnitOfWork unitOfWork, IAdvertService advertS
 
         var advertResponse = await advertService.GetAdvertByIdAsync(advert.Id, cancellationToken);
 
-        if (advertResponse is null)
-        {
-            return new AdvertNotFoundError(message: $"Advert with id: {advert.Id} was not found");
-        }
-
         return advertResponse;
     }
 }

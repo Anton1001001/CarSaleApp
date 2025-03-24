@@ -14,6 +14,7 @@ public class PlaceRepository(IRepository<Place> repository, AdvertDbContext cont
             .Where(place => place.Type == type)
             .OrderBy(place => place.Id)
             .ToListAsync(cancellationToken: cancellationToken);
+        
         return response;
     }
 
@@ -23,6 +24,7 @@ public class PlaceRepository(IRepository<Place> repository, AdvertDbContext cont
             .Where(place => place.ParentId == parentId)
             .OrderBy(place => place.Id)
             .ToListAsync(cancellationToken: cancellationToken);
+        
         return response;
     }
 
