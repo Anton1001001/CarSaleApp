@@ -69,7 +69,7 @@ public class AdvertsController(ISender sender) : ControllerBase
     }
     
     [HttpPost("{type}/form")]
-    public async Task<IResult> Form([FromRoute] string type, GetAdvertFormRequest request, CancellationToken cancellationToken = default)
+    public async Task<IResult> Form([FromRoute] string type, [FromBody] GetAdvertFormRequest request, CancellationToken cancellationToken = default)
     {
         var parameters = ParametersFactory.CreateCommand(type, request.Params.ToString());
         var result = await sender.Send(new GetAdvertFormQuery(parameters), cancellationToken);
