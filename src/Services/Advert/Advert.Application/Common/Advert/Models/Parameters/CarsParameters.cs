@@ -16,7 +16,7 @@ public record CarsParameters(
     int? ColorId,
     int? ConditionId,
     MileageUnit? MileageUnit,
-    int Mileage,
+    int? Mileage,
     string? Vin,
     int? InteriorMaterialId,
     int? InteriorColorId,
