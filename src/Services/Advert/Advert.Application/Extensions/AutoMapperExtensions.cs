@@ -4,7 +4,6 @@ using AutoMapper;
 using AutoMapper.Configuration;
 
 namespace Advert.Application.Extensions;
-
 public static class AutoMapperExtensions
 {
     public static IMappingExpression<TSource, TDestination> ForCtorParam<TSource, TDestination, TMember>(
