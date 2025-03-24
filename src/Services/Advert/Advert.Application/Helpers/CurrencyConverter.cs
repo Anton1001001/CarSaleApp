@@ -7,7 +7,8 @@ namespace Advert.Application.Helpers;
 
 public class CurrencyConverter(ICurrencyRateService currencyRateService) : ICurrencyConverter
 {
-    public async Task<PriceResponse?> ConvertPriceToAllCurrenciesOrDefaultAsync(int amount, Currency currency, CancellationToken cancellationToken = default)
+    public async Task<PriceResponse> ConvertPriceToAllCurrenciesAsync(int amount, Currency currency,
+        CancellationToken cancellationToken = default)
     {
         var rates = await currencyRateService.GetCurrencyRatesAsync(cancellationToken);
         var amountInByn = currency switch
@@ -16,13 +17,8 @@ public class CurrencyConverter(ICurrencyRateService currencyRateService) : ICurr
             Currency.Eur => amount * rates.Eur,
             Currency.Rub => amount * rates.Rub,
             Currency.Byn => amount,
-            _ => default(decimal?)
+            _ => throw new ArgumentOutOfRangeException(nameof(currency), currency, null)
         };
-
-        if (amountInByn is null)
-        {
-            return null;
-        }
 
         return new PriceResponse(
             Usd: Convert.ToInt32(amountInByn / rates.Usd),

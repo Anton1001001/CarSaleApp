@@ -49,13 +49,8 @@ public class GetCarAdvertByIdProcessor(
         };
 
         var priceResponse = await currencyConverter
-            .ConvertPriceToAllCurrenciesOrDefaultAsync(request.PriceAmount, request.PriceCurrency, cancellationToken);
+            .ConvertPriceToAllCurrenciesAsync(request.PriceAmount, request.PriceCurrency, cancellationToken);
 
-        if (priceResponse is null)
-        {
-            return new AdvertBadRequestError(message: "Price convert error");
-        }
-        
         var advertResponse = mapper.Map<AdvertResponse>(request);
         advertResponse = advertResponse with
         {
