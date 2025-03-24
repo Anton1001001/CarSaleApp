@@ -6,7 +6,7 @@ public class Place
     public int? ParentId { get; set; }
     public string Type { get; set; } = null!;
     public string Name { get; set; } = null!;
-    public string? ShortName { get; set; }
+    public string? ShortName { get; set; } = null!;
     public string Label { get; set; } = null!;
     public string? LabelBel { get; set; }
     public string? Emoji { get; set; }
