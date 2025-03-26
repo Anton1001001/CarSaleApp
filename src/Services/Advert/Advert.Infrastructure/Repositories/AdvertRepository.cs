@@ -1,4 +1,5 @@
 using Advert.Domain.Interfaces;
+using Advert.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Advert.Infrastructure.Repositories;
@@ -8,6 +9,7 @@ public class AdvertRepository(AdvertDbContext context) : IAdvertRepository
     public async Task<Domain.Entities.Advert> CreateAsync(Domain.Entities.Advert advert, CancellationToken cancellationToken = default)
     {
         var result = await context.Adverts.AddAsync(advert, cancellationToken);
+        
         return result.Entity;
     }
 
@@ -22,6 +24,7 @@ public class AdvertRepository(AdvertDbContext context) : IAdvertRepository
             .Include(advert => advert.AdvertPublicStatus)
             .Include(advert => advert.AdvertPrivateStatus)
             .FirstOrDefaultAsync(advert => advert.Id == advertId, cancellationToken);
+        
         return result;
     }
 }

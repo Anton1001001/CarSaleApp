@@ -1,9 +1,7 @@
-namespace Advert.Application.CQRS.Commands.CreateAdvert;
-
-public class PriceResponse
-{
-    public int Usd { get; set; }
-    public int Byn { get; set; }
-    public int Rub { get; set; }
-    public int Eur { get; set; }
-}
+namespace Advert.Application.Common.Advert.Models;
+public record PriceResponse(
+    int Usd,
+    int Byn,
+    int Rub,
+    int Eur
+);

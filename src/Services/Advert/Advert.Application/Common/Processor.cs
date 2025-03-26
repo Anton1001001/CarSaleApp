@@ -7,6 +7,7 @@ public abstract class Processor<TRequest, TResponse>
     public Processor<TRequest, TResponse> SetNext(Processor<TRequest, TResponse> next)
     {
         _next = next;
+        
         return next;
     }
 

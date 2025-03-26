@@ -1,5 +1,5 @@
 using Advert.Application.Common.Advert.Models;
-using Advert.Application.CQRS.Commands.CreateAdvert.Parameters;
+using Advert.Application.Common.Advert.Models.Parameters;
 using Advert.Domain.Entities;
 using AutoMapper;
 

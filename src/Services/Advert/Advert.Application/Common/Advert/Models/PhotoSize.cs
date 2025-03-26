@@ -1,8 +1,7 @@
-namespace Advert.Application.CQRS.Commands.CreateAdvert;
+namespace Advert.Application.Common.Advert.Models;
+public record PhotoSize(
+    int Width,
+    int Height,
+    string Url
+);
 
-public class PhotoSize
-{
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public string Url { get; set; } = string.Empty;
-}
