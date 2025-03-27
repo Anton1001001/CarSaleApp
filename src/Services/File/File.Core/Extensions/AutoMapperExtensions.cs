@@ -20,7 +20,7 @@ public static class AutoMapperExtensions
 
     private static MemberInfo FindProperty(LambdaExpression lambdaExpression)
     {
-        Expression expressionToCheck = lambdaExpression.Body;
+        var expressionToCheck = lambdaExpression.Body;
         while (true)
         {
             switch (expressionToCheck)
