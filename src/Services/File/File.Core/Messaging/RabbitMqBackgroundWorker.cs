@@ -13,38 +13,30 @@ using RabbitMQ.Client.Events;
 
 namespace File.Core.Messaging;
 
-public class RabbitMqBackgroundWorker : BackgroundService
+public class RabbitMqBackgroundWorker(
+    IRabbitMqConnection connection,
+    IOptions<MessageQueueOptions> options,
+    IServiceScopeFactory scopeFactory)
+    : BackgroundService
 {
-    private readonly IChannel _channel;
-    private readonly IConnection _connection;
-    private readonly MessageQueueOptions _options;
-    private readonly IServiceScopeFactory _scopeFactory;
+    private IChannel _channel;
+    private readonly IConnection _connection = connection.Connection;
+    private readonly MessageQueueOptions _options = options.Value;
 
-    public RabbitMqBackgroundWorker(
-        IRabbitMqConnection connection,
-        IOptions<MessageQueueOptions> options,
-        ILogger<RabbitMqBackgroundWorker> logger, 
-        IServiceScopeFactory scopeFactory)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _options = options.Value;
-        _scopeFactory = scopeFactory;
-        _connection = connection.Connection;
-        _channel = _connection.CreateChannelAsync().GetAwaiter().GetResult();
-        _channel.QueueDeclareAsync(
+        _channel = await _connection.CreateChannelAsync(cancellationToken: stoppingToken);
+        await _channel.QueueDeclareAsync(
             queue: _options.QueueName,
             durable: false,
             exclusive: false,
             autoDelete: false,
-            arguments: null).GetAwaiter().GetResult();
-    }
+            arguments: null, cancellationToken: stoppingToken);
 
-    protected override Task ExecuteAsync(CancellationToken stoppingToken)
-    {
         stoppingToken.ThrowIfCancellationRequested();
         var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.ReceivedAsync += ConsumeAsync;
-        _channel.BasicConsumeAsync(_options.QueueName, false, consumer, cancellationToken: stoppingToken);
-        return Task.CompletedTask;
+        await _channel.BasicConsumeAsync(_options.QueueName, false, consumer, cancellationToken: stoppingToken);
     }
 
     private async Task ConsumeAsync(object sender, BasicDeliverEventArgs @event)
@@ -55,7 +47,7 @@ public class RabbitMqBackgroundWorker : BackgroundService
 
         if (ids is not null)
         {
-            using var scope = _scopeFactory.CreateScope();
+            using var scope = scopeFactory.CreateScope();
             var mediatorSender = scope.ServiceProvider.GetRequiredService<ISender>();
             var inactiveFilesResponse = await mediatorSender
                 .Send(new GetUnusedFilesIdsQuery(ids), CancellationToken.None);
