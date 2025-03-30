@@ -4,18 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace File.DataAccess;
 
-public class FileDbContext : DbContext
+public class FileDbContext(DbContextOptions<FileDbContext> options) : DbContext(options)
 {
     public DbSet<Photo> Photos { get; set; }
     public DbSet<PhotoSize> PhotoSizes { get; set; }
-
-    public FileDbContext()
-    {
-    }
-
-    public FileDbContext(DbContextOptions<FileDbContext> options) : base(options)
-    {
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
