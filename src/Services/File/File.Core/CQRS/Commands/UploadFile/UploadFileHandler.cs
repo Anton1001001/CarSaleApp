@@ -8,6 +8,7 @@ using File.Core.Models;
 using File.Core.Options;
 using FluentResults;
 using MediatR;
+using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
 using static File.Core.Helpers.StreamConverter;
 using static File.Core.Helpers.ImageResizer;
@@ -17,16 +18,13 @@ namespace File.Core.CQRS.Commands.UploadFile;
 public class UploadFileHandler(
     IStorageService storageService,
     IUnitOfWork unitOfWork,
-    IMapper mapper)
+    IMapper mapper,
+    IOptions<ImageSizeOptions> imageSizeOptions)
     : IRequestHandler<UploadFileCommand, Result<PhotoResponse>>
 {
-    private const int MaxLength = 1400;
-    private const int MediumLength = 612;
-    private const int SmallLength = 360;
-    private const int ExtraSmallLength = 200;
-
     public async Task<Result<PhotoResponse>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
+        var config = imageSizeOptions.Value;
         var mimeType = request.File.ContentType.ToLower();
 
         if (!ImageFormats.IsSupported(mimeType))
@@ -40,10 +38,10 @@ public class UploadFileHandler(
         await using var stream = request.File.OpenReadStream();
         using var image = await Image.LoadAsync(stream, cancellationToken);
 
-        var (bigWidth, bigHeight) = CalculateSize(image.Width, image.Height, MaxLength);
-        var (mediumWidth, mediumHeight) = CalculateSize(image.Width, image.Height, MediumLength);
-        var (smallWidth, smallHeight) = CalculateSize(image.Width, image.Height, SmallLength);
-        var (extraSmallWidth, extraSmallHeight) = CalculateSize(image.Width, image.Height, ExtraSmallLength);
+        var (bigWidth, bigHeight) = CalculateSize(image.Width, image.Height, config.MaxLength);
+        var (mediumWidth, mediumHeight) = CalculateSize(image.Width, image.Height, config.MediumLength);
+        var (smallWidth, smallHeight) = CalculateSize(image.Width, image.Height, config.SmallLength);
+        var (extraSmallWidth, extraSmallHeight) = CalculateSize(image.Width, image.Height, config.ExtraSmallLength);
 
         var bigImage = ConvertToStream(ResizeImage(image, bigWidth, bigHeight), mimeType);
         var mediumImage = ConvertToStream(ResizeImage(image, mediumWidth, mediumHeight), mimeType);
@@ -85,7 +83,7 @@ public class UploadFileHandler(
         }
 
         var response = mapper.Map<PhotoResponse>(photo);
-        
+
         return response;
     }
 }
