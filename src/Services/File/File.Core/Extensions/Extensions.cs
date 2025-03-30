@@ -13,6 +13,7 @@ public static class Extensions
     {
         services.Configure<MessageQueueOptions>(configuration.GetSection(nameof(MessageQueueOptions)));
         services.Configure<RabbitMqOptions>(configuration.GetSection(nameof(RabbitMqOptions)));
+        services.Configure<ImageSizeOptions>(configuration.GetSection(nameof(ImageSizeOptions)));
 
         var applicationAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(applicationAssembly);
