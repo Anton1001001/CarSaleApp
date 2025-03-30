@@ -17,6 +17,7 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
         var inactivePhotoIds = allPhotoIds
             .Where(id => !activePhotoIds.Contains(id))
             .ToList();
+
         return inactivePhotoIds;
     }
 
@@ -29,6 +30,7 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
             .Include(photo => photo.Small)
             .Include(photo => photo.ExtraSmall)
             .FirstOrDefaultAsync(photo => photo.Id == id, cancellationToken: cancellationToken);
+
         return response;
     }
 
@@ -52,12 +54,14 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
     public async Task<Photo> AddAsync(Photo photo, CancellationToken cancellationToken = default)
     {
         await context.Photos.AddAsync(photo, cancellationToken);
+
         return await Task.FromResult(photo);
     }
 
     public async Task<Photo> UpdateAsync(Photo photo, CancellationToken cancellationToken = default)
     {
         context.Photos.Update(photo);
+
         return await Task.FromResult(photo);
     }
 
@@ -66,7 +70,7 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
         var allPhotoIds = await context.Photos
             .AsNoTracking()
             .ToListAsync(cancellationToken);
-        
+
         var photos = allPhotoIds
             .Where(p => ids.Contains(p.Id))
             .ToList();

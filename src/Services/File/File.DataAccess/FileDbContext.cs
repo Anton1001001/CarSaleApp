@@ -8,15 +8,13 @@ public class FileDbContext : DbContext
 {
     public DbSet<Photo> Photos { get; set; }
     public DbSet<PhotoSize> PhotoSizes { get; set; }
-    
+
     public FileDbContext()
     {
-        
     }
 
     public FileDbContext(DbContextOptions<FileDbContext> options) : base(options)
     {
-        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +24,5 @@ public class FileDbContext : DbContext
             .HasCharSet("utf8mb4");
 
         modelBuilder.ApplyConfiguration(new PhotoEntityTypeConfiguration());
-
     }
 }

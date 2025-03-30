@@ -7,7 +7,8 @@ using MediatR;
 
 namespace File.Core.CQRS.Queries.GetFileById;
 
-public class GetFileByIdHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<GetFileByIdQuery, Result<PhotoResponse>>
+public class GetFileByIdHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetFileByIdQuery, Result<PhotoResponse>>
 {
     public async Task<Result<PhotoResponse>> Handle(GetFileByIdQuery request, CancellationToken cancellationToken)
     {
@@ -17,8 +18,9 @@ public class GetFileByIdHandler(IUnitOfWork unitOfWork, IMapper mapper) : IReque
         {
             return new FileNotFoundError(message: $"Photo with id: {request.Id} was not found");
         }
-        
+
         var response = mapper.Map<PhotoResponse>(photo);
+        
         return response;
     }
 }

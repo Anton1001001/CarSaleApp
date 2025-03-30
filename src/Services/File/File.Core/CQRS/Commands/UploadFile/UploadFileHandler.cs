@@ -85,6 +85,7 @@ public class UploadFileHandler(
         }
 
         var response = mapper.Map<PhotoResponse>(photo);
+        
         return response;
     }
 }

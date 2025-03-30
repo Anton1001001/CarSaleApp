@@ -17,7 +17,9 @@ public static class StreamConverter
                 image.SaveAsPng(memoryStream);
                 break;
         }
+
         memoryStream.Position = 0;
+
         return memoryStream;
     }
 }

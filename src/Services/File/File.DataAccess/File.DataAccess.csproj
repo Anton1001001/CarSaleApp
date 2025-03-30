@@ -21,6 +21,7 @@
         <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0" />
         <PackageReference Include="AWSSDK.S3" Version="3.7.304" />
         <PackageReference Include="Backblaze.Agent" Version="1.0.1" />
+        <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">

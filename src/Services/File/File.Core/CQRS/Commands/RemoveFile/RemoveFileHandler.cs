@@ -17,7 +17,7 @@ public class RemoveFileHandler(IStorageService storageService, IUnitOfWork unitO
 
         if (!saveResult)
             return new InternalServerError("File.Remove", "Failed to save data");
-        
+
         return new RemoveFileResponse();
     }
 }

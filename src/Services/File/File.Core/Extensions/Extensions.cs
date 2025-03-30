@@ -13,7 +13,7 @@ public static class Extensions
     {
         services.Configure<MessageQueueOptions>(configuration.GetSection(nameof(MessageQueueOptions)));
         services.Configure<RabbitMqOptions>(configuration.GetSection(nameof(RabbitMqOptions)));
-        
+
         var applicationAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(applicationAssembly);
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));

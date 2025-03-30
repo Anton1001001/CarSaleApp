@@ -5,7 +5,7 @@ option csharp_namespace = "File.GrpcService";
 service File {
   rpc GetFileById(GetFileByIdRequest) returns (GetFileByIdResponse);
   rpc GetFilesByIds(GetFilesByIdsRequest) returns (GetFilesByIdsResponse);
-  
+
 }
 
 message PhotoSize {

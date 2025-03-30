@@ -19,6 +19,5 @@ public class PhotoMappingProfile : Profile
                 opt.MapFrom(src => src.Small))
             .ForCtorParam(dest => dest.ExtraSmall, opt =>
                 opt.MapFrom(src => src.ExtraSmall));
-        
     }
 }

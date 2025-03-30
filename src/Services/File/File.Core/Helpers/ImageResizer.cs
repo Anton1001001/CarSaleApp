@@ -11,17 +11,19 @@ public static class ImageResizer
             return (originalWidth, originalHeight);
 
         double aspectRatio = originalWidth / (double)originalHeight;
-        
+
         if (originalWidth >= originalHeight)
         {
             int width = maxSize;
             int height = (int)(maxSize / aspectRatio);
+
             return (width, height);
         }
         else
         {
             int height = maxSize;
             int width = (int)(maxSize * aspectRatio);
+
             return (width, height);
         }
     }
@@ -29,6 +31,7 @@ public static class ImageResizer
     public static Image ResizeImage(Image image, int width, int height)
     {
         var resizedImage = image.Clone(ctx => ctx.Resize(width, height));
+
         return resizedImage;
     }
 }

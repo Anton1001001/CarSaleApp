@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace File.DataAccess.Services;
 
-public class BackblazeB2Service(IOptions<BackblazeB2Options> options, IAmazonS3 s3Client) : IStorageService
+public class BackblazeB2Service(IOptions<BackblazeOptions> options, IAmazonS3 s3Client) : IStorageService
 { 
     public async Task<string> UploadFileAsync(Stream fileStream, string fileName)
     {

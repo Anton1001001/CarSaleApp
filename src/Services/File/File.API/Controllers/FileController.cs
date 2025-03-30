@@ -15,6 +15,7 @@ public class FileController(ISender sender) : ControllerBase
     public async Task<IResult> UploadFile(IFormFile file, CancellationToken cancellationToken = default)
     {
         var response = await sender.Send(new UploadFileCommand(file), cancellationToken);
+        
         return response.TryGetResult(Results.Ok);
     }
 
@@ -22,6 +23,7 @@ public class FileController(ISender sender) : ControllerBase
     public async Task<IResult> RemoveFile(List<int> ids, CancellationToken cancellationToken = default)
     {
         var response = await sender.Send(new RemoveFileCommand(ids), cancellationToken);
+        
         return response.TryGetResult(Results.Ok);
     }
 
@@ -29,6 +31,7 @@ public class FileController(ISender sender) : ControllerBase
     public async Task<IResult> GetFileById([FromRoute] int id, CancellationToken cancellationToken = default)
     {
         var response = await sender.Send(new GetFileByIdQuery(id), cancellationToken);
+        
         return response.TryGetResult(Results.Ok);
     }
 }

@@ -14,6 +14,7 @@ public static class AutoMapperExtensions
     {
         var memberInfo = FindProperty(destinationMember);
         var memberName = memberInfo.Name;
+        
         return mappingExpression
             .ForCtorParam(memberName, paramOptions);
     }

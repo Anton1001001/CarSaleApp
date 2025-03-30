@@ -15,18 +15,16 @@ public static class Extensions
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
         IConfiguration configuration)
-    { 
-        var connectionString = configuration.GetConnectionString("FileDb")!;
+    {
+        var connectionString = configuration["FileDb"];
         var serverVersion = ServerVersion.AutoDetect(connectionString);
         services.AddDbContext<FileDbContext>(options => options.UseMySql(connectionString, serverVersion));
-        
-        
-        services.Configure<BackblazeB2Options>(configuration.GetSection(nameof(BackblazeB2Options)));
 
+        services.Configure<BackblazeOptions>(configuration.GetSection(nameof(BackblazeOptions)));
 
         services.AddSingleton<IAmazonS3>(provider =>
         {
-            var options = provider.GetRequiredService<IOptions<BackblazeB2Options>>().Value;
+            var options = provider.GetRequiredService<IOptions<BackblazeOptions>>().Value;
             var config = new AmazonS3Config
             {
                 ServiceURL = options.ServiceUrl,
@@ -38,7 +36,7 @@ public static class Extensions
         services.AddScoped<IStorageService, BackblazeB2Service>();
         services.AddScoped<IPhotoRepository, PhotoRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
+
         return services;
     }
 }

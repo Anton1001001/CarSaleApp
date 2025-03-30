@@ -20,12 +20,14 @@ public class FileService(ISender sender, IMapper mapper) : File.FileBase
         return response;
     }
 
-    public override async Task<GetFilesByIdsResponse> GetFilesByIds(GetFilesByIdsRequest request, ServerCallContext context)
+    public override async Task<GetFilesByIdsResponse> GetFilesByIds(GetFilesByIdsRequest request,
+        ServerCallContext context)
     {
         var photos = await sender.Send(new GetFilesByIdsQuery(request.Ids.ToList()), context.CancellationToken);
         var filesResponse = mapper.Map<List<FileResponse>>(photos.Value);
         var response = new GetFilesByIdsResponse();
         response.Files.AddRange(filesResponse);
+
         return response;
     }
 }
