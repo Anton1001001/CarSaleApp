@@ -1,6 +1,6 @@
 namespace File.DataAccess.Options;
 
-public class BackblazeB2Options
+public class BackblazeOptions
 {
     public string KeyId { get; set; } = string.Empty;
     public string KeyName { get; set; } = string.Empty;
