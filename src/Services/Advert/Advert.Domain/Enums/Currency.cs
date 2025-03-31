@@ -2,8 +2,8 @@ namespace Advert.Domain.Enums;
 
 public enum Currency
 {
-    Byn = 1,
-    Usd = 2,
-    Rub = 3,
-    Eur = 4
+    Usd = 1,
+    Byn = 2,
+    Eur = 3,
+    Rub = 4
 }
