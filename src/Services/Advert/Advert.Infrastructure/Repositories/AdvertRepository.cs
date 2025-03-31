@@ -6,6 +6,17 @@ namespace Advert.Infrastructure.Repositories;
 
 public class AdvertRepository(AdvertDbContext context) : IAdvertRepository
 {
+    public async Task<List<int>> GetPhotosIdsAsync(CancellationToken cancellationToken)
+    {
+        return await context.Adverts
+            .Include(a => a.AdvertPhotos)
+            .SelectMany(a => a.AdvertPhotos!) 
+            .Select(p => p.FileId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+    }
+
     public async Task<Domain.Entities.Advert> CreateAsync(Domain.Entities.Advert advert, CancellationToken cancellationToken = default)
     {
         var result = await context.Adverts.AddAsync(advert, cancellationToken);
