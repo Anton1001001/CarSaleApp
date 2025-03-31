@@ -6,6 +6,7 @@ public interface IUnitOfWork
     IAdvertRepository AdvertRepository { get; }
     IAdvertPrivateStatusRepository AdvertPrivateStatusRepository { get; }
     IAdvertPublicStatusRepository AdvertPublicStatusRepository { get; }
+    IAdvertCategoryRepository AdvertCategoryRepository { get; }
     IPlaceRepository PlaceRepository { get; }
     Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
 }
