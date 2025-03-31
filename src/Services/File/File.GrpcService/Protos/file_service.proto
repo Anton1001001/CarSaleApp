@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option csharp_namespace = "File.GrpcService";
+
+service File {
+  rpc GetFileById(GetFileByIdRequest) returns (GetFileByIdResponse);
+  rpc GetFilesByIds(GetFilesByIdsRequest) returns (GetFilesByIdsResponse);
+
+}
+
+message PhotoSize {
+  string url = 1;
+  int32 width = 2;
+  int32 height = 3;
+}
+
+message FileResponse {
+  int32 id = 1;
+  string mime_type = 2;
+  PhotoSize big = 3;
+  PhotoSize medium = 4;
+  PhotoSize small = 5;
+  PhotoSize extra_small = 6;
+}
+
+message GetFileByIdRequest {
+  int32 id = 1;
+}
+
+message GetFileByIdResponse {
+  FileResponse file = 1;
+}
+
+message GetFilesByIdsRequest {
+  repeated int32 ids = 1;
+}
+
+message GetFilesByIdsResponse {
+  repeated FileResponse files = 1;
+}
