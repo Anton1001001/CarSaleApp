@@ -1,32 +1,26 @@
 ﻿using Advert.Application.Errors.Base;
 using FluentResults;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Advert.API.Extensions;
 
 public static class ResultExtensions
 {
-    public static IResult TryGetResult<TValue>(this Result<TValue> result, Func<TValue, IResult> success)
+    public static IActionResult ToActionResult<TValue>(this Result<TValue> result)
     {
-        return result switch
-        {
-            { IsFailed: true } => result.ToProblemDetail(),
-            { IsSuccess: true } => success(result.Value),
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        return result.IsSuccess 
+            ? new OkObjectResult(result.Value) 
+            : result.ToProblemDetails();
     }
 
-    public static IResult TryGetResult(this Result result, Func<IResult> success)
+    public static IActionResult ToActionResult(this Result result)
     {
-        return result switch
-        {
-            { IsFailed: true } => result.ToProblemDetail(),
-            { IsSuccess: true } => success(),
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        return result.IsSuccess 
+            ? new NoContentResult() 
+            : result.ToProblemDetails();
     }
 
-    private static IResult ToProblemDetail(this ResultBase result)
+    private static IActionResult ToProblemDetails(this ResultBase result)
     {
         if (result.IsSuccess)
         {
@@ -34,18 +28,22 @@ public static class ResultExtensions
         }
 
         var error = result.Errors.FirstOrDefault()!;
-        Dictionary<string, object?> extensions = new Dictionary<string, object?> { { "message", error.Message } };
+        var extensions = new Dictionary<string, object?> { { "message", error.Message } };
 
         if (error is BaseError baseError)
         {
             extensions.Add("code", baseError.Code);
         }
 
-
-        return Results.Problem(
-            statusCode: GetStatusCode(error),
-            title: GetTitle(error),
-            extensions: extensions);
+        return new ObjectResult(new ProblemDetails
+        {
+            Status = GetStatusCode(error),
+            Title = GetTitle(error),
+            Extensions = extensions
+        })
+        {
+            StatusCode = GetStatusCode(error)
+        };
     }
 
     private static int GetStatusCode(IError error) => error switch
