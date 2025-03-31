@@ -1,4 +1,4 @@
-using Advert.Application.JobManging;
+using Advert.Application.JobManaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
