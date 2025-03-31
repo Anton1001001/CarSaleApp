@@ -8,8 +8,10 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="DotNetEnv" Version="3.1.1" />
       <PackageReference Include="FluentResults" Version="3.16.0" />
       <PackageReference Include="MediatR" Version="12.4.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -20,7 +22,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="CQRS\Queries\GetAdvertForm\Processors\GetMotoAdvertForm\" />
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.11\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
     
 

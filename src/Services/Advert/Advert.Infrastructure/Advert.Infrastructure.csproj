@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DotNetEnv" Version="3.1.1" />
       <PackageReference Include="Google.Protobuf" Version="3.30.0-rc1" />
       <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
       <PackageReference Include="Grpc.Net.ClientFactory" Version="2.67.0" />
@@ -14,11 +15,16 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Hangfire" Version="1.8.18" />
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.18" />
+      <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
+      <PackageReference Include="Hangfire.Redis.StackExchange" Version="1.11.0" />
       <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.2.efcore.9.0.0" />
+      <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
       <PackageReference Include="Scrutor" Version="6.0.1" />
     </ItemGroup>
 
@@ -29,7 +35,7 @@
     
     <ItemGroup>
         <Protobuf Include="..\..\Car\Car.GrpcService\Protos\car_catalog.proto" GrpcServices="Client"/>
-        <Protobuf Include="D:\Modsen Internship\CarSaleApp\src\Services\File.GrpcService\Protos\file_service.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\File\File.GrpcService\Protos\file_service.proto" GrpcServices="Client"/>
     </ItemGroup>
     
 

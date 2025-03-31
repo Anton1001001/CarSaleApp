@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="FluentResults" Version="3.16.0" />
+        <PackageReference Include="Hangfire" Version="1.8.18" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.18" />
+        <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.13" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -21,12 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
-    </ItemGroup>
-
-    <ItemGroup>
       <Folder Include="Controllers\" />
     </ItemGroup>
 
@@ -34,6 +32,12 @@
       <ProjectReference Include="..\..\Car\Car.Application\Car.Application.csproj" />
       <ProjectReference Include="..\Advert.Application\Advert.Application.csproj" />
       <ProjectReference Include="..\Advert.Infrastructure\Advert.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
     
 
