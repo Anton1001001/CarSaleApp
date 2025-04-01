@@ -1,6 +1,8 @@
 using Advert.Application.Common.Advert.Models;
+using Advert.Application.Extensions;
 using AutoMapper;
 using File.GrpcService;
+using PhotoSize = Advert.Application.Common.Advert.Models.PhotoSize;
 
 namespace Advert.Infrastructure.GrpcClients.FileService;
 
@@ -8,16 +10,18 @@ public class FileServiceMappingProfile : Profile
 {
     public FileServiceMappingProfile()
     {
+        CreateMap<File.GrpcService.PhotoSize, PhotoSize>();
+        
         CreateMap<FileResponse, PhotoResponse>()
-            .ForMember(dest => dest.Big, opt =>
+            .ForCtorParam(dest => dest.Big, opt =>
                 opt.MapFrom(src => src.Big))
-            .ForMember(dest => dest.Medium, opt =>
+            .ForCtorParam(dest => dest.Medium, opt =>
                 opt.MapFrom(src => src.Medium))
-            .ForMember(dest => dest.Small, opt =>
+            .ForCtorParam(dest => dest.Small, opt =>
                 opt.MapFrom(src => src.Small))
-            .ForMember(dest => dest.ExtraSmall, opt =>
+            .ForCtorParam(dest => dest.ExtraSmall, opt =>
                 opt.MapFrom(src => src.ExtraSmall))
-            .ForMember(dest => dest.Main, opt =>
-                opt.MapFrom(_ => false));
+            .ForCtorParam(dest => dest.Main, opt =>
+                opt.MapFrom(src => false));
     }
 }

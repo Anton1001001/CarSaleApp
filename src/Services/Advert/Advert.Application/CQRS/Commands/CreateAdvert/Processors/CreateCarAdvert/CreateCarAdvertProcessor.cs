@@ -7,11 +7,14 @@ using Advert.Application.Errors.Base;
 using Advert.Application.Helpers;
 using Advert.Application.Services.Interfaces;
 using Advert.Domain.Constants;
+using Advert.Domain.Entities;
 using Advert.Domain.Enums;
 using Advert.Domain.Interfaces.Repositories;
 using AutoMapper;
 using FluentResults;
 using Newtonsoft.Json;
+using AdvertPrivateStatus = Advert.Domain.Constants.AdvertPrivateStatus;
+using AdvertPublicStatus = Advert.Domain.Constants.AdvertPublicStatus;
 
 namespace Advert.Application.CQRS.Commands.CreateAdvert.Processors.CreateCarAdvert;
 
@@ -53,6 +56,16 @@ public class CreateCarAdvertProcessor(
         advert.Properties = carParamsJson;
 
         advert.AdvertStatus = AdvertStatus.Active;
+
+        var advertCategory =
+            await unitOfWork.AdvertCategoryRepository.GetByNameAsync(carParameters.AdvertType, cancellationToken);
+
+        if (advertCategory is null)
+        {
+            return new InternalServerError(code: "Advert.Category", message: "Advert category error");
+        }
+        
+        advert.AdvertCategory = advertCategory;
 
         var advertPrivateStatus = await unitOfWork.AdvertPrivateStatusRepository
             .GetByNameAsync(AdvertPrivateStatus.Active, cancellationToken);

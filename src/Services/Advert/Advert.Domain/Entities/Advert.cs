@@ -15,7 +15,7 @@ public class Advert
     public DateTime PublishedAt { get; set; } = DateTime.Now;
     public DateTime RefreshedAt { get; set; }
     public string? RemoveReason { get; set; } = null;
-    public string VideoUrl { get; set; }
+    public string? VideoUrl { get; set; }
     public Currency PriceCurrency { get; set; }
     public int PriceAmount { get; set; }
     public int TodayViews { get; set; } = 0;

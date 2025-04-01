@@ -71,6 +71,7 @@ public class AdvertEntityTypeConfiguration : IEntityTypeConfiguration<Domain.Ent
         builder.Property(e => e.Version).HasColumnName("version");
         builder.Property(e => e.VideoUrl)
             .HasMaxLength(1000)
+            .IsRequired(false)
             .HasColumnName("video_url");
 
         builder.HasOne(d => d.AdvertPrivateStatus).WithMany(p => p.Adverts)
