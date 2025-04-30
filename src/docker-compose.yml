@@ -24,7 +24,7 @@ services:
     env_file:
       - Services/File/File.API/.env
     ports:
-      - "1000:1000"
+      - "5170:5170"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -42,7 +42,7 @@ services:
     env_file:
       - Services/File/File.GrpcService/.env
     ports:
-      - "7000:7000"
+      - "5086:5086"
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -70,7 +70,7 @@ services:
     env_file:
       - Services/Car/Car.API/.env
     ports:
-      - "5000:5000"
+      - "5055:5055"
     depends_on:
       - redis-stack
   
@@ -84,7 +84,7 @@ services:
     env_file:
       - Services/Car/Car.GrpcService/.env
     ports:
-      - "8000:8000"
+      - "5047:5047"
         
   advert-api:
     build:
@@ -94,7 +94,7 @@ services:
     environment:
       ASPNETCORE_URLS: http://+:9000
     ports:
-      - "9000:9000"
+      - "5144:5144"
     depends_on:
       - redis-stack
       - car-grpc
