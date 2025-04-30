@@ -1,0 +1,27 @@
+<header class="site-header">
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a [routerLink]="['/']" class="navbar-logo">
+        <img src="/assets/logo.svg" alt="Логотип" aria-hidden="true" />
+      </a>
+      <ul class="navbar-links">
+        <ng-container class="icon-container" *ngIf="authService.user$ | async as user; else loginLink">
+          <li (click)="messageClick()" class="icon-wrapper">
+            <nz-icon  nzType="message" nzTheme="outline" class="nav-icon"  />
+          </li>
+          <li class="icon-wrapper">
+            <nz-icon nzType="user" nzTheme="outline" class="nav-icon" />
+          </li>
+        </ng-container>
+        <ng-template #loginLink>
+          <li>
+            <a [routerLink]="['/login']" class="nav-link nav-auth">Войти</a>
+          </li>
+        </ng-template>
+        <li>
+          <a [routerLink]="['/create']" class="nav-link">Подать объявление</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

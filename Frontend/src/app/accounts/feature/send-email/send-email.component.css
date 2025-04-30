@@ -1,0 +1,63 @@
+.email-form-buttons {
+    display: flex;
+    gap: 12px; /* Можно уменьшить, если хочешь */
+}
+  
+.email-form-buttons button {
+    flex: 1; /* Обе кнопки занимают равное пространство */
+}
+
+.email-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: linear-gradient(to bottom right, #e6f0ff, #ffffff);
+    padding-top: 60px;
+}
+
+.email-card {
+    max-width: 450px;
+    width: 100%;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.email-form-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.email-form-input {
+    margin-bottom: 20px;
+}
+
+.email-error-message {
+    color: red;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.email-resend-link {
+    display: inline-block;
+    margin-top: 4px;
+    color: #1890ff;
+    cursor: pointer;
+}
+
+.email-resend-link:hover {
+    color: #40a9ff;
+}
+
+.email-form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+
+  

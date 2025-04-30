@@ -1,0 +1,33 @@
+.success-block, .resend-block {
+    text-align: center;
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .success-block {
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
+    color: #389e0d;
+  }
+
+  .resend-block {
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    color: #096dd9;
+  }
+
+  .styled-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-weight: 500;
+    color: #1890ff;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .styled-link:hover {
+    color: #40a9ff;
+  }
+  

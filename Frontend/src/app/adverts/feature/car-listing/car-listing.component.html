@@ -1,0 +1,361 @@
+<section>
+
+  <div class="header">
+    <h1 nz-typography>Подать объявление о продаже автомобиля</h1>
+  </div>
+
+  
+  <div class="header">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+      <ng-container formGroupName="Params">
+  
+        <nz-form-item class="form-item">
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="brand" nzRequired>Марка</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="brand" 
+              nzShowSearch 
+              nzAllowClear 
+              nzPlaceHolder="Выберите марку" 
+              formControlName="brandId" 
+              nzNotFoundContent="Ничего не найдено"
+              (ngModelChange)="onBrandChange($event)">
+                <nz-option *ngFor="let brand of advertFormData?.brands" [nzLabel]="brand.name" [nzValue]="brand.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+  
+
+        <nz-form-item *ngIf="isModelVisible" class="form-item">
+          <nz-form-label class="form-label" [nzSpan]="4" nzFor="model" nzRequired>Модель</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="model" 
+              nzShowSearch 
+              nzAllowClear 
+              nzPlaceHolder="Выберите модель" 
+              formControlName="modelId" 
+              nzNotFoundContent="Ничего не найдено"
+              [nzDisabled]
+              (ngModelChange)="onModelChange($event)">
+                <nz-option *ngFor="let model of advertFormData?.models" [nzLabel]="model.name" [nzValue]="model.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+  
+
+        <nz-form-item *ngIf="isYearVisible" class="form-item">
+          <nz-form-label class="form-label" [nzSpan]="4" nzFor="year" nzRequired>Год выпуска</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="year" 
+              nzShowSearch 
+              nzAllowClear 
+              nzPlaceHolder="Выберите год" 
+              formControlName="year" 
+              nzNotFoundContent="Ничего не найдено"
+              (ngModelChange)="onYearChange($event)">
+                <nz-option *ngFor="let year of advertFormData?.years" [nzLabel]="year.year" [nzValue]="year.year"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item *ngIf="isGenerationVisible">
+          <nz-form-label class="form-label" [nzSpan]="4" nzFor="generation" nzRequired>Поколение</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="generation" 
+              nzAllowClear 
+              nzPlaceHolder="Выберите поколение" 
+              formControlName="generationId" 
+              nzNotFoundContent="Ничего не найдено"
+              (ngModelChange)="onGenerationChange($event)">
+                <nz-option *ngFor="let generation of advertFormData?.generations" [nzLabel]="generation.name" [nzValue]="generation.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item *ngIf="isBodyTypeVisible">
+          <nz-form-label class="form-label" [nzSpan]="4" nzFor="bodyType" nzRequired>Кузов</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="bodyType" 
+              nzShowSearch 
+              nzAllowClear 
+              nzPlaceHolder="Выберите кузов" 
+              formControlName="bodyTypeId" 
+              nzNotFoundContent="Ничего не найдено"
+              (ngModelChange)="onBodyTypeChange($event)">
+                <nz-option *ngFor="let bodyType of advertFormData?.bodyTypes" [nzLabel]="bodyType.name" [nzValue]="bodyType.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <nz-form-item *ngIf="isTransmissionTypeVisible">
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="transmissionType" nzRequired>Коробка передач</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group 
+              id="transmissionType" 
+              formControlName="transmissionTypeId" 
+              nzButtonStyle="solid"
+              (ngModelChange)="onTransmissionTypeChange($event)">
+                <label *ngFor="let transmissionType of advertFormData?.transmissionTypes" nz-radio-button [nzValue]="transmissionType.id">{{transmissionType.name}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item *ngIf="isEngineTypeVisible">
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="engineType" nzRequired>Тип двигателя</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group 
+              id="engineType" 
+              formControlName="engineTypeId" 
+              nzButtonStyle="solid"
+              (ngModelChange)="onEngineTypeChange($event)">
+                <label *ngFor="let engineType of advertFormData?.engineTypes" nz-radio-button [nzValue]="engineType.id">{{engineType.name}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <nz-form-item *ngIf="isDriveTypeVisible">
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="driveType" nzRequired>Привод</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group 
+              id="driveType" 
+              formControlName="driveTypeId" 
+              nzButtonStyle="solid"
+              (ngModelChange)="onDriveTypeChange($event)">
+                <label *ngFor="let driveType of advertFormData?.driveTypes" nz-radio-button [nzValue]="driveType.id">{{driveType.name}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item *ngIf="isModificationVisible" >
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="modification" nzRequired>Модификация</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="modification" 
+              nzAllowClear 
+              nzPlaceHolder="Выберите модификацию" 
+              formControlName="modificationId" 
+              nzNotFoundContent="Ничего не найдено">
+                <nz-option *ngFor="let modification of advertFormData?.modifications" [nzLabel]="modification.name" [nzValue]="modification.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="condition" nzRequired>Состояние</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group class="full-width-radio-group" id="condition" formControlName="conditionId" nzButtonStyle="solid">
+                <label nz-radio-button [nzValue]="1">с пробегом</label>
+                <label nz-radio-button [nzValue]="2">аварийный</label>
+                <label nz-radio-button [nzValue]="3">на запчасти</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzRequired nzFor="mileage">Пробег</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <input id="mileage" type="number" nz-input formControlName="mileage" placeholder="км"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="color" nzRequired>Цвет кузова</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="color" 
+              nzAllowClear 
+              nzPlaceHolder="Выберите цвет кузова" 
+              formControlName="colorId" 
+              nzNotFoundContent="Ничего не найдено">
+                <nz-option *ngFor="let color of advertFormData?.colors" [nzLabel]="color.name" [nzValue]="color.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="interiorMaterial" nzRequired>Материал салона</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="materialColor" 
+              nzAllowClear 
+              nzPlaceHolder="Выберите материал салона" 
+              formControlName="interiorMaterialId" 
+              nzNotFoundContent="Ничего не найдено">
+                <nz-option *ngFor="let interiorMaterial of advertFormData?.interiorMaterials" [nzLabel]="interiorMaterial.name" [nzValue]="interiorMaterial.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="interiorColor" nzRequired>Цвет салона</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group id="interiorColor" formControlName="interiorColorId" nzButtonStyle="solid">
+                <label *ngFor="let interiorColor of advertFormData?.interiorColors" nz-radio-button [nzValue]="interiorColor.id">{{interiorColor.name}}</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="countryOfRegistration" nzRequired>Страна регистрации</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="countryOfRegistration" 
+              nzAllowClear 
+              nzPlaceHolder="Выберите страну регистрации" 
+              formControlName="registrationCountryId" 
+              nzNotFoundContent="Ничего не найдено">
+                <nz-option nzLabel="Белурусь" [nzValue]="1"></nz-option>
+                <nz-option nzLabel="Россия" [nzValue]="2"></nz-option>
+                <nz-option nzLabel="Другая страна" [nzValue]="3"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="registrationStatus" nzRequired>Учёт</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-radio-group class="full-width-radio-group" id="registrationStatus" formControlName="registrationStatus" nzButtonStyle="solid">
+                <label nz-radio-button [nzValue]=1>на учёте в ГАИ</label>
+                <label nz-radio-button [nzValue]=2>снят с учета</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="description" nzRequired>Описание</nz-form-label>
+          <nz-form-control class="description">
+            <textarea rows="9" nz-input formControlName="description"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzRequired nzFor="price">Цена</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <div class="price-container">
+              <input id="price" class="price-input" type="number" nz-input formControlName="price"/>
+              <nz-select 
+                id="currency" 
+                class="currency-select"
+                formControlName="currency">
+                <nz-option nzLabel="USD" [nzValue]="1"></nz-option>
+                <nz-option nzLabel="BYN" [nzValue]="2"></nz-option>
+                <nz-option nzLabel="EUR" [nzValue]="3"></nz-option>
+                <nz-option nzLabel="RUB" [nzValue]="4"></nz-option>
+              </nz-select>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="placeRegion" nzRequired>Область</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="placeRegion" 
+              nzAllowClear 
+              nzShowSearch
+              nzPlaceHolder="Выберите область" 
+              formControlName="placeRegionId" 
+              nzNotFoundContent="Ничего не найдено"
+              (ngModelChange)="onPlaceRegionChange($event)">
+                <nz-option *ngFor="let placeRegion of advertFormData?.placeRegions" [nzLabel]="placeRegion.name" [nzValue]="placeRegion.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+        <nz-form-item *ngIf="isPlaceCityVisible">
+          <nz-form-label [nzSpan]="4" class="form-label" nzFor="placeCity" nzRequired>Город</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <nz-select 
+              id="placeCity" 
+              nzAllowClear 
+              nzShowSearch
+              nzPlaceHolder="Выберите город" 
+              formControlName="placeCityId" 
+              nzNotFoundContent="Ничего не найдено">
+                <nz-option *ngFor="let placeCity of advertFormData?.placeCities" [nzLabel]="placeCity.name" [nzValue]="placeCity.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label" nzRequired nzFor="sellerName">Имя продавца</nz-form-label>
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <input id="sellerName" type="text" nz-input formControlName="sellerName" placeholder="Введите имя продавца"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <ng-container formArrayName="phones">
+          <ng-container *ngFor="let phone of phones.controls; let i = index" [formGroupName]="i">
+            <nz-form-item class="phone-item">
+              <nz-form-label [nzSpan]="4" class="form-label" *ngIf="i === 0" nzFor="phoneNumber" nzRequired>Номер телефона</nz-form-label>
+              <nz-form-control 
+              [nzSpan]="6"
+              class="phone-control"
+              [ngClass]="{'ml-180': i !== 0}">
+                <div class="phone-input-container">
+                  <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate" class="phone-input-group">
+                    <ng-template #addOnBeforeTemplate>
+                      <nz-select formControlName="phoneCodeId" class="phone-select">
+                        <nz-option *ngFor="let phoneCode of advertFormData?.phoneCodes" [nzLabel]="phoneCode.emoji + ' +' + phoneCode.code" [nzValue]="phoneCode.id"></nz-option>
+                      </nz-select>
+                    </ng-template>
+                    <input class="phone-input" formControlName="number" id="phoneNumber" nz-input />
+                  </nz-input-group>
+                  <span
+                    *ngIf="phones.controls.length > 1"
+                    nz-icon
+                    nzType="delete"
+                    class="dynamic-delete-button"
+                    (click)="removePhone(i)">
+                  </span>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+          </ng-container>
+        </ng-container>
+
+        <nz-form-item *ngIf="phones.controls.length < 3">
+          <nz-form-control [nzSpan]="6" class="form-control">
+            <button nz-button nzType="dashed" class="add-button" (click)="addPhone()">
+              Еще один
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" class="form-label">Фотографии</nz-form-label>
+          <div class="photo-container">
+            <h1 class="photo-h1" nz-typography>Фотографии</h1>
+            <p>Используйте только свои снимки и не размещайте рекламу. Иначе модератор отклонит ваше объявление.</p>
+            <p>JPG или PNG размером до 30 МБ. Перемещайте фото, чтобы изменить их порядок.</p>
+            <app-photo-uploader (photoRequestChange)="onPhotoRequestChange($event)"></app-photo-uploader>
+          </div>
+        </nz-form-item>  
+  
+  
+        <nz-form-item>
+          <nz-form-control class="submit-control" [nzSpan]="6">
+            <button class="submit-button" nz-button nzType="primary" type="submit">Submit</button>
+          </nz-form-control>
+        </nz-form-item>
+
+      </ng-container>
+    </form>
+  </div>
+
+</section>

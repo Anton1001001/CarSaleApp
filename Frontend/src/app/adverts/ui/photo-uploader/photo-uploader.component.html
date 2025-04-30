@@ -1,0 +1,36 @@
+<div class="photo-uploader">
+  <div>
+    <app-upload-file 
+    (fileListChange)="updateFileList($event)" 
+    [disabled]="items.length >= 30"  
+    class="app-upload-file">
+    </app-upload-file>
+    <span class="photo-number">
+      {{ items.length < 30 ? 'можно еще ' + (30 - items.length) + ' фото' : 'загружено ' + items.length + ' фото — это максимум'}}
+    </span>   
+  </div>
+  <div cdkDropList cdkDropListOrientation="mixed" class="example-list" (cdkDropListDropped)="drop($event)">
+    @for (item of items; track item) {
+      <div class="example-box" 
+      cdkDrag 
+      (cdkDragStarted)="onDragStart()" 
+      (cdkDragEnded)="onDragEnd()">
+
+      <ng-container *ngIf="item.url === ''; else showImage">
+        <div class="loading-spinner">
+          <ng-template #indicatorTemplate>
+            <nz-icon nzType="loading" nzSpin style="font-size: 40px; color: white;"></nz-icon>
+          </ng-template>
+          <nz-spin [nzIndicator]="indicatorTemplate" nzSimple></nz-spin>
+        </div>
+        
+      </ng-container>
+
+      <ng-template #showImage>
+        <img [src]="item.url" cdkDragHandle />
+      </ng-template>
+    </div>
+    
+    }
+  </div>  
+</div>

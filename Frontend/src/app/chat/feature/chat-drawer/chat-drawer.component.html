@@ -1,0 +1,95 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzVisible]="visible"
+  (nzOnClose)="close()"
+  nzPlacement="right"
+  nzTitle="Чат"
+  nzWidth="500px"
+>
+  <ng-container *nzDrawerContent>
+      <div *ngIf="mode === 'list' && dialogs" class="dialog-list">
+        <div *ngFor="let dialog of dialogs" class="dialog-item" (click)="openDialog(dialog)">
+          <div class="dialog-avatar">
+            <img [src]="dialog.advertInfo.photoPreviewUrl" alt="avatar" />
+          </div>
+          <div class="dialog-content">
+            <div class="dialog-title">
+              {{ `${dialog.advertInfo.brand} ${dialog.advertInfo.model} 
+              ${dialog.advertInfo.generation}, ${dialog.advertInfo.year} г., 
+              ${dialog.advertInfo.price.byn} р.` }}
+            </div>
+            <p class="last-message">{{ dialog.lastMessage }}</p>
+            <div style="display: flex; justify-content: flex-end;" class="last">
+              <span class="dialog-time">{{ dialog.lastMessageTime | date: 'dd.MM.yy' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mode === 'list' && dialogs.length === 0">У вас пока что нет диалогов</div>
+
+      <div *ngIf="mode === 'dialog' && dialogInfo" class="dialog-view">
+        <div style="padding: 0 14px; font-size: 16px; display: flex; flex-direction: column; align-items: left; border-bottom: 1px solid rgb(213, 215, 218);">
+          <a style="margin-bottom: 20px;" (click)="backToList()">← Все диалоги</a>                   
+          <h3 style="margin: 0;">{{ dialogInfo.name }}</h3>
+        </div>
+        <div class="dialog-preview">
+          <div class="preview-avatar">
+            <img [src]="dialogInfo.advertInfo?.photoPreviewUrl" alt="Avatar">
+          </div>
+          <a (click)="goToAdvert(dialogInfo.advertInfo?.id)" class="preview-title">
+            {{ `${dialogInfo.advertInfo?.brand} ${dialogInfo.advertInfo?.model} 
+              ${dialogInfo.advertInfo?.generation}, ${dialogInfo.advertInfo?.year} г., 
+              ${dialogInfo.advertInfo?.price?.byn} р.` }}
+          </a>
+        </div>
+        <div class="messages-content">
+          <div #chatMessages class="chat-messages">
+            <div 
+            *ngFor="let msg of messages"
+            class="message"
+            [ngClass]="msg.isIncoming ? 'own' : 'other'"
+            (contextmenu)="onMessageRightClick($event, msg)"
+          >
+            {{ msg.text }}
+            <div class="message-time">{{ msg.sentAt | date: 'dd.MM.yy HH:mm' }}</div>
+          </div>
+          
+          <div 
+            class="message-context-menu" 
+            *ngIf="contextMenuVisible"
+            [ngStyle]="{
+              top: contextMenuPosition.y + 'px',
+              left: contextMenuPosition.x + 'px'
+            }"
+          >
+            <div class="menu-item" (click)="editMessage()">✏️ Редактировать</div>
+            <div class="menu-item" (click)="deleteMessage()">🗑️ Удалить</div>
+          </div>
+          
+                   
+          </div>  
+          <div class="chat-input">
+            <input 
+              nz-input 
+              #messageInput
+              [value]="inputText"
+              (input)="onInputChange($event)"
+              (keydown.enter)="sendMessage(messageInput)"
+              placeholder="Введите сообщение"
+            />
+            <button nz-button (click)="sendMessage(messageInput)">
+              <nz-icon nzType="send" nzTheme="outline" />
+            </button>
+          </div>
+          
+        </div>
+      </div>
+
+  </ng-container>
+</nz-drawer>
+
+
+
+
+

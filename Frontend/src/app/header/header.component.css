@@ -1,0 +1,92 @@
+:host {
+  --content-padding: 10px;
+  --header-padding: 40px;
+  --header-bg: #2c3e50;
+  --text-light: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.site-header {
+  background-color: #000000;
+  color: var(--text-light);
+  height: 70px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  margin-bottom: 30px;
+}
+
+.navbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container {
+  max-width: 65%;
+  margin: 0 auto;
+  padding: var(--content-padding) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 15px;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-auth:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link:first-child {
+  background-color: #000;
+}
+
+.nav-link:first-child:hover {
+  background-color: #444;
+}
+
+.nav-icon {
+  font-size: 20px;
+  color: white;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-icon:hover {
+  color: #1890ff;
+}
+
+.icon-wrapper {
+  display: inline-block;
+}
+

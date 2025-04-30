@@ -1,0 +1,13 @@
+:root {
+    --font-family-text: "Open Sans", system-ui, sans-serif;
+}
+
+.upload-button {
+    width: 200px;
+    overflow: hidden;
+    padding-left: 20px !important;
+
+    font-family: var(--font-family-text);
+    
+}
+

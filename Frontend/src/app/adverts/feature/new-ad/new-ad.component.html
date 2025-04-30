@@ -1,0 +1,15 @@
+<section class="category-section">
+  <section class="category-grid">
+    <div
+      class="category-card"
+      *ngFor="let category of categories; let i = index"
+      [routerLinkActive]="['selected']"
+      [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/create/', category.name]">
+          <img [src]="'assets/categories/' + category.name + '.png'" alt="{{category.label}}">
+          <p>{{category.label}}</p>
+        </a>
+    </div>
+  </section>
+</section>
+<router-outlet></router-outlet>

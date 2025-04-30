@@ -1,0 +1,63 @@
+<div class="login-form-container">
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <h2 class="login-form-title">Вход в аккаунт</h2>
+  
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Пожалуйста, введите email">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="email" placeholder="Email" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Введите пароль">
+          <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="suffixIcon">
+            <ng-template #prefixIcon>
+              <i nz-icon nzType="lock"></i>
+            </ng-template>
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nz-input
+              formControlName="password"
+              placeholder="Пароль"
+            />
+            <ng-template #suffixIcon>
+              <i
+                nz-icon
+                [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                (click)="passwordVisible = !passwordVisible"
+                style="cursor: pointer"
+              ></i>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      
+  
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="remember">
+            <span>Запомнить меня</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a routerLink="/send-email/forgot-password" class="login-form-forgot">Забыли пароль?</a>
+        </div>
+      </div>
+  
+      <div *ngIf="error" class="error-message">
+        {{ error.message }}
+        <div *ngIf="error?.code === 'SignInByEmail.EmailNotConfirmed'">
+          <a (click)="resendEmailConfirmationLink()">Нажмите здесь, чтобы получить новую ссылку</a>
+        </div>
+      </div>
+  
+      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+        Войти
+      </button>
+  
+      <a (click)="onRegisterClick()" class="register-link">Нет аккаунта? Зарегистрируйтесь</a>
+    </form>
+  </div>
+  

@@ -1,0 +1,167 @@
+<div class="home-content">
+
+
+  <div class="promo-banner">
+    <nz-carousel [nzAutoPlay]="true">
+      <div nz-carousel-content>
+        <img src="https://cdn.pixabay.com/photo/2018/06/02/22/24/bmw-3447452_1280.jpg" style="width: 100%; border-radius: 8px;" />
+      </div>
+      <div nz-carousel-content>
+        <img src="https://cdn.pixabay.com/photo/2017/09/05/11/42/car-2710709_1280.jpg" style="width: 100%; border-radius: 8px;" />
+      </div>
+    </nz-carousel>
+  </div>
+  
+
+  <nz-divider orientation="left">Популярные бренды</nz-divider>
+  <div nz-row [nzGutter]="16" style="margin-bottom: 32px;">
+    <div nz-col [nzSpan]="3" *ngFor="let brand of popularBrands">
+      <nz-card nzHoverable [nzTitle]="brand.name" style="text-align: center;">
+        <div style="width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
+          <img [src]="brand.logo" [alt]="brand.name" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+        </div>
+      </nz-card>
+    </div>
+  </div>
+  
+  <nz-divider orientation="left">Почему выбирают нас</nz-divider>
+  <div nz-row [nzGutter]="16" style="margin-bottom: 32px;">
+    <div nz-col [nzSpan]="6">
+      <nz-card nzBordered [nzTitle]="'Гарантия'" nzHoverable>
+        <i nz-icon nzType="safety-certificate" style="font-size: 24px;"></i>
+        <p>Только проверенные автомобили от сертифицированных продавцов.</p>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card nzBordered [nzTitle]="'Удобный поиск'" nzHoverable>
+        <i nz-icon nzType="search" style="font-size: 24px;"></i>
+        <p>Множество фильтров и быстрый поиск по объявлениям.</p>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card nzBordered [nzTitle]="'Поддержка 24/7'" nzHoverable>
+        <i nz-icon nzType="customer-service" style="font-size: 24px;"></i>
+        <p>Онлайн-чат и горячая линия для решения любых вопросов.</p>
+      </nz-card>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-card nzBordered [nzTitle]="'Выгодные предложения'" nzHoverable>
+        <i nz-icon nzType="dollar" style="font-size: 24px;"></i>
+        <p>Лучшие цены от частных и официальных дилеров.</p>
+      </nz-card>
+    </div>
+  </div>
+
+  <form style="background-color: blue; padding: 20px;" nz-form class="filter-form" (ngSubmit)="applyFilters()">
+    <div nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Марка</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.brand" name="brand" (ngModelChange)="onBrandChange($event)" nzPlaceHolder="Выберите марку">
+              <nz-option *ngFor="let brand of brands" [nzValue]="brand" [nzLabel]="brand"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Модель</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.model" name="model" (ngModelChange)="onModelChange($event)" nzPlaceHolder="Выберите модель" [nzDisabled]="!filters.brand">
+              <nz-option *ngFor="let model of models" [nzValue]="model" [nzLabel]="model"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Поколение</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.generation" name="generation" nzPlaceHolder="Выберите поколение" [nzDisabled]="!filters.model">
+              <nz-option *ngFor="let gen of generations" [nzValue]="gen" [nzLabel]="gen"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Тип кузова</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.bodyType" name="bodyType" nzPlaceHolder="Тип кузова">
+              <nz-option *ngFor="let body of bodyTypes" [nzValue]="body" [nzLabel]="body"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Топливо</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.fuelType" name="fuelType" nzPlaceHolder="Тип топлива">
+              <nz-option *ngFor="let fuel of fuelTypes" [nzValue]="fuel" [nzLabel]="fuel"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Коробка</nz-form-label>
+          <nz-form-control>
+            <nz-select [(ngModel)]="filters.transmission" name="transmission" nzPlaceHolder="Тип трансмиссии">
+              <nz-option *ngFor="let trans of transmissions" [nzValue]="trans" [nzLabel]="trans"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Год (от)</nz-form-label>
+          <nz-form-control>
+            <nz-input-number [(ngModel)]="filters.yearFrom" name="yearFrom" [nzMin]="1980" [nzMax]="2025"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Год (до)</nz-form-label>
+          <nz-form-control>
+            <nz-input-number [(ngModel)]="filters.yearTo" name="yearTo" [nzMin]="1980" [nzMax]="2025"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Цена (от)</nz-form-label>
+          <nz-form-control>
+            <nz-input-number [(ngModel)]="filters.priceFrom" name="priceFrom" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label>Цена (до)</nz-form-label>
+          <nz-form-control>
+            <nz-input-number [(ngModel)]="filters.priceTo" name="priceTo" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div nz-col [nzSpan]="6" class="d-flex align-items-end">
+        <button nz-button nzType="primary" htmlType="submit">Применить</button>
+      </div>
+    </div>
+  </form>
+
+  <app-advert-list [adverts]="adverts" [isLoading]="isLoading"></app-advert-list>
+</div>
+
