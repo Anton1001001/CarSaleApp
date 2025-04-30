@@ -1,0 +1,3 @@
+namespace User.Core.CQRS.Commands.ResendEmailConfirmationLink;
+
+public record ResendEmailConfirmationLinkResponse;
