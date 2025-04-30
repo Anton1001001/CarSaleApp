@@ -55,7 +55,7 @@ public class BackblazeB2Service(IOptions<BackblazeOptions> options, IAmazonS3 s3
             Objects = objectsToDelete,
             Quiet = true
         };
-
+        
         var response = await s3Client.DeleteObjectsAsync(deleteRequest);
         return response.DeleteErrors.Count == 0;
     }

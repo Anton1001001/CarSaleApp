@@ -3,6 +3,7 @@ using File.Core.CQRS.Commands.RemoveFile;
 using File.Core.CQRS.Commands.UploadFile;
 using File.Core.CQRS.Queries.GetFileById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace File.API.Controllers;
