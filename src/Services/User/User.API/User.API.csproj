@@ -8,7 +8,36 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetEnv" Version="3.1.1" />
+        <PackageReference Include="FluentResults" Version="3.16.0" />
+        <PackageReference Include="MediatR" Version="12.5.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
+        
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.14" />
+        
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="System.Security.Claims" Version="4.3.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\User.Core\User.Core.csproj" />
+      <ProjectReference Include="..\User.DataAccess\User.DataAccess.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Auth.Shared\Auth.Shared.csproj" />
+        <None Include="..\..\..\Shared\Auth.Shared\appsettings.jwt.json">
+            <Link>appsettings.jwt.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+
+
     </ItemGroup>
 
     <ItemGroup>
@@ -17,8 +46,5 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
 
 </Project>
