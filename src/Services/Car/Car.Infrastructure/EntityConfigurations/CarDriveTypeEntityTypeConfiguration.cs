@@ -10,7 +10,7 @@ public class CarDriveTypeEntityTypeConfiguration : IEntityTypeConfiguration<CarD
 
         builder.Property(e => e.Id)
             .ValueGeneratedNever()
-            .HasColumnName("id_car_drive_type");
+            .HasColumnName("id");
         builder.Property(e => e.Name)
             .HasMaxLength(255)
             .HasColumnName("name");

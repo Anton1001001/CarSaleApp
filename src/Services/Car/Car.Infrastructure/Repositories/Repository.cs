@@ -12,9 +12,9 @@ public class Repository<T> : IRepository<T>
         _dbSet = Context.Set<T>();
     }
 
-    public async Task<T?> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FindAsync(id);
+        return await _dbSet.FindAsync(id, cancellationToken);
     }
 
     public async Task<List<T>> GetAllAsync()

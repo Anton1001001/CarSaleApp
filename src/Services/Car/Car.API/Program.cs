@@ -1,4 +1,10 @@
+using DotNetEnv;
+
 var builder = WebApplication.CreateBuilder(args);
+
+Env.Load();
+builder.Configuration.AddEnvironmentVariables();
+
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);

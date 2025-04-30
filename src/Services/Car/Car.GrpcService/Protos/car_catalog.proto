@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+option csharp_namespace = "Car.GrpcService";
+import "google/protobuf/empty.proto";
+
+service CarCatalog {
+  rpc GetCarParameters (GetCarParametersRequest) returns (GetCarParametersResponse);
+  rpc GetBrands (google.protobuf.Empty) returns (GetBrandsResponse);
+  rpc GetBrandModels(GetBrandModelsRequest) returns (GetBrandModelsResponse);
+  rpc GetModelGenerations(GetModelGenerationsRequest) returns (GetModelGenerationsResponse);
+  rpc GetGenerationModifications(GetGenerationModificationsRequest) returns (GetGenerationModificationsResponse);
+  rpc GetColors(google.protobuf.Empty) returns (GetColorsResponse);
+  rpc GetInteriorMaterials(google.protobuf.Empty) returns (GetInteriorMaterialsResponse);
+  rpc GetInteriorColors(google.protobuf.Empty) returns (GetInteriorColorsResponse);
+  rpc GetModelYears(GetModelYearsRequest) returns (GetModelYearsResponse);
+  rpc GetCarParametersPreview(GetCarParametersPreviewRequest) returns (GetCarParametersPreviewResponse); 
+}
+
+message GetModelYearsResponse {
+  repeated Year years = 1;
+}
+
+message Year {
+  int32 year = 1;
+}
+
+message GetModelYearsRequest {
+  int32 model_id = 1;
+}
+
+message GetInteriorColorsResponse {
+  repeated InteriorColor interior_colors = 1;
+}
+
+message GetInteriorMaterialsResponse {
+  repeated InteriorMaterial interior_materials = 1;
+}
+
+message GetColorsResponse {
+  repeated Color colors = 1;
+}
+
+message InteriorColor {
+  int32 id = 1;
+  string name = 2;
+}
+
+message InteriorMaterial {
+  int32 id = 1;
+  string name = 2;  
+}
+
+message Color {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GetGenerationModificationsRequest {
+  int32 generation_id = 1;
+}
+
+message GetGenerationModificationsResponse {
+  repeated Modification modifications = 1;
+}
+
+message Modification {
+  int32 id = 1;
+  string name = 2;
+  EngineType engine_type = 3;
+  DriveType drive_type = 4;
+  TransmissionType transmission_type = 5;
+  BodyType body_type = 6;
+}
+
+message EngineType {
+  int32 id = 1;
+  string name = 2;
+}
+
+message DriveType {
+  int32 id = 1;
+  string name = 2;
+}
+
+message TransmissionType {
+  int32 id = 1;
+  string name = 2;
+}
+
+message BodyType {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GetModelGenerationsResponse {
+  repeated Generation generations = 1;
+}
+
+message GetModelGenerationsRequest {
+  int32 model_id = 1;
+  optional int32 year = 2;
+}
+
+message Generation {
+  int32 id = 1;
+  string name = 2;
+  int32 year_begin = 3;
+  int32 year_end = 4;
+  repeated BodyType body_types = 5;
+}
+
+message GetBrandModelsResponse {
+  repeated Model models = 1;
+}
+
+message GetBrandModelsRequest {
+  int32 brand_id = 1;
+}
+
+message Model {
+  int32 id = 1;
+  string name = 2;
+}
+
+message Brand {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GetBrandsResponse {
+  repeated Brand brands = 1;
+}
+
+message GetCarParametersRequest {
+  int32 brand_id = 1;     
+  int32 model_id = 2;    
+  int32 body_type_id = 3;  
+  int32 generation_id = 4;     
+  int32 modification_id = 5;   
+  int32 engine_type_id = 6; 
+  int32 drive_type_id = 7;   
+  int32 transmission_type_id = 8;
+  int32 engine_capacity = 9;     
+  int32 color_id = 10;        
+  int32 condition_id = 11;          
+  int32 interior_material_id = 12;
+  int32 interior_color_id = 13;  
+   
+}
+
+message GetCarParametersResponse {
+  string brand = 1;        
+  string model = 2;         
+  string body_type = 3;       
+  string generation = 4;     
+  string modification = 5;      
+  string engine_type = 6;      
+  string drive_type = 7;     
+  string transmission_type = 8;  
+  string engine_capacity = 9;    
+  string color = 10;      
+  string condition = 11;            
+  string interior_material = 12; 
+  string interior_color = 13;
+}
+
+message GetCarParametersPreviewRequest {
+  int32 brand_id = 1;
+  int32 model_id = 2;
+  int32 generation_id = 3;
+}
+
+message GetCarParametersPreviewResponse {
+  string brand = 1;
+  string model = 2;
+  string generation = 3;
+}

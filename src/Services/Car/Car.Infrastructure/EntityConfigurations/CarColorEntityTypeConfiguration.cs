@@ -9,8 +9,9 @@ public class CarColorEntityTypeConfiguration : IEntityTypeConfiguration<CarColor
         builder.ToTable("car_color", tb => tb.HasComment("Цвета автомобилей"));
 
         builder.Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasComment("ID цвета")
-            .HasColumnName("id_car_color");
+            .HasColumnName("id");
         builder.Property(e => e.Name)
             .HasMaxLength(255)
             .HasComment("Название цвета")

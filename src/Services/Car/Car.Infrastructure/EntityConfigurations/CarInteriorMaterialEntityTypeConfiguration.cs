@@ -9,8 +9,9 @@ public class CarInteriorMaterialEntityTypeConfiguration : IEntityTypeConfigurati
         builder.ToTable("car_interior_material", tb => tb.HasComment("Материалы салона автомобилей"));
 
         builder.Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasComment("ID материала салона")
-            .HasColumnName("id_car_interior_material");
+            .HasColumnName("id");
         builder.Property(e => e.Name)
             .HasMaxLength(255)
             .HasComment("Название материала салона")

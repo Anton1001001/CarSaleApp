@@ -9,8 +9,9 @@ public class CarConditionEntityTypeConfiguration : IEntityTypeConfiguration<CarC
         builder.ToTable("car_condition", tb => tb.HasComment("Состояние автомобилей"));
 
         builder.Property(e => e.Id)
+            .ValueGeneratedNever()
             .HasComment("ID состояния авто")
-            .HasColumnName("id_car_condition");
+            .HasColumnName("id");
         builder.Property(e => e.Name)
             .HasMaxLength(255)
             .HasComment("Название состояния")

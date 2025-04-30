@@ -8,11 +8,10 @@
         <NoWarn>$(NoWarn);SKEXP0001;SKEXP0010;SKEXP0070</NoWarn>
     </PropertyGroup>
     
-    
-
     <ItemGroup>
         <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
         <PackageReference Include="CsvHelper" Version="33.0.1" />
+        <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="MediatR" Version="12.4.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.1">
@@ -27,14 +26,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+      <ProjectReference Include="..\Car.Application\Car.Application.csproj" />
+      <ProjectReference Include="..\Car.Infrastructure\Car.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Car.Application\Car.Application.csproj" />
-      <ProjectReference Include="..\Car.Infrastructure\Car.Infrastructure.csproj" />
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
