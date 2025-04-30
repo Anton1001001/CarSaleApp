@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option csharp_namespace = "Advert.GrpcService";
+
+service Advert {
+  rpc GetAdvertPreviewById(GetAdvertPreviewByIdRequest) returns (GetAdvertPreviewByIdResponse);
+  rpc GetAdvertsPreviewsByIds(GetAdvertsPreviewsByIdsRequest) returns (GetAdvertsPreviewsByIdsResponse);
+}
+
+message GetAdvertsPreviewsByIdsRequest {
+  repeated int32 ids = 1;
+}
+
+message GetAdvertsPreviewsByIdsResponse {
+  repeated AdvertPreview adverts_previews = 1;
+}
+
+message GetAdvertPreviewByIdRequest {
+  int32 id = 1;
+}
+
+message AdvertPreview {
+  int32 id = 1;
+  string seller_id = 2;
+  string advert_type = 3;
+  PublicStatus public_status = 4;
+  string advert_status = 5;
+  string seller_name = 6;
+  Price price = 7;
+  string photo_preview_url = 8;
+  string brand = 9;
+  string model = 10;
+  string generation = 11;
+  int32 year = 12;
+}
+
+message GetAdvertPreviewByIdResponse {
+  AdvertPreview advert_preview = 1;
+}
+
+message PublicStatus {
+  string label = 1;
+  string  name = 2;
+}
+
+message Price {
+  int32 usd = 1;
+  int32 byn = 2;
+  int32 rub = 3;
+  int32 eur = 4;
+}
+
+

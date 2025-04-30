@@ -15,7 +15,9 @@ public class CarsMappingProfile : Profile
                 opt.MapFrom(src => -1))
             .ForCtorParam(dest => dest.Registration, opt =>
                 opt.MapFrom(src => default(string?)));
+        
         CreateMap<CarParametersToSave, CarParametersResponse>();
-        CreateMap<CarParametersToSave, CarsCatalogRequest>();
+        CreateMap<CarParametersToSave, CarsCatalogRequest>();        
+        CreateMap<CarParametersToSave, CarsCatalogPreviewRequest>();
     }
 }

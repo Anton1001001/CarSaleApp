@@ -13,6 +13,7 @@
         <PackageReference Include="Hangfire" Version="1.8.18" />
         <PackageReference Include="Hangfire.AspNetCore" Version="1.8.18" />
         <PackageReference Include="Hangfire.InMemory" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.13" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -29,9 +30,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Shared\Auth.Shared\Auth.Shared.csproj" />
       <ProjectReference Include="..\..\Car\Car.Application\Car.Application.csproj" />
       <ProjectReference Include="..\Advert.Application\Advert.Application.csproj" />
       <ProjectReference Include="..\Advert.Infrastructure\Advert.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Auth.Shared\Auth.Shared.csproj" />
+        <None Include="..\..\..\Shared\Auth.Shared\appsettings.jwt.json">
+            <Link>appsettings.jwt.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>

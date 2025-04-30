@@ -1,7 +1,12 @@
+using System.Text;
 using Advert.API.Middlewares;
 using Advert.Application.Extensions;
+using Advert.Application.Options;
 using Advert.Infrastructure.Extensions;
+using Auth.Shared;
 using Hangfire;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,13 +17,8 @@ builder.Services
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy => policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+builder.Services.AddAuthorization();
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,9 +35,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAll");
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

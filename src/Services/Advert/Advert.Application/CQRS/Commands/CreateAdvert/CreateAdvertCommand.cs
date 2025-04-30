@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Advert.Application.CQRS.Commands.CreateAdvert;
 
-public record CreateAdvertCommand(ParametersBase Parameters) : IRequest<Result<AdvertResponse>>;
+public record CreateAdvertCommand(string SellerId, ParametersBase Parameters) : IRequest<Result<AdvertResponse>>;

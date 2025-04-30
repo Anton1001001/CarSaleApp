@@ -20,7 +20,7 @@ public static class Extensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
 
         services.AddScoped<IPhotosSenderService, PhotosSenderService>();
-        services.AddScoped<IAdvertService, AdvertService>();
+        services.AddTransient<IAdvertService, AdvertService>();
         services.AddSingleton<ICurrencyConverter, CurrencyConverter>();
         
         return services;

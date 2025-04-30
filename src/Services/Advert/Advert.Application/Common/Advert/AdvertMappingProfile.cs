@@ -27,5 +27,23 @@ public class AdvertMappingProfile : Profile
                 opt.MapFrom(src => default(IVehicleParametersResponse?)))
             .ForCtorParam(dest => dest.Photos, opt =>
                 opt.MapFrom(src => new List<PhotoResponse>()));
+
+        CreateMap<Domain.Entities.Advert, AdvertPreviewResponse>()
+            .ForCtorParam(dest => dest.PublicStatus, opt =>
+                opt.MapFrom(src => src.AdvertPublicStatus))
+            .ForCtorParam(dest => dest.Price, opt =>
+                opt.MapFrom(src => default(PriceResponse?)))
+            .ForCtorParam(dest => dest.PhotoPreviewUrl, opt =>
+                opt.MapFrom(src => default(string?)))
+            .ForCtorParam(dest => dest.Brand, opt =>
+                opt.MapFrom(src => ""))
+            .ForCtorParam(dest => dest.Model, opt =>
+                opt.MapFrom(src => ""))
+            .ForCtorParam(dest => dest.Generation, opt =>
+                opt.MapFrom(src => ""))
+            .ForCtorParam(dest => dest.Year, opt =>
+                opt.MapFrom(src => -1));
+
+
     }
 }

@@ -9,6 +9,7 @@ public interface ICarCatalogGrpcClient
     Task<List<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken);
     Task<List<ModelResponse>> GetBrandModelsAsync(int brandId, CancellationToken cancellationToken);
     Task<CarsCatalogResponse> GetCarParametersAsync(CarsCatalogRequest request, CancellationToken cancellationToken);
+    Task<CarsCatalogPreviewResponse> GetCarParametersPreviewAsync(CarsCatalogPreviewRequest request, CancellationToken cancellationToken);
     Task<List<ModificationResponse>> GetGenerationModificationsAsync(int generationId, CancellationToken cancellationToken);
     Task<List<ColorResponse>> GetColorsAsync(CancellationToken cancellationToken);
     Task<List<InteriorColorResponse>> GetInteriorColorsAsync(CancellationToken cancellationToken);

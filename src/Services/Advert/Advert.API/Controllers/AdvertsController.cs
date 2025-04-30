@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Advert.API.Extensions;
 using Advert.Application.Common.Advert.Models.Parameters;
 using Advert.Application.CQRS.Commands.CreateAdvert;
@@ -12,15 +13,18 @@ using Advert.Application.CQRS.Queries.GetAllAdverts;
 using Advert.Infrastructure.Options;
 using Hangfire;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace Advert.API.Controllers;
 
+[Authorize]
 [ApiController]
-[Route("api/adverts/")]
+[Route("/api/adverts/")]
 public class AdvertsController(ISender sender) : ControllerBase
 {
+    
     [HttpGet("categories")]
     public async Task<IActionResult> GetAdvertCategories(CancellationToken cancellationToken)
     {
@@ -28,6 +32,8 @@ public class AdvertsController(ISender sender) : ControllerBase
 
         return result.ToActionResult();
     }
+    
+    [AllowAnonymous]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetAdvertById([FromRoute] int id, CancellationToken cancellationToken = default)
     {
@@ -36,6 +42,7 @@ public class AdvertsController(ISender sender) : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAllAdverts(CancellationToken cancellationToken = default)
     {
@@ -43,12 +50,13 @@ public class AdvertsController(ISender sender) : ControllerBase
         
         return result.ToActionResult();
     }
-
+    
     [HttpPost("{type}/create")]
     public async Task<IActionResult> CreateAdvert([FromRoute] string type, [FromBody] CreateAdvertRequest request, CancellationToken cancellationToken = default)
     {
         var parameters = ParametersFactory.CreateCommand(type, request.Params.ToString());
-        var result = await sender.Send(new CreateAdvertCommand(parameters), cancellationToken);
+        var sellerId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var result = await sender.Send(new CreateAdvertCommand(sellerId!, parameters), cancellationToken);
 
         return result.ToActionResult();
     }
