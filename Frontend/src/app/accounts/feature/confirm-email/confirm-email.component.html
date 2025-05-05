@@ -1,0 +1,12 @@
+<div *ngIf="isSuccess" class="success-block">
+    <p>Your email has been confirmed successfully.</p>
+    <a routerLink="/login" class="styled-link">Go to login</a>
+  </div>
+  
+  <div *ngIf="!isSuccess" class="resend-block">
+    <p>Didn't receive the confirmation link?</p>
+    <a (click)="resendEmailConfirmationLink()" class="styled-link">
+      Click here to resend confirmation link
+    </a>
+  </div>
+  

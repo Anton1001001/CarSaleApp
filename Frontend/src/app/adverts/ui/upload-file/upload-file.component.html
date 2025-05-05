@@ -1,0 +1,13 @@
+<nz-upload
+  [nzShowUploadList]="false"
+  nzAction="http://localhost:5170/api/files/upload"
+  [nzFileList]="fileList"
+  (nzChange)="handleChange($event)"
+>
+  <button [disabled]="disabled" class="upload-button" nz-button>
+    <nz-icon nzType="upload" />
+    Выбрать...
+  </button>
+</nz-upload>
+  
+

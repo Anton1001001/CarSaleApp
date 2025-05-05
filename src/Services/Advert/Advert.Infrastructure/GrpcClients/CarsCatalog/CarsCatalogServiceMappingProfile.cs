@@ -11,6 +11,8 @@ public class CarsCatalogServiceMappingProfile : Profile
 {
     public CarsCatalogServiceMappingProfile()
     {
+        CreateMap<GetCarParametersPreviewResponse, CarsCatalogPreviewResponse>();
+        CreateMap<CarsCatalogPreviewRequest, GetCarParametersPreviewRequest>();
         CreateMap<CarsCatalogRequest, GetCarParametersRequest>().ReverseMap();
         CreateMap<GetCarParametersResponse, CarsCatalogResponse>().ReverseMap();
         CreateMap<BodyType, BodyTypeResponse>();

@@ -1,10 +1,12 @@
 using System.Reflection;
+using DotNetEnv;
 using File.Core.Extensions;
 using File.DataAccess.Extensions;
 using File.GrpcService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddApplicationServices(builder.Configuration);

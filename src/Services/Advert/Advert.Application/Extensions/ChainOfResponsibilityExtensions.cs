@@ -7,6 +7,7 @@ using Advert.Application.CQRS.Commands.CreateAdvert.Processors.CreateMotoAdvert;
 using Advert.Application.CQRS.Queries.GetAdvertForm;
 using Advert.Application.CQRS.Queries.GetAdvertForm.Processors.GetCarAdvertForm;
 using Advert.Application.Services.Processors.GetCarAdvertById;
+using Advert.Application.Services.Processors.GetCarAdvertPreviewById;
 using FluentResults;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -46,6 +47,15 @@ public static class ChainOfResponsibilityExtensions
         services.AddScoped<Processor<Domain.Entities.Advert, Result<AdvertResponse>>>(sp =>
         {
             var carHandler = sp.GetRequiredService<GetCarAdvertByIdProcessor>();
+
+            return carHandler;
+        });
+
+        services.AddScoped<GetCarAdvertPreviewById>();
+
+        services.AddScoped<Processor<Domain.Entities.Advert, Result<AdvertPreviewResponse>>>(sp =>
+        {
+            var carHandler = sp.GetRequiredService<GetCarAdvertPreviewById>();
 
             return carHandler;
         });

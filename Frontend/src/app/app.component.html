@@ -1,0 +1,10 @@
+<main [class.blur-background]="isPreviewOpen">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="main-content">
+      <router-outlet (activate)="onRouteActivate($event)"></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </div>
+  <app-chat-drawer *ngIf="visible" [visible]="visible"></app-chat-drawer>
+</main>

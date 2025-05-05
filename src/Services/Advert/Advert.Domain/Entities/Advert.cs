@@ -4,6 +4,7 @@ namespace Advert.Domain.Entities;
 
 public class Advert
 {
+    public Guid? SellerId { get; set; }
     public int Id { get; set; }
     public string AdvertType { get; set; } = null!;
     public uint AdvertPrivateStatusId { get; set; }

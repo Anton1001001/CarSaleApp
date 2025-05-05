@@ -107,6 +107,9 @@ namespace Advert.Infrastructure.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("remove_reason");
 
+                    b.Property<Guid?>("SellerId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("SellerName")
                         .IsRequired()
                         .HasMaxLength(25)

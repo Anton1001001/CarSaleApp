@@ -11,7 +11,7 @@ public class GetAllAdvertsHandler(IUnitOfWork unitOfWork, IAdvertService advertS
     public async Task<Result<List<AdvertResponse>>> Handle(GetAllAdvertsQuery request, CancellationToken cancellationToken)
     {
         var adverts = await unitOfWork.Repository<Domain.Entities.Advert>().GetAllAsync(cancellationToken);
-        var ids = adverts.Select(a => a.Id).ToList();
+        var ids = adverts.Select(advert => advert.Id).ToList();
         var response = new List<AdvertResponse>();
 
         foreach (var id in ids)

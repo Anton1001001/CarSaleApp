@@ -1,3 +1,17 @@
+using Car.Application.Queries.BodyType.GetBodyTypes;
+using Car.Application.Queries.Brand.GetBrands;
+using Car.Application.Queries.Color.GetColors;
+using Car.Application.Queries.Condition.GetConditions;
+using Car.Application.Queries.DriveType.GetDriveTypes;
+using Car.Application.Queries.EngineType.GetEngineTypes;
+using Car.Application.Queries.Generation.GetModelGenerations;
+using Car.Application.Queries.InteriorColor.GetInteriorColors;
+using Car.Application.Queries.InteriorMaterial.GetInteriorMaterials;
+using Car.Application.Queries.Model.GetBrandModels;
+using Car.Application.Queries.Modification.GetGenerationModifications;
+using Car.Application.Queries.TransmissionType.GetTransmissionTypes;
+
+
 namespace Car.API.Controllers;
 
 [ApiController]
@@ -10,7 +24,6 @@ public class CarsController(ISender sender, CarInfoDbContext context) : Controll
         var result = await sender.Send(new GetBrandsQuery(), cancellationToken);
         return TypedResults.Ok(result);
     }
-
 
     [HttpGet("body-types")]
     public async Task<Ok<List<GetBodyTypesResponse>>> GetBodyTypes(CancellationToken cancellationToken = default)
@@ -89,21 +102,6 @@ public class CarsController(ISender sender, CarInfoDbContext context) : Controll
     public async Task<Ok<List<GetTransmissionTypesResponse>>> GetTransmissionTypes(CancellationToken cancellationToken = default)
     {
         var result = await sender.Send(new GetTransmissionTypesQuery(), cancellationToken);
-        return TypedResults.Ok(result);
-    }
-
-    [HttpGet("exchange/types")]
-    public async Task<Ok<List<GetExchangeTypesResponse>>> GetExchangeTypes(CancellationToken cancellationToken = default)
-    {
-        var result = await sender.Send(new GetExchangeTypesQuery(), cancellationToken);
-        return TypedResults.Ok(result);
-    }
-
-    [HttpGet("modifications/{modificationId}/characteristics")]
-    public async Task<Ok<List<GetModificationCharacteristicsResponse>>> GetModificationCharacteristics(
-        int modificationId, CancellationToken cancellationToken = default)
-    {
-        var result = await sender.Send(new GetModificationCharacteristicsQuery(modificationId), cancellationToken);
         return TypedResults.Ok(result);
     }
 }

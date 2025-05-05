@@ -8,6 +8,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/User/User.API/User.API.csproj", "src/Services/User/User.API/"]
+COPY ["src/Services/User/User.Core/User.Core.csproj", "src/Services/User/User.Core/"]
+COPY ["src/Services/User/User.DataAccess/User.DataAccess.csproj", "src/Services/User/User.DataAccess/"]
+COPY ["src/Shared/Auth.Shared/Auth.Shared.csproj", "src/Shared/Auth.Shared/"]
 RUN dotnet restore "src/Services/User/User.API/User.API.csproj"
 COPY . .
 WORKDIR "/src/src/Services/User/User.API"

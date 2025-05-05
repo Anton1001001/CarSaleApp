@@ -1,0 +1,35 @@
+<div class="listing-item">
+    <div class="listing-item-wrapper">
+        <div class="listing-item-photo">
+            <a [routerLink]="['/advert-details', advert.id]" class="photo-link"></a>
+            <app-photo-carousel [photos]="advert.photos"></app-photo-carousel>
+        </div>
+        <div class="listing-item-about">
+            <h3 class="listing-item-title">
+                <a [routerLink]="['/advert-details', advert.id]" class="listing-item-link">
+                    <span class="link-text">
+                        {{ `${ advert.parameters.brand } ${ advert.parameters.model } ${ advert.parameters.generation }` }}
+                    </span>
+                </a>
+            </h3>
+        </div>
+        <div class="listing-item-params">
+            <div>{{ `${ advert.parameters.year } г.`}} </div>
+            <div>{{ `${ advert.parameters.transmissionType }, ${ engineCapacityString } л, 
+            ${ advert.parameters.engineType }, ${ advert.parameters.bodyType }`}}</div>
+            <div>{{ `${ mileageString } км` }}</div>
+        </div>
+        <div class="listing-item-prices">
+            <div class="listing-item-price">{{ `${ priceBynString } р.` }}</div>
+            <div class="listing-item-priceusd"> {{`≈ ${ priceUsdString } $`}} </div>
+        </div>
+        <div class="listing-item-message">
+            <div>{{ `${advert.description}` }}</div>
+        </div>
+        <div class="listing-item-info">
+            <div class="listing-item-location">{{ `${ advert.shortLocationName }` }}</div>
+            <div class="listing-item-date">{{ `${ date }` }}</div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,38 @@
+<div class="email-form-container">
+    <nz-card *ngIf="mode" class="email-card" [nzBordered]="false">
+      <form [formGroup]="emailForm" (ngSubmit)="sendEmail()" autocomplete="off">
+        <h1 class="email-form-title">
+          <ng-container *ngIf="mode.includes('resend-email-confirmation-link')">
+            Подтверждение email
+          </ng-container>
+          <ng-container *ngIf="mode.includes('forgot-password')">
+            Восстановление доступа
+          </ng-container>
+        </h1>
+  
+        <nz-form-item class="email-form-input">
+          <nz-form-control>
+            <input
+              nz-input
+              formControlName="email"
+              placeholder="Введите ваш email"
+              type="email"
+            />
+          </nz-form-control>
+  
+          <div *ngIf="error && mode.includes('forgot-password')">
+            <span class="email-error-message">{{ error.message }}</span>
+            <a (click)="resendEmailConfirmationLink()" class="email-resend-link">
+              Запросить письмо с подтверждением
+            </a>
+          </div>
+        </nz-form-item>
+  
+        <div class="email-form-buttons">
+          <button nz-button nzType="primary" htmlType="submit">Отправить</button>
+          <button nz-button nzType="default" (click)="cancel()" type="button">Отменить</button>
+        </div>
+      </form>
+    </nz-card>
+  </div>
+  

@@ -1,0 +1,119 @@
+.form-label {
+  text-align: left;
+  max-width: 180px;
+}
+
+.form-control {
+  max-width: 366px;
+}
+
+.header {
+  max-width: 65%;
+  padding: 0 20px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.full-width-radio-group {
+  display: flex;
+  width: 100%;
+}
+
+.full-width-radio-group label[nz-radio-button] {
+  flex: 1; 
+  text-align: center;
+}
+
+.price-container {
+  display: flex;
+  gap: 10px;
+}
+
+.currency-select {
+  max-width: 115px;
+}
+
+.price-input {
+  max-width: 215px;
+}
+
+.description {
+  max-width: 804px;
+}
+
+.phone-input-container {
+  display: flex;
+}
+
+.phone-select {
+  min-width: 100px;
+}
+
+.phone-input {
+  max-width: 240px !important;
+}
+
+.add-button {
+  margin-left: 180px;
+  width: 340px;
+}
+
+
+.dynamic-delete-button {
+  font-size: 20px;
+  padding-left: 10px;
+  cursor: pointer; 
+  transition: color 0.3s ease; 
+}
+
+.dynamic-delete-button:hover {
+  color: red; 
+  cursor: pointer; 
+}
+
+.phone-control {
+  max-width: 370px;
+}
+
+.ml-180 {
+  margin-left: 180px;
+}
+
+.phone-input {
+  max-width: 266px;
+}
+
+.submit-control {
+  margin-left: 180px;
+}
+
+.submit-button {
+  width: 340px;
+}
+
+.photo-uploader {
+  margin-left: 180px;
+}
+
+.photo-container {
+  background-color: #5a7aa3;
+
+}
+
+.app-upload-file {
+  padding: 20px !important
+}
+
+p {
+  max-width: 430px;
+  padding-left: 20px;
+  color: white;
+}
+
+.photo-h1 {
+  color: white;
+  padding: 20px;
+  padding-bottom: 0px;
+}
+
+

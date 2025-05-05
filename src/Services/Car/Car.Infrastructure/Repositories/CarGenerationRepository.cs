@@ -7,12 +7,11 @@ public class CarGenerationRepository(CarInfoDbContext context)
     {
         return await Context.CarModifications
             .AsNoTracking()
-            .Where(modification => modification.CarSerieNavigation.CarGenerationId == generationId)
-            .Include(modification => modification.CarSerieNavigation)
-                .ThenInclude(carSerie => carSerie.CarBodyTypeNavigation)
-            .Include(modification => modification.CarDriveTypeNavigation)
-            .Include(modification => modification.CarEngineTypeNavigation)
-            .Include(modification => modification.CarTransmissionTypeNavigation)
+            .Where(modification => modification.CarGenerationId == generationId)
+            .Include(modification => modification.CarBodyType)
+            .Include(modification => modification.CarDriveType)
+            .Include(modification => modification.CarEngineType)
+            .Include(modification => modification.CarTransmissionType)
             .ToListAsync(cancellationToken);
     }
 }

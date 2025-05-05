@@ -1,5 +1,4 @@
 ﻿namespace Car.Domain.Entities;
-
 public class CarInteriorMaterial
 {
     public int Id { get; set; }

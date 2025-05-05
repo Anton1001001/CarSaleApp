@@ -1,9 +1,11 @@
+using DotNetEnv;
 using File.Core.Extensions;
 using File.Core.Messaging;
 using File.DataAccess.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddCors(options =>

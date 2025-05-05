@@ -56,6 +56,8 @@ public class CreateCarAdvertProcessor(
         advert.Properties = carParamsJson;
 
         advert.AdvertStatus = AdvertStatus.Active;
+        
+        advert.SellerId = Guid.Parse(request.SellerId);
 
         var advertCategory =
             await unitOfWork.AdvertCategoryRepository.GetByNameAsync(carParameters.AdvertType, cancellationToken);

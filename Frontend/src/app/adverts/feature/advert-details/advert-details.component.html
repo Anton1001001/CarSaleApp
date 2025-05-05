@@ -1,0 +1,102 @@
+<div class="container" *ngIf="advert">
+  <div class="breadcrumb">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a>Application List</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>An Application</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <div class="card">
+      <div class="card-header">
+          <h1 class="card-title">{{ cardTitle }}</h1>
+          <div class="card-header-inner">
+              <ul class="card-stat">
+                  <li class="card-stat-item">{{ date }}</li>
+                  <li class="card-stat-item">{{ id }}</li>
+              </ul>
+          </div>
+      </div>
+      <div class="card-wrap">
+          <div class="card-gallery">
+              <div class="gallery">
+                  <div class="gallery-stage" (click)="onClick()">
+                      <img
+                      nz-image
+                      [nzSrc]="selectedImage.src"
+                      [nzDisablePreview]="true"
+                      alt="Основное фото"
+                      class="main-image"
+                      />
+                  </div>
+                  <div class="gallery-nav">
+                      <div class="gallery-nav-shaft">
+                        <div class="gallery-nav-frame"*ngFor="let image of images">
+                          <img
+                            #thumb
+                            nz-image
+                            [nzSrc]="image.src"
+                            [nzDisablePreview]="true"
+                            (click)="selectPhoto(image, thumb)"
+                            [class.selected]="image === selectedImage"
+                            alt="Миниатюра"
+                          />
+                        </div>
+                      </div>
+                  </div>  
+              </div>
+          </div>
+          <div class="card-summary">
+            <div class="card-price">
+              <div class="card-price-wrap">
+                <div class="card-price-primary">{{`${priceBynString} р.`}}</div>
+                <div class="card-price-secondary">
+                  <span>{{`≈ ${priceUsdString} $`}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-about">
+              <div class="card-params">
+                {{`${advert.parameters.year} г., ${advert.parameters.transmissionType}, 
+                ${engineCapacityString}, ${advert.parameters.engineType}, 
+                ${mileageKmString} км`}}
+              </div>
+              <div class="card-description">
+                {{`${advert.parameters.bodyType}, ${advert.parameters.driveType}, ${advert.parameters.color}`}}
+              </div>
+              <div class="card-description">
+                {{`салон ${advert.parameters.interiorColor}, ${advert.parameters.interiorMaterial}`}}
+              </div>
+              <div class="card-modification">
+                {{ `${enginePowerValue} л.с., средний расход ${averageFuelConsumptionString} л` }}
+              </div>
+            </div>
+            <div class="card-location">
+              {{ `${advert.locationName}` }}
+            </div>
+            <div class="card-contact">
+              <div class="card-contact" style="display: flex; flex-direction: column; gap: 12px;">
+                <button nz-button nzType="primary" nzBlock>
+                  <i nz-icon nzType="phone" nzTheme="outline" style="margin-right: 8px;"></i>
+                  Позвонить продавцу
+                </button>
+                <button nz-button nzType="default" nzBlock (click)="writeToSeller(advert)">
+                  <i nz-icon nzType="message" nzTheme="outline" style="margin-right: 8px;"></i>
+                  Написать продавцу
+                </button>   
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="card-comment">
+        <h4 class="card-comment-title">Описание</h4>
+        <div class="card-comment-body">
+          <div class="card-comment-text">
+            <p>{{ `${advert.description}` }}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+

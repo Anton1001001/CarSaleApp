@@ -1,0 +1,27 @@
+:host {
+  --content-padding: 10px;
+  --header-padding: 300px;
+}
+
+.content {
+  background-color: #fff;  
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.blur-background {
+  filter: blur(50px);
+  transition: filter 0.3s ease;
+  pointer-events: none;
+}
+
+
+

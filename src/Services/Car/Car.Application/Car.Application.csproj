@@ -8,12 +8,29 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="DotNetEnv" Version="3.1.1" />
       <PackageReference Include="MediatR" Version="12.4.1" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Car.Domain\Car.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Queries\BodyType\" />
+      <Folder Include="Queries\Brand\" />
+      <Folder Include="Queries\Color\" />
+      <Folder Include="Queries\Condition\" />
+      <Folder Include="Queries\DriveType\" />
+      <Folder Include="Queries\EngineType\" />
+      <Folder Include="Queries\Generation\" />
+      <Folder Include="Queries\InteriorColor\" />
+      <Folder Include="Queries\InteriorMaterial\" />
+      <Folder Include="Queries\Model\" />
+      <Folder Include="Queries\Modification\" />
+      <Folder Include="Queries\TransmissionType\" />
+      <Folder Include="Queries\Year\" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,26 @@
+<nz-drawer
+  [nzVisible]="visible"
+  nzTitle="Войти в систему"
+  [nzPlacement]="'right'"
+  [nzClosable]="true"
+  (nzOnClose)="close()"
+  [nzWidth]="'400px'"
+  [nzBodyStyle]="{ padding: 0 }"
+>
+  <ng-container *nzDrawerContent>
+
+    <app-login
+      *ngIf="mode === 'login'"
+      [isInDrawer]="true"
+      (loginSuccess)="close()"
+      (switchToRegister)="switchToRegister()"
+    ></app-login>
+
+    <app-register
+      *ngIf="mode === 'register'"
+      [isInDrawer]="true"
+      (switchToLogin)="switchToLogin()"
+    ></app-register>
+
+  </ng-container>
+</nz-drawer>

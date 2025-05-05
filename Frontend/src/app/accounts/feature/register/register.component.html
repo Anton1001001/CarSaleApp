@@ -1,0 +1,60 @@
+<div class="login-form-container">
+  <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+    <h2 class="login-form-title">Создание аккаунта</h2>
+
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="nameErrorTpl">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="name" placeholder="Имя" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template #nameErrorTpl let-control>
+      {{ control.errors?.server || 'Введите ваше имя' }}
+    </ng-template>
+
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="emailErrorTpl">
+        <nz-input-group nzPrefixIcon="mail">
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template #emailErrorTpl let-control>
+      {{ control.errors?.server || 'Введите корректный email' }}
+    </ng-template>
+
+    <nz-form-item>
+      <nz-form-control [nzErrorTip]="passwordErrorTpl">
+        <nz-input-group [nzPrefix]="prefixIcon" [nzSuffix]="suffixIcon">
+          <ng-template #prefixIcon>
+            <i nz-icon nzType="lock"></i>
+          </ng-template>
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            nz-input
+            formControlName="password"
+            placeholder="Пароль"
+          />
+          <ng-template #suffixIcon>
+            <i
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"
+              style="cursor: pointer"
+            ></i>
+          </ng-template>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-template #passwordErrorTpl let-control>
+      {{ control.errors?.server || 'Пожалуйста, введите пароль' }}
+    </ng-template>
+
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+      Зарегистрироваться
+    </button>
+
+    <a (click)="onLoginClick()" class="register-link">Уже есть аккаунт? Войти</a>
+  </form>
+</div>
