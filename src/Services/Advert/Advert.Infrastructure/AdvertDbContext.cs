@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Advert.Infrastructure;
 
-public class AdvertDbContext : DbContext
+public class AdvertDbContext(DbContextOptions<AdvertDbContext> options) : DbContext(options)
 {
     public DbSet<Domain.Entities.Advert> Adverts { get; set; }
     public DbSet<AdvertPhoneNumber> AdvertPhoneNumbers { get; set; }
@@ -14,15 +14,6 @@ public class AdvertDbContext : DbContext
     public DbSet<AdvertPublicStatus> AdvertPublicStatuses { get; set; }
     public DbSet<PhoneCode> PhoneCodes { get; set; }
     public DbSet<Place> Places { get; set; }
-
-    public AdvertDbContext()
-    {
-    }
-
-    public AdvertDbContext(DbContextOptions<AdvertDbContext> options)
-        : base(options)
-    {
-    }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

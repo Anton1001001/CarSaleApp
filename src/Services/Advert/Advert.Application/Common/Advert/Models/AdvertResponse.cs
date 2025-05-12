@@ -1,3 +1,5 @@
+using Advert.Application.Common.Cars.Models;
+
 namespace Advert.Application.Common.Advert.Models;
 
 public record AdvertResponse(
@@ -16,6 +18,6 @@ public record AdvertResponse(
     PriceResponse? Price,
     List<PhotoResponse> Photos,
     string? RemoveReason,
-    IVehicleParametersResponse? Parameters,
+    CarParametersResponse? Parameters,
     string ShortLocationName
 );

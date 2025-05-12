@@ -6,7 +6,7 @@
 
   
   <div class="header">
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <form nz-form [formGroup]="validateForm">
 
       <ng-container formGroupName="Params">
   
@@ -350,7 +350,7 @@
   
         <nz-form-item>
           <nz-form-control class="submit-control" [nzSpan]="6">
-            <button class="submit-button" nz-button nzType="primary" type="submit">Submit</button>
+            <button class="submit-button" nz-button nzType="primary" (click)="submitForm()">Submit</button>
           </nz-form-control>
         </nz-form-item>
 

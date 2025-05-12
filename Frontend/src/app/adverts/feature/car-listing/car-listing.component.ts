@@ -8,7 +8,6 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { PhotoUploaderComponent } from "../../ui/photo-uploader/photo-uploader.component";
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { PhotoRequest } from '../../data-access/models/photo-request';
@@ -45,6 +44,7 @@ export class CarListingComponent implements OnInit {
   isDriveTypeVisible: boolean = false;
   isModificationVisible: boolean = false;
   isPlaceCityVisible: boolean = false;
+  advertFormData: GetCarAdvertFormResponse| null = null;
 
   private fb = inject(FormBuilder);
   private advertService = inject(AdvertService);
@@ -82,12 +82,14 @@ export class CarListingComponent implements OnInit {
       })
     })
   });
-  
-  async onSubmit(): Promise<void> {
 
+  ngOnInit(): void {
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe({
+      next: (data) => {
+        this.advertFormData = data;
+      }
+    });
   }
-
-  advertFormData: GetCarAdvertFormResponse| null = null;
 
   resetFields(fields: string[]) {
     const paramsGroup = this.validateForm.get('Params') as FormGroup;  
@@ -100,10 +102,7 @@ export class CarListingComponent implements OnInit {
       files: photoRequest.files,
       main: photoRequest.main
     });
-
-    console.log(this.validateForm);
   }
-  
   
   onBrandChange(selectedValue: any) {
     this.isModelVisible = selectedValue !== null;
@@ -125,6 +124,10 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ])
+
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onModelChange(selectedValue: any) {
@@ -145,6 +148,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onYearChange(selectedValue: any) {
@@ -163,6 +169,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onGenerationChange(selectedValue: any) {
@@ -179,6 +188,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onBodyTypeChange(selectedValue: any) {
@@ -193,6 +205,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onTransmissionTypeChange(selectedValue: any) {
@@ -205,6 +220,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onEngineTypeChange(selectedValue: any) {
@@ -215,6 +233,9 @@ export class CarListingComponent implements OnInit {
       'driveTypeId', 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onDriveTypeChange(selectedValue: any) {
@@ -223,6 +244,9 @@ export class CarListingComponent implements OnInit {
     this.resetFields([ 
       'modificationId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
 
   onPlaceRegionChange(selectedValue: any) {
@@ -231,31 +255,11 @@ export class CarListingComponent implements OnInit {
     this.resetFields([ 
       'placeCityId'
     ]);
+    this.advertService.getAdvertForm(this.validateForm.value).subscribe(data => {
+      this.advertFormData = data
+    })
   }
   
-
-  ngOnInit(): void {
-    this.advertService.getAdvertForm(this.validateForm.value).subscribe({
-      next: (data) => {
-        this.advertFormData = data;
-      }
-    });
-  
-    this.validateForm.valueChanges
-      .pipe(
-        debounceTime(50),
-        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
-      )
-      .subscribe((formValues) => {
-        console.log(formValues);
-        this.advertService.getAdvertForm(formValues).subscribe({
-          next: (data) => {
-            this.advertFormData = data;
-          }
-        });
-      });
-  }
-
   get phones(): FormArray {
     return this.validateForm.controls.Params.get('phones') as FormArray;
   }

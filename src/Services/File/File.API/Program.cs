@@ -5,8 +5,16 @@ using File.DataAccess.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
+    options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
+});
+
 Env.Load();
 builder.Configuration.AddEnvironmentVariables();
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddCors(options =>
 {
@@ -17,6 +25,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHostedService<RabbitMqBackgroundWorker>();
+builder.Services.AddRequestTimeouts();
 
 builder.Services.AddControllers();
 
@@ -31,6 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("AllowAll");
+
 app.MapControllers();
 
 app.Run();

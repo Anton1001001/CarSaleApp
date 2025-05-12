@@ -167,7 +167,7 @@ namespace Car.Infrastructure.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
-                    b.Property<int?>("YearBegin")
+                    b.Property<int>("YearBegin")
                         .HasColumnType("int")
                         .HasColumnName("year_begin");
 

@@ -4,6 +4,7 @@ using File.Core.CQRS.Commands.UploadFile;
 using File.Core.CQRS.Queries.GetFileById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace File.API.Controllers;

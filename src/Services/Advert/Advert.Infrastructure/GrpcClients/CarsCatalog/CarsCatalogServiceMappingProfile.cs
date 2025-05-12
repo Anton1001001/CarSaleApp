@@ -14,7 +14,6 @@ public class CarsCatalogServiceMappingProfile : Profile
         CreateMap<GetCarParametersPreviewResponse, CarsCatalogPreviewResponse>();
         CreateMap<CarsCatalogPreviewRequest, GetCarParametersPreviewRequest>();
         CreateMap<CarsCatalogRequest, GetCarParametersRequest>().ReverseMap();
-        CreateMap<GetCarParametersResponse, CarsCatalogResponse>().ReverseMap();
         CreateMap<BodyType, BodyTypeResponse>();
         CreateMap<EngineType, EngineTypeResponse>();
         CreateMap<TransmissionType, TransmissionTypeResponse>();
@@ -26,8 +25,19 @@ public class CarsCatalogServiceMappingProfile : Profile
         CreateMap<Color, ColorResponse>();
         CreateMap<InteriorColor, InteriorColorResponse>();
         CreateMap<InteriorMaterial, InteriorMaterialResponse>();
+        
         CreateMap<Year, YearResponse>()
             .ForCtorParam(dest => dest.Year, opt =>
                 opt.MapFrom(src => src.Year_));
+
+        CreateMap<GetCarParametersResponse, CarsCatalogResponse>()
+            .ForCtorParam(dest => dest.EnginePower, opt =>
+                opt.MapFrom(src => src.HasEnginePower ? src.EnginePower : default(int?)))
+            .ForCtorParam(dest => dest.EngineCapacity, opt =>
+                opt.MapFrom(src => src.HasEngineCapacity ? src.EngineCapacity : default(int?)))
+            .ForCtorParam(dest => dest.GroundClearance, opt =>
+                opt.MapFrom(src => src.HasGroundClearance ? src.GroundClearance : default(float?)))
+            .ForCtorParam(dest => dest.FuelConsumptionCombined, opt =>
+                opt.MapFrom(src => src.HasFuelConsumptionCombined ? src.FuelConsumptionCombined : default(float?)));
     }
 }

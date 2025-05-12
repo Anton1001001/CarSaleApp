@@ -13,6 +13,7 @@ import { ConfirmEmailComponent } from './accounts/feature/confirm-email/confirm-
 import { SendEmailComponent } from './accounts/feature/send-email/send-email.component';
 import { ResetPasswordComponent } from './accounts/feature/reset-password/reset-password.component';
 import { AdvertDetailsComponent } from './adverts/feature/advert-details/advert-details.component';
+import { PrintComponent } from './print/feature/print/print.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent, title: 'Главная страница'},
@@ -25,6 +26,7 @@ export const routes: Routes = [
         ]
     },
     { path: 'login', component: LoginComponent, title: 'Вход'},
+    {path: 'print', component: PrintComponent, title: 'Печать'},
     { path: 'register', component: RegisterComponent, title: 'Регистрация'},
     { path: 'home', component: HomeComponent, title: 'Главная страница'},
     { path: 'confirm-email', component: ConfirmEmailComponent},
@@ -35,15 +37,14 @@ export const routes: Routes = [
         path: 'create',
         runGuardsAndResolvers: 'always',
         canActivate: [authorizationGuard],
-        canActivateChild: [authorizationGuard],
-        component: NewAdComponent,
+        component: CarListingComponent,
         title: 'create',
-        children: [
-          { path: 'cars', component: CarListingComponent },
-          { path: 'moto', component: MotoListingComponent },
-          { path: 'buses', component: BusListingComponent },
-          { path: 'trucks', component: TruckListingComponent }
-        ]
+        // children: [
+        //   { path: 'cars', component: CarListingComponent },
+        //   { path: 'moto', component: MotoListingComponent },
+        //   { path: 'buses', component: BusListingComponent },
+        //   { path: 'trucks', component: TruckListingComponent }
+        // ]
       }
       
 ];

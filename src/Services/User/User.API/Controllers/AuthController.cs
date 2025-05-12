@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Timeouts;
 using Microsoft.AspNetCore.Mvc;
 using User.API.Extensions;
 using User.Core.CQRS.Commands.ConfirmEmail;
@@ -14,6 +15,7 @@ using User.Core.CQRS.Queries.GetCurrentUser;
 namespace User.API.Controllers;
 
 [ApiController]
+[DisableRequestTimeout]
 [Route("/api/auth")]
 public class AuthController(ISender sender) : ControllerBase
 {

@@ -10,6 +10,7 @@ using Advert.Application.CQRS.Queries.GetAdvertById;
 using Advert.Application.CQRS.Queries.GetAdvertCategories;
 using Advert.Application.CQRS.Queries.GetAdvertForm;
 using Advert.Application.CQRS.Queries.GetAllAdverts;
+using Advert.Application.CQRS.Queries.PrintAdvert;
 using Advert.Infrastructure.Options;
 using Hangfire;
 using MediatR;
@@ -24,6 +25,14 @@ namespace Advert.API.Controllers;
 [Route("/api/adverts/")]
 public class AdvertsController(ISender sender) : ControllerBase
 {
+    [AllowAnonymous]
+    [HttpGet("print/{id:int}")]
+    public async Task<IActionResult> PrintAdvert([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var response = await sender.Send(new PrintAdvertQuery(id), cancellationToken);
+        return File(response.Value.PdfBytes, "application/pdf");
+        return response.ToActionResult();
+    }
     
     [HttpGet("categories")]
     public async Task<IActionResult> GetAdvertCategories(CancellationToken cancellationToken)
@@ -94,6 +103,7 @@ public class AdvertsController(ISender sender) : ControllerBase
         return result.ToActionResult();
     }
     
+    [AllowAnonymous]
     [HttpPost("{type}/form")]
     public async Task<IActionResult> Form([FromRoute] string type, [FromBody] GetAdvertFormRequest request, CancellationToken cancellationToken = default)
     {
@@ -103,4 +113,3 @@ public class AdvertsController(ISender sender) : ControllerBase
         return result.ToActionResult();
     }
 }
-

@@ -8,6 +8,7 @@ using Advert.Domain.Entities;
 using Advert.Domain.Interfaces.Repositories;
 using AutoMapper;
 using FluentResults;
+using Microsoft.Extensions.Logging;
 using static Advert.Application.Helpers.ListUtils;
 
 namespace Advert.Application.CQRS.Queries.GetAdvertForm.Processors.GetCarAdvertForm;
@@ -15,7 +16,8 @@ namespace Advert.Application.CQRS.Queries.GetAdvertForm.Processors.GetCarAdvertF
 public class GetCarAdvertFormProcessor(
     IUnitOfWork unitOfWork,
     ICarCatalogGrpcClient carCatalogGrpcClient,
-    IMapper mapper)
+    IMapper mapper,
+    ILogger<GetCarAdvertFormProcessor> logger)
     : Processor<GetAdvertFormQuery, Result<GetAdvertFormResponse>>
 {
     protected override bool CanHandle(GetAdvertFormQuery request)
@@ -30,12 +32,15 @@ public class GetCarAdvertFormProcessor(
         {
             return new AdvertBadRequestError();
         }
+        
+        logger.LogInformation($"Place Region: {carsParameters.PlaceRegionId}");
 
         var placeRegions = await unitOfWork.PlaceRepository.GetPlacesByTypeAsync(PlaceTypes.Region, cancellationToken);
         var phoneCodes = await unitOfWork.Repository<PhoneCode>().GetAllAsync(cancellationToken);
 
         var placeRegionsResponse = mapper.Map<List<PlaceRegionResponse>>(placeRegions);
         var phoneCodeResponse = mapper.Map<List<PhoneCodeResponse>>(phoneCodes);
+        
 
         var response = new GetAdvertFormResponse(
             Brands: await carCatalogGrpcClient.GetBrandsAsync(cancellationToken),
@@ -45,6 +50,14 @@ public class GetCarAdvertFormProcessor(
             PlaceRegions: placeRegionsResponse,
             PhoneCodes: phoneCodeResponse
         );
+
+        if (carsParameters.PlaceRegionId is not null)
+        {
+            var placeCities = await unitOfWork.PlaceRepository
+                .GetPlacesByParentIdAsync(carsParameters.PlaceRegionId.Value, cancellationToken);
+
+            response = response with { PlaceCities = mapper.Map<List<PlaceCityResponse>>(placeCities) };
+        }
 
         if (carsParameters.BrandId is not null)
             response = response with
@@ -126,14 +139,6 @@ public class GetCarAdvertFormProcessor(
                     carsParameters.DriveTypeId, 
                     m => m.DriveType.Id)
             };
-        
-        if (carsParameters.PlaceRegionId is null)
-            return response;
-
-        var placeCities = await unitOfWork.PlaceRepository
-            .GetPlacesByParentIdAsync(carsParameters.PlaceRegionId.Value, cancellationToken);
-
-        response = response with { PlaceCities = mapper.Map<List<PlaceCityResponse>>(placeCities) };
         
         return response;
     }

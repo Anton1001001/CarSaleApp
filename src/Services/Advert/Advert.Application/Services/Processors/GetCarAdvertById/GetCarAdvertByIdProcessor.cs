@@ -8,6 +8,7 @@ using Advert.Application.Errors.Base;
 using Advert.Domain.Constants;
 using AutoMapper;
 using FluentResults;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Advert.Application.Services.Processors.GetCarAdvertById;
@@ -16,6 +17,7 @@ public class GetCarAdvertByIdProcessor(
     IFileServiceGrpcClient fileServiceGrpcClient,
     ICarCatalogGrpcClient carCatalogGrpcClient,
     IMapper mapper,
+    ILogger<GetCarAdvertByIdProcessor> logger,
     ICurrencyConverter currencyConverter) : Processor<Domain.Entities.Advert, Result<AdvertResponse>>
 {
     protected override bool CanHandle(Domain.Entities.Advert request)
@@ -35,10 +37,17 @@ public class GetCarAdvertByIdProcessor(
         }
         
         var carsCatalogRequest = mapper.Map<CarsCatalogRequest>(carParameters);
+        
+        logger.LogInformation("CarsCatalogRequest: {Request}", JsonConvert.SerializeObject(carsCatalogRequest));
+
+        
         var carCatalogResponse = await carCatalogGrpcClient.GetCarParametersAsync(carsCatalogRequest, cancellationToken);
 
         var carParametersToShow = mapper.Map<CarParametersResponse>(carCatalogResponse);
 
+        var carParametersToShowJson = JsonConvert.SerializeObject(carParametersToShow);
+        logger.LogInformation("CarParametersToShow: {Request}", carParametersToShowJson);
+        
         carParametersToShow = carParametersToShow with
         {
             MileageKm = carParameters.MileageKm,

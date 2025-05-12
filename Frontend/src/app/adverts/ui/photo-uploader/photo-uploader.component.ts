@@ -25,14 +25,13 @@ export class PhotoUploaderComponent {
   @Output() photoRequestChange = new EventEmitter<PhotoRequest>();
 
   private updatePhotoRequest(fileList: NzUploadFile[]) {
-    if (fileList.length === 0) return;
-
+    if (!this.checkAllFilesDone(fileList)) return;
+    
     this.photoRequest = {
-      files: fileList.map(file => +file['id']),
-      main: +fileList[0]['id']
+      files: fileList.map(file => file.response.id),
+      main: fileList[0].response.id
     };
     this.photoRequestChange.emit(this.photoRequest);
-    console.log(this.photoRequest);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -51,6 +50,10 @@ export class PhotoUploaderComponent {
   
   onDragEnd() {
     document.body.style.cursor = 'default';
+  }
+
+  private checkAllFilesDone(fileList: NzUploadFile[]): boolean {
+    return fileList.length > 0 && fileList.every(file => file.status === 'done');
   }
   
 }

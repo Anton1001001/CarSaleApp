@@ -134,17 +134,13 @@ namespace File.DataAccess.Migrations
                                 .HasForeignKey("PhotoId");
                         });
 
-                    b.Navigation("Big")
-                        .IsRequired();
+                    b.Navigation("Big");
 
-                    b.Navigation("ExtraSmall")
-                        .IsRequired();
+                    b.Navigation("ExtraSmall");
 
-                    b.Navigation("Medium")
-                        .IsRequired();
+                    b.Navigation("Medium");
 
-                    b.Navigation("Small")
-                        .IsRequired();
+                    b.Navigation("Small");
                 });
 #pragma warning restore 612, 618
         }

@@ -13,6 +13,7 @@ import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
+import { timeoutInterceptor } from './shared/interceptors/timeout.interceptor';
 
 
 registerLocaleData(en);

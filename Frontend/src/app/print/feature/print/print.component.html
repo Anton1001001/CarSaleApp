@@ -1,0 +1,22 @@
+<nz-card nzTitle="Печать объявления" class="print-card">
+    <p>Введите ID объявления, которое вы хотите распечатать:</p>
+  
+    <nz-input-number
+      [(ngModel)]="advertId"
+      [nzMin]="1"
+      [nzStep]="1"
+      [nzPlaceHolder]="'Введите ID'"
+      style="width: 100%; margin-bottom: 16px;"
+    ></nz-input-number>
+  
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="!advertId || advertId <= 0"
+      (click)="printPdf()"
+      style="width: 100%;"
+    >
+      Печать PDF
+    </button>
+  </nz-card>
+  

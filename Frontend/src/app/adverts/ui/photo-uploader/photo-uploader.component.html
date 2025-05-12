@@ -16,7 +16,7 @@
       (cdkDragStarted)="onDragStart()" 
       (cdkDragEnded)="onDragEnd()">
 
-      <ng-container *ngIf="item.url === ''; else showImage">
+      <ng-container *ngIf="item.status === 'uploading'; else showImage">
         <div class="loading-spinner">
           <ng-template #indicatorTemplate>
             <nz-icon nzType="loading" nzSpin style="font-size: 40px; color: white;"></nz-icon>
@@ -27,7 +27,7 @@
       </ng-container>
 
       <ng-template #showImage>
-        <img [src]="item.url" cdkDragHandle />
+        <img [src]="item.response.medium.url" cdkDragHandle />
       </ng-template>
     </div>
     

@@ -9,8 +9,11 @@ public record CarsCatalogResponse(
     string EngineType,
     string DriveType,
     string TransmissionType,
-    string EngineCapacity,
     string Color,
     string Condition,
     string InteriorMaterial,
-    string InteriorColor);
+    string InteriorColor,
+    int? EngineCapacity,
+    int? EnginePower,
+    float? FuelConsumptionCombined,
+    float? GroundClearance);

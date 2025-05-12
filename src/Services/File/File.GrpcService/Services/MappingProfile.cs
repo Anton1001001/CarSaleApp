@@ -1,6 +1,5 @@
 using AutoMapper;
 using File.Core.Common.Models;
-using File.Core.Models;
 
 namespace File.GrpcService.Services;
 

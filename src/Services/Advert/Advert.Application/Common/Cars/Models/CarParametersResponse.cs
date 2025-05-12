@@ -13,6 +13,10 @@ public record CarParametersResponse(
     string Condition,
     string InteriorMaterial,
     string InteriorColor,
+    int? EngineCapacity,
+    int? EnginePower,
+    float? FuelConsumptionCombined,
+    float? GroundClearance,
     int Year,
     int MileageKm,
     string? Registration

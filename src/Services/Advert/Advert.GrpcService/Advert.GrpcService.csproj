@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
 
@@ -18,6 +19,20 @@
     <ItemGroup>
       <ProjectReference Include="..\Advert.Application\Advert.Application.csproj" />
       <ProjectReference Include="..\Advert.Infrastructure\Advert.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Auth.Shared\Auth.Shared.csproj" />
+        <None Include="..\..\..\Shared\Auth.Shared\appsettings.jwt.json">
+            <Link>appsettings.jwt.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>
