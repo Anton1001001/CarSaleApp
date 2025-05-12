@@ -39,10 +39,10 @@ public static class Extensions
         services.AddAutoMapper(applicationAssembly);
 
         services.AddGrpcClient<CarCatalog.CarCatalogClient>(options =>
-            options.Address = new Uri("http://localhost:5047"));
+            options.Address = new Uri("http://car-grpc:5047"));
         
         services.AddGrpcClient<File.GrpcService.File.FileClient>(options => 
-            options.Address = new Uri("http://localhost:5086"));
+            options.Address = new Uri("http://file-grpc:5086"));
 
         services.AddScoped<IFileServiceGrpcClient, FileServiceGrpcClient>();
         services.AddScoped<ICarCatalogGrpcClient, CarCatalogGrpcClient>();

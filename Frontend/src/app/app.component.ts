@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isPreviewOpen = false;
 
-  onRouteActivate(component: any) {
+   onRouteActivate(component: any) {
     if (component && component instanceof AdvertDetailsComponent) {
       component.previewOpened.subscribe((value: boolean) => {
         this.isPreviewOpen = value;

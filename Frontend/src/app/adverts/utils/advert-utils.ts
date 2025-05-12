@@ -63,5 +63,14 @@ export function getNumberRuFormat(value: number): string {
 export function getFormattedFloat(value: number): string {
     return value.toFixed(1).replace('.', ',');
 }
+
+export function getFormattedEngineCapacity(value: number | null | undefined): string | null {
+    if (value == null) {
+        return null;
+    }
+    
+    const liters = value / 1000;
+    return liters.toFixed(1).replace('.', ',');
+}
   
   

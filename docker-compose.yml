@@ -1,0 +1,261 @@
+﻿services:
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: redis-stack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  file-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: file_db
+    ports:
+      - "3310:3306"
+    volumes:
+      - file-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  file-api:
+    build:
+      context: .
+      dockerfile: Services/File/File.API/Dockerfile
+    env_file:
+      - Services/File/File.API/.env
+    ports:
+      - "5170:5170"
+    depends_on:
+      file-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5170
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+
+  file-grpc:
+    build:
+      context: .
+      dockerfile: Services/File/File.GrpcService/Dockerfile
+    env_file:
+      - Services/File/File.GrpcService/.env
+    ports:
+      - "5086:5086"
+    depends_on:
+      file-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5086
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+
+  car-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cars_catalog_db
+    ports:
+      - "3314:3306"
+    volumes:
+      - car-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  car-api:
+    build:
+      context: .
+      dockerfile: Services/Car/Car.API/Dockerfile
+    env_file:
+      - Services/Car/Car.API/.env
+    ports:
+      - "5055:5055"
+    depends_on:
+      car-db:
+        condition: service_healthy
+      redis-stack:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5055
+
+  car-grpc:
+    build:
+      context: .
+      dockerfile: Services/Car/Car.GrpcService/Dockerfile
+    env_file:
+      - Services/Car/Car.GrpcService/.env
+    ports:
+      - "5047:5047"
+    depends_on:
+      car-db:
+        condition: service_healthy
+      redis-stack:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5047
+
+  advert-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: advert_db
+    ports:
+      - "3313:3306"
+    volumes:
+      - advert-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  advert-api:
+    build:
+      context: .
+      dockerfile: Services/Advert/Advert.API/Dockerfile
+    ports:
+      - "5144:5144"
+    depends_on:
+      advert-db:
+        condition: service_healthy
+      file-grpc:
+        condition: service_started
+      car-grpc:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      redis-stack:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5144
+
+  advert-grpc:
+    build:
+      context: .
+      dockerfile: Services/Advert/Advert.GrpcService/Dockerfile
+    ports:
+      - "5017:5017"
+    depends_on:
+      advert-db:
+        condition: service_healthy
+      car-grpc:
+        condition: service_started
+    environment:
+      ASPNETCORE_URLS: http://+:5017
+
+  user-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3312:3306"
+    volumes:
+      - user-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  user-api:
+    build:
+      context: .
+      dockerfile: Services/User/User.API/Dockerfile
+    ports:
+      - "5077:5077"
+    depends_on:
+      user-db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://+:5077
+
+  chat-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chat_db
+    ports:
+      - "3311:3306"
+    volumes:
+      - chat-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  chat-api:
+    build:
+      context: .
+      dockerfile: Services/Chat/Chat.API/Dockerfile
+    ports:
+      - "5251:5251"
+    depends_on:
+      chat-db:
+        condition: service_healthy
+      advert-grpc:
+        condition: service_started
+    environment:
+      ASPNETCORE_URLS: http://+:5251
+
+  ocelot-api-gateway:
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGateway/Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      car-api:
+        condition: service_started
+      advert-api:
+        condition: service_started
+      chat-api:
+        condition: service_started
+      user-api:
+        condition: service_started
+      file-api:
+        condition: service_started
+    environment:
+      ASPNETCORE_URLS: http://+:5000
+
+volumes:
+  redis-data:
+  advert-db-data:
+  file-db-data:
+  car-db-data:
+  user-db-data:
+  chat-db-data:

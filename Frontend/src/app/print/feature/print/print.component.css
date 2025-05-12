@@ -1,0 +1,48 @@
+.print-card {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.1),
+      inset 0 1px 1px rgba(255, 255, 255, 0.6),
+      inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .print-card p {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 24px;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  nz-input-number {
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  button[nz-button] {
+    font-size: 16px;
+    padding: 12px;
+    background: linear-gradient(145deg, #1890ff, #40a9ff);
+    color: white;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
+  }
+  
+  button[nz-button]:hover {
+    background: linear-gradient(145deg, #40a9ff, #69c0ff);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.5);
+  }
+  
+  button[nz-button]:disabled {
+    background: #f0f0f0 !important;
+    color: #999 !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+  }
+  

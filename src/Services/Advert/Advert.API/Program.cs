@@ -1,14 +1,16 @@
-using System.Text;
 using Advert.API.Middlewares;
 using Advert.Application.Extensions;
-using Advert.Application.Options;
 using Advert.Infrastructure.Extensions;
 using Auth.Shared;
 using Hangfire;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+    .AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.jwt.json"), optional: false, reloadOnChange: true);
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+
 
 builder.Services
     .AddControllers()

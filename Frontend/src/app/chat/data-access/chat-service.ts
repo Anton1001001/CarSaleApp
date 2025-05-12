@@ -176,7 +176,7 @@ export class ChatService implements OnDestroy {
   }
 
   createMessage(text: string, dialogId: number) {
-    return this.http.post(`${environment.appUrl}/api/chat/dialogs/${dialogId}/messages`, {text})
+    return this.http.post(`${environment.appUrl}/api/chat/dialogs/${dialogId}/messages`, { text })
   }
 
   getDialogMessages(dialogId: number) {

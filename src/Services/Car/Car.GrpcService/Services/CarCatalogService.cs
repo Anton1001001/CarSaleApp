@@ -24,11 +24,12 @@ using MediatR;
 
 namespace Car.GrpcService.Services;
 
-public class CarCatalogService(ISender sender) : CarCatalog.CarCatalogBase
+public class CarCatalogService(ISender sender, ILogger<CarCatalogService> logger) : CarCatalog.CarCatalogBase
 {
     public override async Task<GetModelYearsResponse> GetModelYears(GetModelYearsRequest request,
         ServerCallContext context)
     {
+        logger.LogInformation("pass into CarCatalogService.GetModelYears");
         var years = await sender.Send(new GetModelYearsQuery { ModelId = request.ModelId }, context.CancellationToken);
         var response = new GetModelYearsResponse();
         var yearsResponse = years
@@ -98,10 +99,10 @@ public class CarCatalogService(ISender sender) : CarCatalog.CarCatalogBase
                 Id = modification.Id,
                 Name = modification.Name,
                 BodyType = new BodyType { Id = modification.BodyType.Id, Name = modification.BodyType.Name },
-                DriveType = new DriveType { Id = modification.DriveType.Id, Name = modification.DriveType.Name },
+                DriveType = new DriveType { Id = modification.DriveType!.Id, Name = modification.DriveType.Name },
                 TransmissionType = new TransmissionType
-                    { Id = modification.TransmissionType.Id, Name = modification.TransmissionType.Name },
-                EngineType = new EngineType { Id = modification.EngineType.Id, Name = modification.EngineType.Name },
+                    { Id = modification.TransmissionType!.Id, Name = modification.TransmissionType.Name },
+                EngineType = new EngineType { Id = modification.EngineType!.Id, Name = modification.EngineType.Name },
             }).ToList();
         var response = new GetGenerationModificationsResponse();
         response.Modifications.AddRange(grpcModifications);
@@ -163,40 +164,33 @@ public class CarCatalogService(ISender sender) : CarCatalog.CarCatalogBase
         return response;
     }
 
-    public override async Task<GetCarParametersResponse> GetCarParameters(
-        GetCarParametersRequest request,
-        ServerCallContext context)
+    public override async Task<GetCarParametersResponse> GetCarParameters(GetCarParametersRequest request, ServerCallContext context)
     {
         var brand = await sender.Send(new GetBrandByIdQuery(request.BrandId), context.CancellationToken);
-
+        
         var model = await sender.Send(new GetModelByIdQuery(request.ModelId), context.CancellationToken);
-
+        
         var generation = await sender.Send(new GetGenerationByIdQuery(request.GenerationId), context.CancellationToken);
-
-        var modification =
-            await sender.Send(new GetModificationByIdQuery(request.ModificationId), context.CancellationToken);
-
+        
+        var modification = await sender.Send(new GetModificationByIdQuery(request.ModificationId), context.CancellationToken);
+        
         var bodyType = await sender.Send(new GetBodyTypeByIdQuery(request.BodyTypeId), context.CancellationToken);
-
-        var transmissionType = await sender.Send(new GetTransmissionTypeByIdQuery(request.TransmissionTypeId),
-            context.CancellationToken);
-
+        
+        var transmissionType = await sender.Send(new GetTransmissionTypeByIdQuery(request.TransmissionTypeId), context.CancellationToken);
+        
         var engineType = await sender.Send(new GetEngineTypeByIdQuery(request.EngineTypeId), context.CancellationToken);
-
+        
         var driveType = await sender.Send(new GetDriveTypeByIdQuery(request.DriveTypeId), context.CancellationToken);
-
+        
         var condition = await sender.Send(new GetConditionByIdQuery(request.ConditionId), context.CancellationToken);
-
+        
         var color = await sender.Send(new GetColorByIdQuery(request.ColorId), context.CancellationToken);
-
-        var interiorColor = await sender
-            .Send(new GetInteriorColorByIdQuery(request.InteriorColorId),
-                context.CancellationToken);
-
-        var interiorMaterial = await sender.Send(new GetInteriorMaterialByIdQuery(request.InteriorMaterialId),
-            context.CancellationToken);
-
-        return new GetCarParametersResponse
+        
+        var interiorColor = await sender.Send(new GetInteriorColorByIdQuery(request.InteriorColorId), context.CancellationToken);
+        
+        var interiorMaterial = await sender.Send(new GetInteriorMaterialByIdQuery(request.InteriorMaterialId), context.CancellationToken);
+        
+        var response = new GetCarParametersResponse
         {
             Brand = brand.Name,
             Model = model.Name,
@@ -209,9 +203,32 @@ public class CarCatalogService(ISender sender) : CarCatalog.CarCatalogBase
             Condition = condition.Name,
             Color = color.Name,
             InteriorColor = interiorColor.Name,
-            InteriorMaterial = interiorMaterial.Name
+            InteriorMaterial = interiorMaterial.Name,
         };
+
+        if (modification.GroundClearance is not null)
+        {
+            response.GroundClearance = (float)(modification.GroundClearance.Value);
+        }
+
+        if (modification.EnginePower is not null)
+        {
+            response.EnginePower = modification.EnginePower.Value;
+        }
+
+        if (modification.FuelConsumptionCombined is not null)
+        {
+            response.FuelConsumptionCombined = (float)(modification.FuelConsumptionCombined.Value);
+        }
+
+        if (modification.EngineCapacity is not null)
+        {
+            response.EngineCapacity = modification.EngineCapacity.Value;
+        }
+        
+        return response;
     }
+    
 
     public override async Task<GetCarParametersPreviewResponse> GetCarParametersPreview(
         GetCarParametersPreviewRequest request, ServerCallContext context)

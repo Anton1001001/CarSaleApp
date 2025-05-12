@@ -4,11 +4,13 @@ using Advert.Application.CQRS.Queries.GetAdvertForm.Models;
 using AutoMapper;
 using Car.GrpcService;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using static Car.GrpcService.CarCatalog;
 
 namespace Advert.Infrastructure.GrpcClients.CarsCatalog;
 
-public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper mapper) : ICarCatalogGrpcClient
+public class CarCatalogGrpcClient(ILogger<CarCatalogGrpcClient> logger,CarCatalogClient carCatalogClient, IMapper mapper) : ICarCatalogGrpcClient
 {
     public async Task<List<GenerationResponse>> GetModelGenerationsAsync(int modelId,
         CancellationToken cancellationToken = default, int? year = null)
@@ -50,10 +52,18 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
         CancellationToken cancellationToken = default)
     {
         var catalogRequest = mapper.Map<GetCarParametersRequest>(request);
+        var json = JsonConvert.SerializeObject(catalogRequest);
+        logger.LogInformation("CatalogRequest: {CatalogRequest}", json);
         var response = await carCatalogClient
             .GetCarParametersAsync(catalogRequest, cancellationToken: cancellationToken);
 
-        return mapper.Map<CarsCatalogResponse>(response);
+        var responseJson = JsonConvert.SerializeObject(response);
+        logger.LogInformation("CatalogResponse: {CatalogResponse}", responseJson);
+        
+        var mappedResponse = mapper.Map<CarsCatalogResponse>(response);
+        var mappedResponseJson = JsonConvert.SerializeObject(mappedResponse);
+        logger.LogInformation("MappedCatalogResponse: {MappedResponseJson}", mappedResponseJson);
+        return mappedResponse;
     }
 
     public async Task<CarsCatalogPreviewResponse> GetCarParametersPreviewAsync(CarsCatalogPreviewRequest request,
@@ -107,10 +117,21 @@ public class CarCatalogGrpcClient(CarCatalogClient carCatalogClient, IMapper map
 
     public async Task<List<YearResponse>> GetModelYearsAsync(int modelId, CancellationToken cancellationToken = default)
     {
-        var catalogResponse = await carCatalogClient.GetModelYearsAsync(new GetModelYearsRequest { ModelId = modelId },
-            cancellationToken: cancellationToken);
-        var response = mapper.Map<List<YearResponse>>(catalogResponse.Years);
+        try
+        {
+            logger.LogInformation("Getting years for model with ID: {ModelId}", modelId);
 
-        return response;
+            var catalogResponse = await carCatalogClient.GetModelYearsAsync(new GetModelYearsRequest { ModelId = modelId },
+                cancellationToken: cancellationToken);
+            var response = mapper.Map<List<YearResponse>>(catalogResponse.Years);
+
+            return response;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Unexpected error occurred while building car advert form.");
+            return new List<YearResponse>();
+        }
+
     }
 }

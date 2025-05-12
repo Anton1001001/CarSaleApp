@@ -42,16 +42,6 @@ public class SignByEmailHandler(
 
         var accessToken = jwtService.CreateAccessToken(user);
 
-        // var cookieOptions = new CookieOptions
-        // {
-        //     HttpOnly = true,
-        //     Secure = false,
-        //     SameSite = SameSiteMode.Strict,
-        //     Expires = DateTimeOffset.UtcNow.AddHours(1)
-        // };
-        //
-        // httpContextAccessor.HttpContext?.Response.Cookies.Append("accessToken", accessToken, cookieOptions);
-
         var response = new SignInByEmailResponse(user.Id, user.Email, user.Name, accessToken);
 
         return response;

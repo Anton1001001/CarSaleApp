@@ -6,8 +6,23 @@
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
+.site-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f9fafb;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.site-name:hover {
+  color: #f28f20;
+}
+
+
 .site-header {
-  background-color: #000000;
+  background: linear-gradient(135deg, #111827, #1f2937);
   color: var(--text-light);
   height: 70px;
   border-radius: 8px 8px 0 0;

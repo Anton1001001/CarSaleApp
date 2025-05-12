@@ -10,24 +10,35 @@ public class FileService(ISender sender, IMapper mapper) : File.FileBase
 {
     public override async Task<GetFileByIdResponse> GetFileById(GetFileByIdRequest request, ServerCallContext context)
     {
-        var photo = await sender.Send(new GetFileByIdQuery(request.Id), context.CancellationToken);
-        var fileResponse = mapper.Map<FileResponse>(photo.Value);
-        var response = new GetFileByIdResponse
+        var response = await sender.Send(new GetFileByIdQuery(request.Id), context.CancellationToken);
+
+        if (response.IsFailed)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, response.Errors[0].Message));
+        }
+        
+        var fileResponse = mapper.Map<FileResponse>(response.Value);
+        
+        return new GetFileByIdResponse
         {
             File = fileResponse
         };
-
-        return response;
     }
 
     public override async Task<GetFilesByIdsResponse> GetFilesByIds(GetFilesByIdsRequest request,
         ServerCallContext context)
     {
-        var photos = await sender.Send(new GetFilesByIdsQuery(request.Ids.ToList()), context.CancellationToken);
-        var filesResponse = mapper.Map<List<FileResponse>>(photos.Value);
-        var response = new GetFilesByIdsResponse();
-        response.Files.AddRange(filesResponse);
+        var response = await sender.Send(new GetFilesByIdsQuery(request.Ids.ToList()), context.CancellationToken);
 
-        return response;
+        if (response.IsFailed)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, response.Errors[0].Message));
+        }
+        
+        var filesResponse = mapper.Map<List<FileResponse>>(response.Value);
+        var result = new GetFilesByIdsResponse();
+        result.Files.AddRange(filesResponse);
+
+        return result;
     }
 }

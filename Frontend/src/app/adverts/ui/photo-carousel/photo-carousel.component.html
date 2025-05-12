@@ -1,5 +1,5 @@
 <nz-carousel [nzDots]="true" class="carousel" [nzEffect]="effect">
-    <div *ngFor="let photo of photos" nz-carousel-content>
+    <div *ngFor="let photo of photos | slice:0:6" nz-carousel-content>
       <img 
       [src]="photo.small.url" 
       alt=""

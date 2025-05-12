@@ -1,10 +1,11 @@
 using File.Core.Abstractions;
 using File.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace File.DataAccess.Repositories;
 
-public class PhotoRepository(FileDbContext context) : IPhotoRepository
+public class PhotoRepository(FileDbContext context, ILogger<PhotoRepository> logger) : IPhotoRepository
 {
     public async Task<List<int>> GetInactivePhotoIdsAsync(List<int> activePhotoIds,
         CancellationToken cancellationToken = default)
@@ -34,7 +35,7 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
         return response;
     }
 
-    public async Task<IEnumerable<Photo>> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken = default)
+    public async Task<List<Photo>> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken = default)
     {
         var response = await context.Photos
             .AsNoTracking()
@@ -60,6 +61,7 @@ public class PhotoRepository(FileDbContext context) : IPhotoRepository
 
     public async Task<Photo> UpdateAsync(Photo photo, CancellationToken cancellationToken = default)
     {
+        logger.LogInformation("Context hash: {hash}", context.GetHashCode());
         context.Photos.Update(photo);
 
         return await Task.FromResult(photo);

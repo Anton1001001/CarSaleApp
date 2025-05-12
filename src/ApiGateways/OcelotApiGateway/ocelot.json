@@ -4,7 +4,7 @@
       "DownstreamPathTemplate": "/api/auth/me",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5077 }
+        { "Host": "user-api", "Port": 5077 }
       ],
       "UpstreamPathTemplate": "/api/auth/me",
       "UpstreamHttpMethod": [ "GET" ],
@@ -17,7 +17,7 @@
       "DownstreamPathTemplate": "/api/auth/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5077 }
+        { "Host": "user-api", "Port": 5077 }
       ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
@@ -26,7 +26,7 @@
       "DownstreamPathTemplate": "/api/adverts",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5144 }
+        { "Host": "advert-api", "Port": 5144 }
       ],
       "UpstreamPathTemplate": "/api/adverts",
       "UpstreamHttpMethod": [ "GET" ]
@@ -35,7 +35,7 @@
       "DownstreamPathTemplate": "/api/adverts/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5144 }
+        { "Host": "advert-api", "Port": 5144 }
       ],
       "UpstreamPathTemplate": "/api/adverts/{id}",
       "UpstreamHttpMethod": [ "GET" ]
@@ -44,7 +44,7 @@
       "DownstreamPathTemplate": "/api/adverts/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5144 }
+        { "Host": "advert-api", "Port": 5144 }
       ],
       "UpstreamPathTemplate": "/api/adverts/{everything}",
       "UpstreamHttpMethod": [ "POST", "GET" ],
@@ -57,7 +57,7 @@
       "DownstreamPathTemplate": "/api/chat/dialogs/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5251 }
+        { "Host": "chat-api", "Port": 5251 }
       ],
       "UpstreamPathTemplate": "/api/chat/dialogs/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
@@ -72,7 +72,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "chat-api",
           "Port": 5251
         }
       ],
@@ -83,13 +83,22 @@
       "DownstreamPathTemplate": "/api/files/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "localhost", "Port": 5170 }
+        { "Host": "file-api", "Port": 5170 }
       ],
       "UpstreamPathTemplate": "/api/files/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "QoSOptions": {
+        "TimeoutValue": 500000,
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 1000,
+        "BulkheadIsolation": {
+          "MaxConcurrentRequests": 25, 
+          "MaxQueueSize": 20          
+        }
+      }
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "http://ocelot-api-gateway:5000"
   }
 }

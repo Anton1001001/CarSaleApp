@@ -14,13 +14,14 @@ public static class Extensions
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("ChatDb");
+        // var connectionString = "server=chat-db;database=chat_db;user=root;password=root;Charset=utf8mb4;";
         var serverVersion = ServerVersion.AutoDetect(connectionString);
         
         services.AddDbContext<ChatDbContext>(options =>
             options.UseMySql(connectionString, serverVersion));
         
         services.AddGrpcClient<Advert.GrpcService.Advert.AdvertClient>(options => 
-            options.Address = new Uri("http://localhost:5017"));
+            options.Address = new Uri("http://advert-grpc:5017"));
         
         var applicationAssembly = Assembly.GetExecutingAssembly();
         services.AddAutoMapper(applicationAssembly);

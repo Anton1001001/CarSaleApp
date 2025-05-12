@@ -2,7 +2,7 @@
   <nav class="navbar">
     <div class="navbar-container">
       <a [routerLink]="['/']" class="navbar-logo">
-        <img src="/assets/logo.svg" alt="Логотип" aria-hidden="true" />
+        <span class="site-name">clutch.by</span>
       </a>
       <ul class="navbar-links">
         <ng-container class="icon-container" *ngIf="authService.user$ | async as user; else loginLink">
@@ -20,6 +20,9 @@
         </ng-template>
         <li>
           <a [routerLink]="['/create']" class="nav-link">Подать объявление</a>
+        </li>
+        <li>
+          <a [routerLink]="['/print']" class="nav-link">Печать</a>
         </li>
       </ul>
     </div>

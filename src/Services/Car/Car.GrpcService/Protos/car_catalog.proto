@@ -156,12 +156,16 @@ message GetCarParametersResponse {
   string modification = 5;      
   string engine_type = 6;      
   string drive_type = 7;     
-  string transmission_type = 8;  
-  string engine_capacity = 9;    
-  string color = 10;      
-  string condition = 11;            
-  string interior_material = 12; 
-  string interior_color = 13;
+  string transmission_type = 8;     
+  string color = 9;      
+  string condition = 10;            
+  string interior_material = 11; 
+  string interior_color = 12;
+  
+  optional int32 engine_capacity = 13;
+  optional int32 engine_power = 14;
+  optional float fuel_consumption_combined = 15;
+  optional float ground_clearance = 16;
 }
 
 message GetCarParametersPreviewRequest {

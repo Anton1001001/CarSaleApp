@@ -63,9 +63,11 @@ export class AuthService {
         },
         error: () => { console.log("Error me"); this.logout() }
       });
+    } else {
+      this.currentUser = null;
+      this.userSource.next(null);
     }
-    this.currentUser = null;
-    this.userSource.next(null);
+
   }
 
   logout() {

@@ -18,7 +18,10 @@ public static class Extensions
     {
         var connectionString = configuration["FileDb"];
         var serverVersion = ServerVersion.AutoDetect(connectionString);
-        services.AddDbContext<FileDbContext>(options => options.UseMySql(connectionString, serverVersion));
+        services.AddDbContext<FileDbContext>(options => options
+            .UseMySql(connectionString, serverVersion)           
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()); 
 
         services.Configure<BackblazeOptions>(configuration.GetSection(nameof(BackblazeOptions)));
 
